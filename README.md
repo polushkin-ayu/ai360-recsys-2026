@@ -1,8 +1,8 @@
 # AI360 2026 — взаимодействия признаков в рекомендациях
 
-Учебное исследование Factorization Machines и Deep & Cross Network.
+Учебное исследование Factorization Machines второго порядка и факторизации полиномиальных взаимодействий. Классический ML; предварительное знание Deep Learning не требуется.
 
-**Вопрос:** улучшает ли cross-ветка качество предсказания клика относительно небольшой DNN и как меняются число параметров и время обучения?
+**Вопрос:** как факторизация коэффициентов помогает обучать взаимодействия признаков на разреженных данных и где находятся границы её применимости?
 
 Статус: подготовлен план; данные, окружение и модели ещё предстоит подготовить студентам. Результатов экспериментов пока нет.
 
@@ -15,18 +15,25 @@
 
 ## Материалы
 
-- Steffen Rendle. Factorization Machines. ICDM 2010. [DOI](https://doi.org/10.1109/ICDM.2010.127), [сайт автора и ссылки](https://www.libfm.org/), [PDF](https://jame-zhang.github.io/assets/algo/Factorization-Machines-Rendle2010.pdf).
-- Ruoxi Wang et al. Deep & Cross Network for Ad Click Predictions. 2017. Изучаем исходную версию v1: [статья](https://arxiv.org/abs/1708.05123v1).
-- Дополнительное чтение: Freudenthaler, Schmidt-Thieme, Rendle. Factorization Machines — Factorized Polynomial Regression Models. PDF есть у ментора.
+- **Основная статья:** Freudenthaler, Schmidt-Thieme, Rendle. Factorization Machines — Factorized Polynomial Regression Models. [PDF авторов](https://www.ismll.uni-hildesheim.de/pub/pdfs/FreudenthalerRendle_FactorizedPolynomialRegression.pdf).
+- **Введение:** Steffen Rendle. Factorization Machines. ICDM 2010. [DOI](https://doi.org/10.1109/ICDM.2010.127), [PDF](https://jame-zhang.github.io/assets/algo/Factorization-Machines-Rendle2010.pdf).
+- **Необязательное продолжение:** Deep & Cross Network for Ad Click Predictions (2017), [v1](https://arxiv.org/abs/1708.05123v1). Реализация DCN в обязательный объём не входит.
+
+## Эксперименты
+
+1. Небольшая синтетика: линейная модель, независимые попарные взаимодействия, FM второго порядка. Изучаем влияние объёма train и ограничения факторизации.
+2. MovieLens 100K: bias-модель и FM по user/item ID. Дополнительные признаки — после готовности основного сравнения.
+
+Основная метрика — RMSE. FM с одними user/item ID эквивалентна матричной факторизации с bias: это проверка реализации, а не два разных метода для соревнования.
 
 ## Этапы
 
-- 3 октября: взаимодействия признаков, FM, чтение оригинальной статьи, обзор DCN.
-- 4 октября: основы DL, разбор DCN, данные и протокол, начало кода.
+- 3 октября: взаимодействия, разреженность, FM и чтение Рендла.
+- 4 октября: полиномиальная регрессия, обучение FM, основная статья, протокол и первый пример. [Расписание 11–18](docs/day2.md).
 - 5 октября: самостоятельная работа и первый сквозной запуск.
-- 6 октября: проверка концепта и эксперимента, репетиция.
+- 6 октября: проверка концепта и эксперимента, репетиции.
 - 7 октября: mid-review — защита концепта; завершённый код не обязателен.
-- 10–13 октября: эксперименты, анализ и постер.
+- 10–13 октября: сравнения, повторные запуски, анализ ограничений и постер.
 - 14 октября: финальная защита.
 
 ## Структура
@@ -51,5 +58,5 @@ python -m pip install -r requirements.txt
 ```
 
 Для Windows PowerShell активация: `.venv\Scripts\Activate.ps1`.
-Сборку PyTorch выбираем по доступному CPU/GPU согласно [официальной инструкции](https://pytorch.org/get-started/locally/).
+PyTorch необязателен: можно использовать NumPy с явными градиентами или PyTorch с autograd. Если выбран PyTorch, сборку устанавливаем согласно [официальной инструкции](https://pytorch.org/get-started/locally/).
 После реализации добавьте сюда проверенные команды подготовки данных, обучения и оценки.
