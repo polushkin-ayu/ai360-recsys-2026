@@ -5,4 +5,4 @@ pandas
 scikit-learn
 matplotlib
 jupyterlab
-# Optional: PyTorch for autograd; NumPy with explicit gradients is also valid.
+# FM: NumPy or PyTorch/autograd. DNN/DCN: install suitable PyTorch build separately.
