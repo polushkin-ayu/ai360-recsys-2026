@@ -1,0 +1,23 @@
+# Python and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+# Datasets and model artifacts
+/data/*
+!/data/README.md
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+runs/
+wandb/

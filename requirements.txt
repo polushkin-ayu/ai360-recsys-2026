@@ -1,0 +1,8 @@
+# Initial suggestions only; not a tested or locked environment.
+# Pin versions after the team's first successful run.
+numpy
+pandas
+scikit-learn
+matplotlib
+jupyterlab
+# Install the suitable PyTorch build separately; see README.
