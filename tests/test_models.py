@@ -2,6 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from src.models import (
@@ -11,6 +12,7 @@ from src.models import (
     count_parameters,
     fit_model,
     load_checkpoint,
+    predict_frame,
     regularized_mse_loss,
     save_checkpoint,
 )
@@ -116,8 +118,14 @@ class ModelTests(unittest.TestCase):
         )
         optimizer.zero_grad()
         loss.backward()
-        before = {name: parameter.detach().clone() for name, parameter in model.named_parameters()}
-        gradients = {name: parameter.grad.detach().clone() for name, parameter in model.named_parameters()}
+        before = {
+            name: parameter.detach().clone()
+            for name, parameter in model.named_parameters()
+        }
+        gradients = {
+            name: parameter.grad.detach().clone()
+            for name, parameter in model.named_parameters()
+        }
         optimizer.step()
         for name, parameter in model.named_parameters():
             torch.testing.assert_close(parameter, before[name] - 0.1 * gradients[name])
@@ -152,6 +160,32 @@ class ModelTests(unittest.TestCase):
             first.parameters(), second.parameters(), strict=True
         ):
             torch.testing.assert_close(first_parameter, second_parameter)
+
+    def test_predict_frame_preserves_team1_row_order(self) -> None:
+        model = BiasModel(3, 3, global_mean=3.0)
+        frame = {
+            "row_id": np.array([19, 4, 11], dtype=np.int64),
+            "user_idx": np.array([2, 0, 1], dtype=np.int64),
+            "item_idx": np.array([0, 2, 1], dtype=np.int64),
+        }
+        expected = model(
+            torch.tensor(frame["user_idx"]), torch.tensor(frame["item_idx"])
+        ).detach().numpy()
+
+        prediction, row_ids = predict_frame(model, frame, batch_size=2)
+
+        np.testing.assert_array_equal(row_ids, frame["row_id"])
+        np.testing.assert_allclose(prediction, expected)
+
+    def test_predict_frame_rejects_unknown_ids(self) -> None:
+        model = BiasModel(2, 2)
+        frame = {
+            "row_id": np.array([1]),
+            "user_idx": np.array([0]),
+            "item_idx": np.array([-1]),
+        }
+        with self.assertRaisesRegex(ValueError, "unknown"):
+            predict_frame(model, frame)
 
 
 if __name__ == "__main__":

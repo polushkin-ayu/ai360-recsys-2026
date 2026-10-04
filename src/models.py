@@ -12,6 +12,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Optional
 
+import numpy as np
 import torch
 from torch import Tensor, nn
 
@@ -101,7 +102,7 @@ class FactorizationMachine(BiasModel):
         n_factors: int = 16,
         global_mean: float = 0.0,
         init_std: float = 0.01,
-        fast_interaction: bool = False,
+        fast_interaction: bool = True,
     ) -> None:
         if not isinstance(n_factors, int) or n_factors <= 0:
             raise ValueError("n_factors must be a positive integer")
@@ -147,7 +148,7 @@ class FactorizationMachine(BiasModel):
             return super().forward(user_idx, item_idx) + self.interaction_fast(
                 user_idx, item_idx
             )
-        
+
         return super().forward(user_idx, item_idx) + self.interaction_direct(
                 user_idx, item_idx
             )
@@ -160,7 +161,13 @@ class FactorizationMachine(BiasModel):
 
     def get_config(self) -> dict[str, Any]:
         config = super().get_config()
-        config.update({"n_factors": self.n_factors, "init_std": self.init_std})
+        config.update(
+            {
+                "n_factors": self.n_factors,
+                "init_std": self.init_std,
+                "fast_interaction": self.fast_interaction,
+            }
+        )
         return config
 
 
@@ -372,7 +379,79 @@ def fit_model(
 
 def count_parameters(model: nn.Module) -> int:
     """Number of trainable scalar parameters."""
-    return sum(parameter.numel() for parameter in model.parameters() if parameter.requires_grad)
+    return sum(
+        parameter.numel()
+        for parameter in model.parameters()
+        if parameter.requires_grad
+    )
+
+
+def predict_frame(
+    model: BiasModel,
+    frame: Any,
+    *,
+    batch_size: int = 4096,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Predict a Team 1 prepared table and preserve its ``row_id`` order.
+
+    The frame must contain one-dimensional integer ``row_id``, ``user_idx`` and
+    ``item_idx`` columns. Prepared validation/test tables already exclude
+    unknown IDs; passing the ``-1`` sentinel from an ``*_all.csv`` file is an
+    error rather than an accidental lookup of the final embedding row.
+    """
+    if (
+        not isinstance(batch_size, int)
+        or isinstance(batch_size, bool)
+        or batch_size <= 0
+    ):
+        raise ValueError("batch_size must be a positive integer")
+
+    columns: dict[str, np.ndarray] = {}
+    for name in ("row_id", "user_idx", "item_idx"):
+        try:
+            value = frame[name]
+        except (KeyError, TypeError) as error:
+            raise ValueError(f"frame must contain the {name!r} column") from error
+        if hasattr(value, "to_numpy"):
+            value = value.to_numpy()
+        array = np.asarray(value)
+        if array.ndim != 1:
+            raise ValueError(f"frame column {name!r} must be one-dimensional")
+        if not np.issubdtype(array.dtype, np.integer):
+            raise TypeError(f"frame column {name!r} must contain integers")
+        columns[name] = array
+
+    row_ids = columns["row_id"]
+    user_values = columns["user_idx"]
+    item_values = columns["item_idx"]
+    if (
+        not (len(row_ids) == len(user_values) == len(item_values))
+        or len(row_ids) == 0
+    ):
+        raise ValueError("model input columns must have the same non-zero length")
+    if (user_values < 0).any() or (item_values < 0).any():
+        raise ValueError("unknown user/item indices must be filtered before prediction")
+    if (user_values >= model.n_users).any() or (item_values >= model.n_items).any():
+        raise ValueError("user/item index is outside the model vocabulary")
+
+    device = next(model.parameters()).device
+    users = torch.as_tensor(user_values, dtype=torch.long)
+    items = torch.as_tensor(item_values, dtype=torch.long)
+    predictions = []
+    was_training = model.training
+    model.eval()
+    try:
+        with torch.no_grad():
+            for start in range(0, len(row_ids), batch_size):
+                stop = start + batch_size
+                predictions.append(
+                    model(users[start:stop].to(device), items[start:stop].to(device))
+                    .detach()
+                    .cpu()
+                )
+    finally:
+        model.train(was_training)
+    return torch.cat(predictions).numpy(), row_ids.copy()
 
 
 def save_checkpoint(

@@ -16,9 +16,14 @@ item_idx)`, поддерживают `.to(device)`, `.train()`, `.eval()`, `stat
 
 ```python
 import torch
-from src.models import FactorizationMachine, TrainingConfig, fit_model
+from src.data import MODEL_COLUMNS, load_prepared
+from src.models import FactorizationMachine, TrainingConfig, fit_model, predict_frame
 
-model = FactorizationMachine(n_users, n_items, n_factors=16)
+data = load_prepared("data/processed/team1")
+train = data.train[MODEL_COLUMNS]
+validation = data.validation[MODEL_COLUMNS]
+
+model = FactorizationMachine(data.n_users, data.n_items, n_factors=16)
 result = fit_model(
     model,
     torch.as_tensor(train.user_idx, dtype=torch.long),
@@ -30,10 +35,13 @@ result = fit_model(
     config=TrainingConfig(seed=42),
 )
 
-model.eval()
-with torch.no_grad():
-    prediction = model(test_user_idx, test_item_idx)
+prediction, prediction_row_ids = predict_frame(model, data.test)
 ```
+
+`predict_frame` реализует контракт команды данных: принимает таблицу из
+`load_prepared`, не меняет порядок и возвращает прогноз вместе с исходным
+`row_id`. В него следует передавать `validation`/`test`, а не варианты
+`*_all.csv`: sentinel `-1` для неизвестного ID отклоняется явно.
 
 При наличии validation после early stopping восстанавливается версия с
 минимальным validation RMSE. `result.history` содержит train loss, train RMSE и
