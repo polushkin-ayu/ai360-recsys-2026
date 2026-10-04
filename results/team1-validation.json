@@ -1,0 +1,103 @@
+{
+  "run_id": "team1-data-2026-10-04",
+  "base_commit": "ec255d2e9d7f825eeaa35582d99c06d3b5f875b0",
+  "tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "run": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "clean_reproduction": {
+    "separate_checkout": true,
+    "separate_venv": true,
+    "official_download_repeated": true,
+    "git_apply_check": "passed",
+    "git_apply": "passed",
+    "K5": "passed",
+    "K6": "passed",
+    "processed_file_count": 12,
+    "all_processed_files_byte_identical": true,
+    "full_pipeline_reports_identical": true,
+    "frozen_environments_identical": true,
+    "compared_artifacts": [
+      {
+        "file": "item_mapping.csv",
+        "sha256": "c873437630ea8ea6dc54f326e950f8ea064a5a0003a49ac28b3259b9dc6541eb",
+        "byte_identical": true
+      },
+      {
+        "file": "metadata.json",
+        "sha256": "0690fc970aca1b499c819b6aea28b23fbbbc5ef1696e3cb5afd3bf5a0b29c43e",
+        "byte_identical": true
+      },
+      {
+        "file": "selected_users.json",
+        "sha256": "bc28c3ea30204ca52a98f701227ad831465ba74f08ad51eb9bce2a8a264376fe",
+        "byte_identical": true
+      },
+      {
+        "file": "subset.csv",
+        "sha256": "f62b4ea2d4dcb05b441b59ec09d253d4a1c11dabf355363b781764d8233283a5",
+        "byte_identical": true
+      },
+      {
+        "file": "test.csv",
+        "sha256": "b0eed135b52375ffd2c9903a427eb623266fc18739220418a71a4254091c1a46",
+        "byte_identical": true
+      },
+      {
+        "file": "test_all.csv",
+        "sha256": "23b933458387471d16a4bf26249d499f06de066ede67e6987421aa7474fabe18",
+        "byte_identical": true
+      },
+      {
+        "file": "test_row_ids.csv",
+        "sha256": "d8d833775a765c671f8aa6edeb853055e82aee55e15bd7ad1e5ab918a152651d",
+        "byte_identical": true
+      },
+      {
+        "file": "train.csv",
+        "sha256": "52916abc475afaf9de4106ccd56bc5c380b32dee59b77815d4225cf160fdf823",
+        "byte_identical": true
+      },
+      {
+        "file": "user_mapping.csv",
+        "sha256": "65e6b7853a6f787f0b06bb7c7e62e7015c0ea7577c6535263c7be9ca1c1e0f6b",
+        "byte_identical": true
+      },
+      {
+        "file": "validation.csv",
+        "sha256": "073a2d3d64a785dbafb7715d49f8fad4780b9406279c70d19d84870c0ff4eead",
+        "byte_identical": true
+      },
+      {
+        "file": "validation_all.csv",
+        "sha256": "d1831eece902363770146a4d17fad2a14c3fa556d4427aeb5346e4473cef2b61",
+        "byte_identical": true
+      },
+      {
+        "file": "validation_row_ids.csv",
+        "sha256": "9d87fb00cf1c68bd855eeb66f1866862d13d325bd76d7701b3d986856208952b",
+        "byte_identical": true
+      }
+    ]
+  },
+  "commands_checked": [
+    "python3 -m venv .venv",
+    "source .venv/bin/activate",
+    "python -m pip install -r requirements-data.txt",
+    "python -m src.prepare_data --config configs/team1-data.json --report results/team1-data-checks.json",
+    "python -m src.check_data --config configs/team1-data.json --report data/team1-recheck.json",
+    "python -m unittest discover -s tests -v",
+    "python -m compileall -q src tests",
+    "python -m pip check"
+  ],
+  "README_python_interface_checked": true,
+  "dataset_and_venv_ignored": true,
+  "limitations": [
+    "No Windows execution; Linux CPU only.",
+    "No actual bias/FM predictions exist yet, so the model-level ID comparison is pending.",
+    "Human interface approval, Issue ownership and cross-team review are pending. No GitHub mutations performed."
+  ]
+}

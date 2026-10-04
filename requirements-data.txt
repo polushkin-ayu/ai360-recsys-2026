@@ -1,0 +1,3 @@
+# Tested CPU environment for Team 1 only; model dependencies are unchanged.
+numpy==2.3.5
+pandas==2.2.3
