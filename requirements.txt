@@ -5,4 +5,5 @@ pandas
 scikit-learn
 matplotlib
 jupyterlab
-# FM: NumPy or PyTorch/autograd. DNN/DCN: install suitable PyTorch build separately.
+# Install the platform-appropriate build if CUDA support is required.
+torch
