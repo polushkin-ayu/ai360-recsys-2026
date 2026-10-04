@@ -1,0 +1,13 @@
+{
+  "source": {
+    "url": "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+    "archive_bytes": 4924029,
+    "archive_sha256": "50d2a982c66986937beb9ffb3aa76efe955bf3d5c6b761f4e3a7cd717c6a3229",
+    "ratings_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490"
+  },
+  "expected": {"ratings": 100000, "users": 943, "items": 1682},
+  "subset": {"seed": 42, "target_ratings": 15000},
+  "split": {"seed": 42, "fractions": [0.7, 0.15, 0.15]},
+  "raw_dir": "data/raw",
+  "output_dir": "data/processed/team1"
+}

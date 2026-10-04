@@ -1,0 +1,231 @@
+{
+  "run_id": "team1-data-2026-10-04",
+  "command": "python -m src.prepare_data --config configs/team1-data.json --report results/team1-data-checks.json",
+  "config_sha256": "87929a5d923624c42ceb74c9f84da39942062853bbfee29b1fcfcc55792f9b01",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "device": "CPU"
+  },
+  "provenance": {
+    "base_commit": "ec255d2e9d7f825eeaa35582d99c06d3b5f875b0",
+    "uncommitted_changes": true,
+    "source_sha256": {
+      "src/__init__.py": "94556718ef07ab44f3f5f6a2b5b4e5891ad68ca5059e20cd1216e42ce7d35c2e",
+      "src/check_data.py": "9d2bc67ee554b35dbf4932dd1c5b7a6c93e8176031b697a50a7b94c7a2f7c70e",
+      "src/data.py": "83f72d1c68cbb5e58bcd3d16d52ca1ab42197f9581e0cecfefa42191fc345332",
+      "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+      "src/prepare_data.py": "d98ad0cc0772136406d20904f4470e8d600f82b0e6917f45ecb2066aa7a7b911",
+      "tests/test_team1.py": "80f9b7ba2905fe516a39892c5b531ae8074a22d5c837078b77529ade2c9131e9",
+      "configs/team1-data.json": "87929a5d923624c42ceb74c9f84da39942062853bbfee29b1fcfcc55792f9b01",
+      "requirements-data.txt": "5380168e504039766f85a01cfc2166deb82df705d83ab7c89f3cf7c147ef05ce"
+    },
+    "note": "No commit/push performed. Reproduce with the supplied patch, not the base commit alone."
+  },
+  "source": {
+    "url": "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+    "archive_sha256": "50d2a982c66986937beb9ffb3aa76efe955bf3d5c6b761f4e3a7cd717c6a3229",
+    "ratings_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490"
+  },
+  "full_data": {
+    "ratings": 100000,
+    "users": 943,
+    "items": 1682,
+    "missing_values": {
+      "row_id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 1,
+    "rating_max": 5,
+    "duplicate_pair_rows": 0,
+    "duplicate_pair_excess": 0,
+    "rating_distribution": {
+      "1": 6110,
+      "2": 11370,
+      "3": 27145,
+      "4": 34174,
+      "5": 21201
+    },
+    "ratings_per_user": {
+      "count": 943.0,
+      "mean": 106.04453870625663,
+      "std": 100.93174276633498,
+      "min": 20.0,
+      "25%": 33.0,
+      "50%": 65.0,
+      "75%": 148.0,
+      "max": 737.0
+    },
+    "ratings_per_item": {
+      "count": 1682.0,
+      "mean": 59.45303210463734,
+      "std": 80.3838456100493,
+      "min": 1.0,
+      "25%": 6.0,
+      "50%": 27.0,
+      "75%": 80.0,
+      "max": 583.0
+    }
+  },
+  "subset": {
+    "ratings": 15103,
+    "users": 140,
+    "items": 1414,
+    "missing_values": {
+      "row_id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 1,
+    "rating_max": 5,
+    "duplicate_pair_rows": 0,
+    "duplicate_pair_excess": 0,
+    "rating_distribution": {
+      "1": 1130,
+      "2": 1738,
+      "3": 3937,
+      "4": 5028,
+      "5": 3270
+    },
+    "ratings_per_user": {
+      "count": 140.0,
+      "mean": 107.87857142857143,
+      "std": 100.15365661420606,
+      "min": 20.0,
+      "25%": 32.5,
+      "50%": 63.0,
+      "75%": 151.25,
+      "max": 493.0
+    },
+    "ratings_per_item": {
+      "count": 1414.0,
+      "mean": 10.68104667609618,
+      "std": 12.567810465974087,
+      "min": 1.0,
+      "25%": 2.0,
+      "50%": 6.0,
+      "75%": 14.0,
+      "max": 85.0
+    }
+  },
+  "selected_users": 140,
+  "n_users": 140,
+  "n_items": 1329,
+  "config": {
+    "source": {
+      "url": "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+      "archive_bytes": 4924029,
+      "archive_sha256": "50d2a982c66986937beb9ffb3aa76efe955bf3d5c6b761f4e3a7cd717c6a3229",
+      "ratings_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490"
+    },
+    "expected": {
+      "ratings": 100000,
+      "users": 943,
+      "items": 1682
+    },
+    "subset": {
+      "seed": 42,
+      "target_ratings": 15000
+    },
+    "split": {
+      "seed": 42,
+      "fractions": [
+        0.7,
+        0.15,
+        0.15
+      ]
+    },
+    "raw_dir": "data/raw",
+    "output_dir": "data/processed/team1"
+  },
+  "K5": {
+    "status": "passed",
+    "row_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "pair_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "union_equals_subset": true,
+    "raw_row_lineage_verified": true,
+    "all_ratings_of_selected_users": true,
+    "seeded_subset_verified": true,
+    "mappings_exactly_train_only": true,
+    "known_flags_and_indices_verified": true,
+    "artifact_checksums_verified": true,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "sizes_before_filter": {
+      "train": 10572,
+      "validation": 2265,
+      "test": 2266
+    },
+    "evaluation": {
+      "validation": {
+        "before": 2265,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 56,
+        "unknown_users": 0,
+        "unknown_items": 51,
+        "unknown_both_rows": 0,
+        "excluded_rows": 56,
+        "after": 2209,
+        "coverage": 0.9752759381898455,
+        "row_ids_file": "validation_row_ids.csv",
+        "row_ids_sha256": "9d87fb00cf1c68bd855eeb66f1866862d13d325bd76d7701b3d986856208952b"
+      },
+      "test": {
+        "before": 2266,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 46,
+        "unknown_users": 0,
+        "unknown_items": 45,
+        "unknown_both_rows": 0,
+        "excluded_rows": 46,
+        "after": 2220,
+        "coverage": 0.9796999117387467,
+        "row_ids_file": "test_row_ids.csv",
+        "row_ids_sha256": "d8d833775a765c671f8aa6edeb853055e82aee55e15bd7ad1e5ab918a152651d"
+      }
+    },
+    "model_id_comparison": "pending model implementations; require_same_row_ids is provided"
+  },
+  "K6": {
+    "status": "passed",
+    "manual_rmse": 1.5811388300841898,
+    "expected": 1.5811388300841898,
+    "aligned_rmse": 1.5811388300841898,
+    "invalid_inputs_rejected": [
+      "different_lengths",
+      "broadcast_column",
+      "broadcast_row",
+      "both_2d",
+      "scalar",
+      "empty",
+      "nan_truth",
+      "nan_prediction",
+      "inf_truth",
+      "inf_prediction",
+      "complex",
+      "nonnumeric",
+      "reordered_row_ids",
+      "different_row_ids",
+      "duplicate_row_ids",
+      "missing_row_ids",
+      "noninteger_row_ids",
+      "row_ids_length_mismatch"
+    ],
+    "finite_large_values_checked": true,
+    "zero_error_checked": true
+  }
+}
