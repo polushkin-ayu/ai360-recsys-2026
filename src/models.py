@@ -143,15 +143,10 @@ class FactorizationMachine(BiasModel):
             - item_factors.square()
         ).sum(dim=1)
 
-    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:
-        if self.fast_interaction:
-            return super().forward(user_idx, item_idx) + self.interaction_fast(
-                user_idx, item_idx
-            )
-
+    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:    
         return super().forward(user_idx, item_idx) + self.interaction_direct(
-                user_idx, item_idx
-            )
+            user_idx, item_idx
+        )
 
     def factor_l2(self) -> Tensor:
         return (
