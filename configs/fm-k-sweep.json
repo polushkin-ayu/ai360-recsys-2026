@@ -1,0 +1,20 @@
+{
+  "experiment_id": "fm-k-sweep-20261006",
+  "data_dir": "data/processed/team1",
+  "output_dir": "results/fm-k-sweep-20261006",
+  "local_dir": "data/fm-k-sweep-20261006",
+  "k_values": [8, 16, 32, 64],
+  "seeds": [42, 43, 44],
+  "init_std": 0.01,
+  "threads": 1,
+  "training": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "learning_rate": 0.01,
+    "optimizer": "adam",
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0.0
+  }
+}
