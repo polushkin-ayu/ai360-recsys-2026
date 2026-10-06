@@ -1,0 +1,52 @@
+{
+  "signature": "eaef0d95832e3103800a48e2172ee9ba60a4704f4e14147d603d741217ccef23",
+  "metrics": {
+    "run_id": "svdpp_k200_s42",
+    "model": "svdpp",
+    "k": 200,
+    "initialization_seed": 42,
+    "subset_seed": 42,
+    "split_seed": 42,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "history_normalization": "sqrt",
+    "fixed_global_mean": 3.502837657928467,
+    "config_hash": "d943856a4226b521314b107a3ab896ed251917f7a84f4f1c35771340c917221d",
+    "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7",
+    "dirty_worktree": true,
+    "best_epoch": 2,
+    "epochs_run": 22,
+    "train_mse": 0.37992017982262877,
+    "train_loss_with_regularization": 0.38728336185558954,
+    "train_rmse": 0.6163766541836483,
+    "validation_rmse": 1.0433189273075465,
+    "test_rmse": 1.077307664941745,
+    "parameter_count": 561069,
+    "fit_seconds": 1.4375124099997265,
+    "device": "cpu",
+    "history_checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507"
+  },
+  "training_config": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "optimizer": "adam",
+    "learning_rate": 0.01,
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0,
+    "seed": 42
+  },
+  "checkpoint": "artifacts/svdpp/main/svdpp_k200_s42.pt",
+  "history_csv": "results/svdpp/histories/svdpp_k200_s42.csv",
+  "validation_predictions": "results/svdpp/predictions/svdpp_k200_s42_validation.csv",
+  "y_gradient_norm": 79.1346664428711,
+  "reload_max_error": 0.0,
+  "files": {
+    "artifacts/svdpp/main/svdpp_k200_s42.pt": "242ae4656481c8f619fab755fc95eee13f9b74f61b4f95a90fee0c67d6b66e11",
+    "results/svdpp/histories/svdpp_k200_s42.csv": "e2f2a0cb6f4746082c3dc24cd74f4dbee26860807e6fe6ce48389ce5974ae951",
+    "results/svdpp/predictions/svdpp_k200_s42_validation.csv": "d9c5c4851e7aa4528307c70f492e33ea31d4101f36142e1fb7bfaeef6065c658"
+  },
+  "test_files": {
+    "results/svdpp/predictions/svdpp_k200_s42_test.csv": "cf2a82e81dc431b6956afcc10151ea774ebfa28a636b2f37d6a376875ddfaa75"
+  }
+}

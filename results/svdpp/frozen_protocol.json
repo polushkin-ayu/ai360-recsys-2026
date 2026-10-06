@@ -1,0 +1,168 @@
+{
+  "fingerprint": {
+    "config_hash": "d943856a4226b521314b107a3ab896ed251917f7a84f4f1c35771340c917221d",
+    "config_json_source": "{\n  \"models\": [\"svdpp\"],\n  \"scope_revision\": \"SVD++ only; numerical settings unchanged. Test was already viewed in the earlier run; this revision adds no tuning.\",\n  \"data_dir\": \"data/processed/team1\",\n  \"output_dir\": \"results/svdpp\",\n  \"checkpoint_dir\": \"artifacts/svdpp\",\n  \"k_grid\": [10, 20, 50, 100, 200],\n  \"initialization_seeds\": [42, 43, 44],\n  \"pilot_seed\": 0,\n  \"pilot_k\": 20,\n  \"pilot_candidates\": [\n    {\"learning_rate\": 0.003, \"reg_factors\": 0.05},\n    {\"learning_rate\": 0.01, \"reg_factors\": 0.05},\n    {\"learning_rate\": 0.003, \"reg_factors\": 0.5}\n  ],\n  \"training\": {\n    \"epochs\": 200, \"batch_size\": 1024, \"optimizer\": \"adam\",\n    \"learning_rate\": 0.01, \"reg_bias\": 0.01, \"reg_factors\": 0.05,\n    \"patience\": 20, \"min_delta\": 0\n  },\n  \"init_std\": 0.01,\n  \"clipping\": false,\n  \"mu\": \"fixed_train_mean\",\n  \"history_normalization\": \"sqrt\",\n  \"device\": \"cpu\",\n  \"dtype\": \"float32\",\n  \"threads\": 1,\n  \"deterministic_algorithms\": true\n}\n",
+    "source_sha256": {
+      "src/__init__.py": "94556718ef07ab44f3f5f6a2b5b4e5891ad68ca5059e20cd1216e42ce7d35c2e",
+      "src/check_data.py": "9d2bc67ee554b35dbf4932dd1c5b7a6c93e8176031b697a50a7b94c7a2f7c70e",
+      "src/check_svdpp.py": "38f7ea97b0e14eac7703b5c4ea8a9c0282eede3667a121b63a5777a2b8cdadc6",
+      "src/data.py": "83f72d1c68cbb5e58bcd3d16d52ca1ab42197f9581e0cecfefa42191fc345332",
+      "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+      "src/models.py": "7e021f68bf81d4ba56eb0eb8eb0809e81a6b4d6fce13278d1992177c57f63ad0",
+      "src/plot_svdpp.py": "e2802ee1b613696bda59787cd65a15195524ef9b6fa1400a026e9650cff373aa",
+      "src/prepare_data.py": "d98ad0cc0772136406d20904f4470e8d600f82b0e6917f45ecb2066aa7a7b911",
+      "src/run_svdpp.py": "082d55e505d60175483b4feef075b008973053f0bc49a16db5dce05cb792ea21",
+      "src/svdpp.py": "07470d8372e19b6f98fdbb31ab5a9fea975d7c7d3df6bada99ebba76fb07016e",
+      "tests/test_models.py": "a0a0eae77efede6b5dcca879010dd50ba429d9c5daaf9e04f01231798f8775de",
+      "tests/test_svdpp.py": "41cd1e1eb16da9edc56479bf8eb606cc705ea01e78bc8386f05b792cd698c9e4",
+      "tests/test_team1.py": "80f9b7ba2905fe516a39892c5b531ae8074a22d5c837078b77529ade2c9131e9",
+      "configs/team1-data.json": "87929a5d923624c42ceb74c9f84da39942062853bbfee29b1fcfcc55792f9b01",
+      "requirements-svdpp.txt": "d395d81a38879c9d92363fe10051641b200caf045175a8b905b9228052aff955"
+    },
+    "data_identity": {
+      "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+      "n_users": 140,
+      "n_items": 1329,
+      "history_checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507",
+      "artifact_sha256": {
+        "subset.csv": "f62b4ea2d4dcb05b441b59ec09d253d4a1c11dabf355363b781764d8233283a5",
+        "selected_users.json": "bc28c3ea30204ca52a98f701227ad831465ba74f08ad51eb9bce2a8a264376fe",
+        "user_mapping.csv": "65e6b7853a6f787f0b06bb7c7e62e7015c0ea7577c6535263c7be9ca1c1e0f6b",
+        "item_mapping.csv": "c873437630ea8ea6dc54f326e950f8ea064a5a0003a49ac28b3259b9dc6541eb",
+        "train.csv": "52916abc475afaf9de4106ccd56bc5c380b32dee59b77815d4225cf160fdf823",
+        "validation.csv": "073a2d3d64a785dbafb7715d49f8fad4780b9406279c70d19d84870c0ff4eead",
+        "validation_all.csv": "d1831eece902363770146a4d17fad2a14c3fa556d4427aeb5346e4473cef2b61",
+        "validation_row_ids.csv": "9d87fb00cf1c68bd855eeb66f1866862d13d325bd76d7701b3d986856208952b",
+        "test.csv": "b0eed135b52375ffd2c9903a427eb623266fc18739220418a71a4254091c1a46",
+        "test_all.csv": "23b933458387471d16a4bf26249d499f06de066ede67e6987421aa7474fabe18",
+        "test_row_ids.csv": "d8d833775a765c671f8aa6edeb853055e82aee55e15bd7ad1e5ab918a152651d"
+      },
+      "normalization": "sqrt"
+    },
+    "environment": {
+      "python": "3.12.14",
+      "packages": {
+        "contourpy": "1.3.3",
+        "cycler": "0.12.1",
+        "filelock": "3.32.3",
+        "fonttools": "4.61.1",
+        "fsspec": "2026.7.0",
+        "Jinja2": "3.1.6",
+        "kiwisolver": "1.4.9",
+        "MarkupSafe": "3.0.3",
+        "matplotlib": "3.10.8",
+        "mpmath": "1.3.0",
+        "networkx": "3.6.1",
+        "numpy": "2.3.5",
+        "packaging": "26.3",
+        "pandas": "2.2.3",
+        "pillow": "12.3.0",
+        "pyparsing": "3.3.2",
+        "python-dateutil": "2.9.0.post0",
+        "pytz": "2026.3.post1",
+        "setuptools": "84.0.0",
+        "six": "1.17.0",
+        "sympy": "1.14.0",
+        "torch": "2.14.1+cpu",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.4"
+      },
+      "torch": "2.14.1+cpu",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "matplotlib": "3.10.8",
+      "os": "Linux-6.18.44-x86_64-with-glibc2.39",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "gpu": null,
+      "device": "cpu",
+      "dtype": "float32",
+      "threads": 1,
+      "deterministic_algorithms": true,
+      "timing": "fit only, includes epoch train/validation evaluation, early stopping and best-state restore; excludes I/O; CUDA synchronized"
+    }
+  },
+  "config": {
+    "models": [
+      "svdpp"
+    ],
+    "scope_revision": "SVD++ only; numerical settings unchanged. Test was already viewed in the earlier run; this revision adds no tuning.",
+    "data_dir": "data/processed/team1",
+    "output_dir": "results/svdpp",
+    "checkpoint_dir": "artifacts/svdpp",
+    "k_grid": [
+      10,
+      20,
+      50,
+      100,
+      200
+    ],
+    "initialization_seeds": [
+      42,
+      43,
+      44
+    ],
+    "pilot_seed": 0,
+    "pilot_k": 20,
+    "pilot_candidates": [
+      {
+        "learning_rate": 0.003,
+        "reg_factors": 0.05
+      },
+      {
+        "learning_rate": 0.01,
+        "reg_factors": 0.05
+      },
+      {
+        "learning_rate": 0.003,
+        "reg_factors": 0.5
+      }
+    ],
+    "training": {
+      "epochs": 200,
+      "batch_size": 1024,
+      "optimizer": "adam",
+      "learning_rate": 0.01,
+      "reg_bias": 0.01,
+      "reg_factors": 0.05,
+      "patience": 20,
+      "min_delta": 0
+    },
+    "init_std": 0.01,
+    "clipping": false,
+    "mu": "fixed_train_mean",
+    "history_normalization": "sqrt",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 1,
+    "deterministic_algorithms": true
+  },
+  "chosen": {
+    "svdpp": {
+      "learning_rate": 0.01,
+      "reg_factors": 0.05
+    }
+  },
+  "code_provenance": {
+    "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7",
+    "dirty_worktree": true
+  },
+  "expected_runs": [
+    "svdpp_k10_s42",
+    "svdpp_k10_s43",
+    "svdpp_k10_s44",
+    "svdpp_k20_s42",
+    "svdpp_k20_s43",
+    "svdpp_k20_s44",
+    "svdpp_k50_s42",
+    "svdpp_k50_s43",
+    "svdpp_k50_s44",
+    "svdpp_k100_s42",
+    "svdpp_k100_s43",
+    "svdpp_k100_s44",
+    "svdpp_k200_s42",
+    "svdpp_k200_s43",
+    "svdpp_k200_s44"
+  ],
+  "test_policy": "evaluate entire predefined grid after validation selection; no test-based selection or refit",
+  "frozen_at": "2026-10-06T09:44:24.639319+00:00"
+}

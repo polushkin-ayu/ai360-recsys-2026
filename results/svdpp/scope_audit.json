@@ -1,0 +1,19 @@
+{
+  "scope": "SVD++ only",
+  "main_runs": 15,
+  "pilot_runs": 3,
+  "source_hashes_match": true,
+  "frozen_protocol_unchanged_after_test": true,
+  "selected_k_unchanged_after_test": true,
+  "checkpoint_and_validation_checksums_unchanged_after_test": true,
+  "prediction_row_ids_verified": true,
+  "csv_prediction_dtype": "float32, matching measured inference",
+  "rmse_recomputed_max_abs_error": 0.0,
+  "numeric_metrics_equal_to_previous_svdpp_runs": true,
+  "test_had_been_viewed_before_scope_revision": true,
+  "scope_revision_added_no_tuning": true,
+  "png_rebuild_byte_identical": true,
+  "test_predictions_outside_rating_range": 138,
+  "tests_run": 44,
+  "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7"
+}

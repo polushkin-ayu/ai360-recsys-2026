@@ -1,0 +1,52 @@
+{
+  "signature": "7566e4c101182fd49ab8c00a0824868a67380df6ef53303278b7874cc65e5808",
+  "metrics": {
+    "run_id": "svdpp_k10_s44",
+    "model": "svdpp",
+    "k": 10,
+    "initialization_seed": 44,
+    "subset_seed": 42,
+    "split_seed": 42,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "history_normalization": "sqrt",
+    "fixed_global_mean": 3.502837657928467,
+    "config_hash": "d943856a4226b521314b107a3ab896ed251917f7a84f4f1c35771340c917221d",
+    "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7",
+    "dirty_worktree": true,
+    "best_epoch": 3,
+    "epochs_run": 23,
+    "train_mse": 0.7374836147129833,
+    "train_loss_with_regularization": 0.7389731358539778,
+    "train_rmse": 0.8587686619299655,
+    "validation_rmse": 1.0350107707335627,
+    "test_rmse": 1.0405785255692757,
+    "parameter_count": 29449,
+    "fit_seconds": 0.5807412929998463,
+    "device": "cpu",
+    "history_checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507"
+  },
+  "training_config": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "optimizer": "adam",
+    "learning_rate": 0.01,
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0,
+    "seed": 44
+  },
+  "checkpoint": "artifacts/svdpp/main/svdpp_k10_s44.pt",
+  "history_csv": "results/svdpp/histories/svdpp_k10_s44.csv",
+  "validation_predictions": "results/svdpp/predictions/svdpp_k10_s44_validation.csv",
+  "y_gradient_norm": 25.683094024658203,
+  "reload_max_error": 0.0,
+  "files": {
+    "artifacts/svdpp/main/svdpp_k10_s44.pt": "21b3eb51926cc907e9ce6e009aeb6264f5063b8672b8576cfe32750a6febe260",
+    "results/svdpp/histories/svdpp_k10_s44.csv": "a25b2189f836e44f96a319c15ff46ff16904d627382ed7b8a7edf19f7f267f92",
+    "results/svdpp/predictions/svdpp_k10_s44_validation.csv": "71cfd80e15f7cb621509864d085840c46bd791937b90807ba0552dd4962664d5"
+  },
+  "test_files": {
+    "results/svdpp/predictions/svdpp_k10_s44_test.csv": "e01333e6b7c619ff9d70141b9d59a1fe2b4a4dbe9b4d2ae4a00de5f4a19bb7d3"
+  }
+}
