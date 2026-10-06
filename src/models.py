@@ -144,7 +144,7 @@ class FactorizationMachine(BiasModel):
             - item_factors.square()
         ).sum(dim=1)
 
-    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:    
+    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:
         return super().forward(user_idx, item_idx) + self.interaction_direct(
             user_idx, item_idx
         )
@@ -352,7 +352,62 @@ class SparseFactorizationMachine(nn.Module):
             "n_factors": self.n_factors,
             "init_std": self.init_std,
         }
+class PureMatrixFactorization(nn.Module):
+    """
+    Матричная факторизация без линейных сдвигов
+    """
+    def __init__(
+            self,
+            n_users: int,
+            n_items: int,
+            *,
+            n_factors: int = 16,
+            init_std: float = 0.01,
+    ) -> None:
+        super().__init__()
+        _validate_model_sizes(n_users, n_items)
+        self.n_users = n_users
+        self.n_items = n_items
+        self.n_factors = n_factors
+        self.init_std = float(init_std)
 
+        self.user_factors = nn.Embedding(n_users, n_factors)
+        self.item_factors = nn.Embedding(n_items, n_factors)
+        self._reset_factor_parameters()
+
+    def _reset_factor_parameters(self) -> None:
+        nn.init.normal_(self.user_factors.weight, mean=0.0, std=self.init_std)
+        nn.init.normal_(self.item_factors.weight, mean=0.0, std=self.init_std)
+
+    def reset_parameters(self, global_mean: float = 0.0) -> None:
+        """Переинициализация факторов. Параметр global_mean принимается для совместимости с API."""
+        self._reset_factor_parameters()
+
+    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:
+        """Возвращает скалярное произведение пользовательских и предметных факторов."""
+        _validate_inputs(user_idx, item_idx)
+        user_factors = self.user_factors(user_idx)
+        item_factors = self.item_factors(item_idx)
+        return (user_factors * item_factors).sum(dim=1)
+
+    def bias_l2(self) -> Tensor:
+        """Линейных сдвигов нет, возвращается нулевой тензор на нужном устройстве."""
+        return self.user_factors.weight.new_zeros(())
+
+    def factor_l2(self) -> Tensor:
+        """Сумма квадратов норм факторных матриц для L2-регуляризации."""
+        return (
+                self.user_factors.weight.square().sum()
+                + self.item_factors.weight.square().sum()
+        )
+
+    def get_config(self) -> dict[str, Any]:
+        return {
+            "n_users": self.n_users,
+            "n_items": self.n_items,
+            "n_factors": self.n_factors,
+            "init_std": self.init_std,
+        }
 
 @dataclass(frozen=True)
 class TrainingConfig:
@@ -407,8 +462,8 @@ def regularized_mse_loss(
     mse = nn.functional.mse_loss(prediction, target)
     return (
         mse
-        + reg_bias / n_train * model.bias_l2()
-        + reg_factors / n_train * model.factor_l2()
+        + reg_bias * model.bias_l2()
+        + reg_factors * model.factor_l2()
     )
 
 
@@ -683,6 +738,7 @@ def load_checkpoint(
         "FactorizationMachine": FactorizationMachine,
         "SVDPlusPlus": SVDPlusPlus,
         "SparseFactorizationMachine": SparseFactorizationMachine,
+        "PureMatrixFactorization" : PureMatrixFactorization,
     }
     try:
         model_class = model_classes[payload["model_class"]]

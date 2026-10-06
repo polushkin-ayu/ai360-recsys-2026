@@ -1,0 +1,161 @@
+{
+  "best_k": 195,
+  "best_val_rmse": 0.8959837205736259,
+  "sweep": {
+    "50": {
+      "val_rmse": 0.9148185292563095,
+      "best_epoch": 9,
+      "fit_time_seconds": 7.462789583019912
+    },
+    "55": {
+      "val_rmse": 0.9154928983635777,
+      "best_epoch": 9,
+      "fit_time_seconds": 7.126856291200966
+    },
+    "60": {
+      "val_rmse": 0.9156239061761069,
+      "best_epoch": 8,
+      "fit_time_seconds": 7.012877458240837
+    },
+    "65": {
+      "val_rmse": 0.9151487211813683,
+      "best_epoch": 8,
+      "fit_time_seconds": 7.813935041893274
+    },
+    "70": {
+      "val_rmse": 0.915006627591538,
+      "best_epoch": 7,
+      "fit_time_seconds": 7.640081957913935
+    },
+    "75": {
+      "val_rmse": 0.9151125604047187,
+      "best_epoch": 7,
+      "fit_time_seconds": 7.96948325028643
+    },
+    "80": {
+      "val_rmse": 0.9100825195251716,
+      "best_epoch": 7,
+      "fit_time_seconds": 8.498041917104274
+    },
+    "85": {
+      "val_rmse": 0.9121591429939907,
+      "best_epoch": 7,
+      "fit_time_seconds": 9.429145792033523
+    },
+    "90": {
+      "val_rmse": 0.9100269477628357,
+      "best_epoch": 7,
+      "fit_time_seconds": 9.637315917294472
+    },
+    "95": {
+      "val_rmse": 0.9102680697923494,
+      "best_epoch": 6,
+      "fit_time_seconds": 10.140822208952159
+    },
+    "100": {
+      "val_rmse": 0.9089618714821098,
+      "best_epoch": 6,
+      "fit_time_seconds": 10.619374417234212
+    },
+    "105": {
+      "val_rmse": 0.9082359068008828,
+      "best_epoch": 6,
+      "fit_time_seconds": 11.429588665720075
+    },
+    "110": {
+      "val_rmse": 0.9058924979022298,
+      "best_epoch": 6,
+      "fit_time_seconds": 12.8543879580684
+    },
+    "115": {
+      "val_rmse": 0.9068117274093453,
+      "best_epoch": 6,
+      "fit_time_seconds": 13.82504270831123
+    },
+    "120": {
+      "val_rmse": 0.9042988290904159,
+      "best_epoch": 6,
+      "fit_time_seconds": 16.309949290938675
+    },
+    "125": {
+      "val_rmse": 0.9053069752609791,
+      "best_epoch": 6,
+      "fit_time_seconds": 15.993367458693683
+    },
+    "130": {
+      "val_rmse": 0.9035493134098569,
+      "best_epoch": 6,
+      "fit_time_seconds": 17.224142832681537
+    },
+    "135": {
+      "val_rmse": 0.9034421057354945,
+      "best_epoch": 6,
+      "fit_time_seconds": 17.492514708079398
+    },
+    "140": {
+      "val_rmse": 0.9033372783133029,
+      "best_epoch": 6,
+      "fit_time_seconds": 17.217240291647613
+    },
+    "145": {
+      "val_rmse": 0.9018857409194232,
+      "best_epoch": 5,
+      "fit_time_seconds": 17.369651874992996
+    },
+    "150": {
+      "val_rmse": 0.9023027641358919,
+      "best_epoch": 5,
+      "fit_time_seconds": 18.311015457846224
+    },
+    "155": {
+      "val_rmse": 0.9009373228691011,
+      "best_epoch": 5,
+      "fit_time_seconds": 20.645945084281266
+    },
+    "160": {
+      "val_rmse": 0.9024253576578094,
+      "best_epoch": 5,
+      "fit_time_seconds": 19.98847262514755
+    },
+    "165": {
+      "val_rmse": 0.8993752109590395,
+      "best_epoch": 5,
+      "fit_time_seconds": 20.97074433322996
+    },
+    "170": {
+      "val_rmse": 0.8981532757591262,
+      "best_epoch": 5,
+      "fit_time_seconds": 22.950348458252847
+    },
+    "175": {
+      "val_rmse": 0.8977720427610247,
+      "best_epoch": 5,
+      "fit_time_seconds": 24.47326787514612
+    },
+    "180": {
+      "val_rmse": 0.898036856901464,
+      "best_epoch": 5,
+      "fit_time_seconds": 26.003871832974255
+    },
+    "185": {
+      "val_rmse": 0.8961287574854887,
+      "best_epoch": 5,
+      "fit_time_seconds": 31.48729516705498
+    },
+    "190": {
+      "val_rmse": 0.8963866486620966,
+      "best_epoch": 5,
+      "fit_time_seconds": 30.90880479197949
+    },
+    "195": {
+      "val_rmse": 0.8959837205736259,
+      "best_epoch": 5,
+      "fit_time_seconds": 29.032204541843385
+    },
+    "200": {
+      "val_rmse": 0.89757093456748,
+      "best_epoch": 5,
+      "fit_time_seconds": 29.533363667316735
+    }
+  }
+}
