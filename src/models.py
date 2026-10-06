@@ -15,6 +15,7 @@ from typing import Any, Optional
 import numpy as np
 import torch
 from torch import Tensor, nn
+from torch.nn import functional as F
 
 
 def _validate_model_sizes(n_users: int, n_items: int) -> None:
@@ -166,6 +167,193 @@ class FactorizationMachine(BiasModel):
         return config
 
 
+class SparseFactorizationMachine(nn.Module):
+    """General second-order FM for arbitrary real-valued feature vectors.
+
+    Dense input is accepted by :meth:`forward` as a matrix ``[batch, n_features]``.
+    Sparse input is accepted by :meth:`forward_sparse` in canonical CSR form:
+    active feature IDs are unique and sorted within each row, values are flattened
+    across rows, and ``row_offsets`` contains ``batch + 1`` boundaries including
+    the final number of non-zero values.
+
+    Both paths compute
+
+    ``w0 + sum_i(w_i*x_i) + sum_{i<j}<v_i,v_j>*x_i*x_j``.
+    """
+
+    def __init__(
+        self,
+        n_features: int,
+        *,
+        n_factors: int = 16,
+        global_mean: float = 0.0,
+        init_std: float = 0.01,
+    ) -> None:
+        super().__init__()
+        if not isinstance(n_features, int) or isinstance(n_features, bool):
+            raise TypeError("n_features must be an integer")
+        if n_features <= 0:
+            raise ValueError("n_features must be positive")
+        if not isinstance(n_factors, int) or isinstance(n_factors, bool):
+            raise TypeError("n_factors must be an integer")
+        if n_factors <= 0:
+            raise ValueError("n_factors must be positive")
+        if not np.isfinite(global_mean):
+            raise ValueError("global_mean must be finite")
+        if not np.isfinite(init_std) or init_std <= 0:
+            raise ValueError("init_std must be positive and finite")
+
+        self.n_features = n_features
+        self.n_factors = n_factors
+        self.init_std = float(init_std)
+        self.global_bias = nn.Parameter(torch.tensor(float(global_mean)))
+        self.linear_weights = nn.Embedding(n_features, 1)
+        self.feature_factors = nn.Embedding(n_features, n_factors)
+        self.reset_parameters(global_mean=global_mean)
+
+    def reset_parameters(self, global_mean: float = 0.0) -> None:
+        if not np.isfinite(global_mean):
+            raise ValueError("global_mean must be finite")
+        with torch.no_grad():
+            self.global_bias.fill_(float(global_mean))
+            self.linear_weights.weight.zero_()
+        nn.init.normal_(self.feature_factors.weight, mean=0.0, std=self.init_std)
+
+    def _validate_dense_input(self, features: Tensor) -> None:
+        if features.ndim != 2:
+            raise ValueError("features must have shape [batch, n_features]")
+        if features.shape[1] != self.n_features:
+            raise ValueError(
+                f"features must contain exactly {self.n_features} columns"
+            )
+        if not features.is_floating_point():
+            raise TypeError("features must have a floating-point dtype")
+        if not torch.isfinite(features).all():
+            raise ValueError("features must contain only finite values")
+
+    def forward(self, features: Tensor) -> Tensor:
+        """Predict from a dense feature matrix of shape ``[batch, p]``."""
+        self._validate_dense_input(features)
+        dtype = self.global_bias.dtype
+        if features.dtype != dtype:
+            features = features.to(dtype=dtype)
+
+        weights = self.linear_weights.weight.squeeze(-1)
+        factors = self.feature_factors.weight
+        linear = features @ weights
+        summed_factors = features @ factors
+        squared_factors = features.square() @ factors.square()
+        interaction = 0.5 * (
+            summed_factors.square() - squared_factors
+        ).sum(dim=1)
+        return self.global_bias + linear + interaction
+
+    def _validate_sparse_input(
+        self,
+        feature_indices: Tensor,
+        feature_values: Tensor,
+        row_offsets: Tensor,
+    ) -> None:
+        if feature_indices.ndim != 1 or feature_values.ndim != 1:
+            raise ValueError(
+                "feature_indices and feature_values must be one-dimensional"
+            )
+        if feature_indices.shape != feature_values.shape:
+            raise ValueError(
+                "feature_indices and feature_values must have the same shape"
+            )
+        if row_offsets.ndim != 1 or row_offsets.numel() < 1:
+            raise ValueError(
+                "row_offsets must be a non-empty one-dimensional tensor"
+            )
+        if feature_indices.dtype != torch.long or row_offsets.dtype != torch.long:
+            raise TypeError(
+                "feature_indices and row_offsets must have dtype torch.long"
+            )
+        if not feature_values.is_floating_point():
+            raise TypeError("feature_values must have a floating-point dtype")
+        if not torch.isfinite(feature_values).all():
+            raise ValueError("feature_values must contain only finite values")
+        if feature_indices.numel() and (
+            (feature_indices < 0).any()
+            or (feature_indices >= self.n_features).any()
+        ):
+            raise ValueError("feature index is outside the model vocabulary")
+        if row_offsets[0].item() != 0:
+            raise ValueError("row_offsets must start with zero")
+        if row_offsets[-1].item() != feature_indices.numel():
+            raise ValueError("the final row offset must equal the number of values")
+        if row_offsets.numel() > 1 and (row_offsets[1:] < row_offsets[:-1]).any():
+            raise ValueError("row_offsets must be non-decreasing")
+        if feature_indices.numel() > 1:
+            counts = row_offsets[1:] - row_offsets[:-1]
+            row_ids = torch.repeat_interleave(
+                torch.arange(
+                    counts.numel(), device=row_offsets.device, dtype=torch.long
+                ),
+                counts,
+            )
+            same_row = row_ids[1:] == row_ids[:-1]
+            if (same_row & (feature_indices[1:] <= feature_indices[:-1])).any():
+                raise ValueError(
+                    "feature indices must be unique and increasing within each row"
+                )
+
+    def forward_sparse(
+        self,
+        feature_indices: Tensor,
+        feature_values: Tensor,
+        row_offsets: Tensor,
+    ) -> Tensor:
+        """Predict from a CSR batch without materializing a dense design matrix."""
+        self._validate_sparse_input(feature_indices, feature_values, row_offsets)
+        dtype = self.global_bias.dtype
+        if feature_values.dtype != dtype:
+            feature_values = feature_values.to(dtype=dtype)
+
+        linear = F.embedding_bag(
+            feature_indices,
+            self.linear_weights.weight,
+            row_offsets,
+            mode="sum",
+            per_sample_weights=feature_values,
+            include_last_offset=True,
+        ).squeeze(-1)
+        summed_factors = F.embedding_bag(
+            feature_indices,
+            self.feature_factors.weight,
+            row_offsets,
+            mode="sum",
+            per_sample_weights=feature_values,
+            include_last_offset=True,
+        )
+        squared_factors = F.embedding_bag(
+            feature_indices,
+            self.feature_factors.weight.square(),
+            row_offsets,
+            mode="sum",
+            per_sample_weights=feature_values.square(),
+            include_last_offset=True,
+        )
+        interaction = 0.5 * (
+            summed_factors.square() - squared_factors
+        ).sum(dim=1)
+        return self.global_bias + linear + interaction
+
+    def bias_l2(self) -> Tensor:
+        return self.linear_weights.weight.square().sum()
+
+    def factor_l2(self) -> Tensor:
+        return self.feature_factors.weight.square().sum()
+
+    def get_config(self) -> dict[str, Any]:
+        return {
+            "n_features": self.n_features,
+            "n_factors": self.n_factors,
+            "init_std": self.init_std,
+        }
+
+
 @dataclass(frozen=True)
 class TrainingConfig:
     """Hyperparameters of the optional reference training loop."""
@@ -203,7 +391,7 @@ class TrainingResult:
 
 
 def regularized_mse_loss(
-    model: BiasModel,
+    model: BiasModel | SparseFactorizationMachine,
     prediction: Tensor,
     target: Tensor,
     *,
@@ -451,7 +639,7 @@ def predict_frame(
 
 def save_checkpoint(
     path: str | Path,
-    model: BiasModel,
+    model: BiasModel | SparseFactorizationMachine,
     training_result: Optional[TrainingResult] = None,
 ) -> None:
     """Save a standard state-dict checkpoint plus enough metadata to reload it."""
@@ -471,12 +659,13 @@ def load_checkpoint(
     path: str | Path,
     *,
     map_location: str | torch.device = "cpu",
-) -> tuple[BiasModel, Optional[TrainingResult]]:
+) -> tuple[BiasModel | SparseFactorizationMachine, Optional[TrainingResult]]:
     """Load a checkpoint created by :func:`save_checkpoint`."""
     payload = torch.load(Path(path), map_location=map_location, weights_only=True)
     model_classes = {
         "BiasModel": BiasModel,
         "FactorizationMachine": FactorizationMachine,
+        "SparseFactorizationMachine": SparseFactorizationMachine,
     }
     try:
         model_class = model_classes[payload["model_class"]]
