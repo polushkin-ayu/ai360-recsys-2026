@@ -1,0 +1,113 @@
+{
+  "experiment_id": "fm-movielens1m-k50-100-150-20261006",
+  "command": "python -m src.run_fm_sweep --config configs/fm-movielens1m-k50-100-150.json",
+  "commit": "b8c93b1ed025a5d7a4f7fd730c888402ec0948c8",
+  "working_tree_status_before_run": "",
+  "config_sha256": "ebbd6a8fb8c0403d993b0f64ad5911b675a841a23cb582019df0dde204ca3d63",
+  "source_sha256": {
+    "src/models.py": "725b74865f08c32c4076d4ada5070a71a8252ed1fefdab20c80db92c267a88e4",
+    "src/data.py": "726f34d7d8ea0de25000ac65136aec6d645d1f42a527be518051f17f605b0826",
+    "src/metrics.py": "393191cf2899df0adf23e3350180d5b4c4b2af5bc35c5aa059c185a9de44e7d9",
+    "src/run_fm_sweep.py": "530a5a2099f26daa6d19bef12730a7532867ddae1ba357717747c634ab9fa173"
+  },
+  "config": {
+    "experiment_id": "fm-movielens1m-k50-100-150-20261006",
+    "data_dir": "data/processed/movielens1m",
+    "output_dir": "results/fm-movielens1m-k50-100-150-20261006",
+    "local_dir": "data/fm-movielens1m-k50-100-150-20261006",
+    "k_values": [
+      50,
+      100,
+      150
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "init_std": 0.01,
+    "threads": 1,
+    "training": {
+      "epochs": 200,
+      "batch_size": 1024,
+      "learning_rate": 0.01,
+      "optimizer": "adam",
+      "reg_bias": 0.01,
+      "reg_factors": 0.05,
+      "patience": 20,
+      "min_delta": 0.0
+    }
+  },
+  "environment": {
+    "python": "3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "pandas": "3.0.6",
+    "torch": "2.14.1+cpu",
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+    "device": "cpu",
+    "threads": 1,
+    "deterministic_algorithms": true
+  },
+  "data": {
+    "split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+    "source": {
+      "url": "https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset",
+      "ratings_sha256": "506d64ca44484487c11dc2d9a28de5c54948213e6b96285e298afe28d6ea4e0f"
+    },
+    "subset": {
+      "rule": "all_ratings",
+      "seed": 42,
+      "target_ratings": 1000209
+    },
+    "split": {
+      "seed": 42,
+      "fractions": [
+        0.7,
+        0.15,
+        0.15
+      ]
+    },
+    "n_users": 6040,
+    "n_items": 3652,
+    "n_train": 700146,
+    "n_validation": 150002,
+    "n_test": 149990,
+    "coverage": {
+      "validation": {
+        "before": 150031,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 29,
+        "unknown_users": 0,
+        "unknown_items": 25,
+        "unknown_both_rows": 0,
+        "excluded_rows": 29,
+        "after": 150002,
+        "coverage": 0.9998067066139664
+      },
+      "test": {
+        "before": 150032,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 42,
+        "unknown_users": 0,
+        "unknown_items": 36,
+        "unknown_both_rows": 0,
+        "excluded_rows": 42,
+        "after": 149990,
+        "coverage": 0.999720059720593
+      }
+    },
+    "train_row_ids_sha256": "87546f525fe29570b7f47577a2d1346484f47d52433c13d229f11ad13e50449b",
+    "validation_row_ids_sha256": "21c29da556328c953b76824b5f8493116fe8b359ac3240add2221193cd0993dd",
+    "test_row_ids_sha256": "14200ea13d3a70c3d29fdf105e9ece86d7f905adec7a6026ac46937b4c065cc2"
+  },
+  "evaluation": {
+    "metric": "RMSE via src.metrics.rmse_by_row_id",
+    "clipping": false,
+    "test_evaluated": false,
+    "selection": "minimum mean validation RMSE across seeds",
+    "timing": "fit_model internal wall clock, training and epoch evaluation; excludes initialization, IO and plotting",
+    "scope": "user/item FM; fixed regularization, not a completed hyperparameter search or baseline comparison",
+    "team_approval": "k grid and seeds proposed for this pilot; confirmation pending"
+  }
+}

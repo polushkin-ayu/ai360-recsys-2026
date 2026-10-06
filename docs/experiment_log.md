@@ -115,3 +115,16 @@
 - Checks and exact environment: `results/movielens1m-data/`.
 - Models not trained, test scores not computed. Raw/processed data ignored by Git.
 - Next: all model authors use this common data_dir and verify the split ID before training.
+
+
+## fm-movielens1m-k50-100-150-20261006 — shared MovieLens 1M
+
+- Author: uliana roshchina; k=50/100/150, seeds=42/43/44, nine runs.
+- Executable commit: `b8c93b1ed025a5d7a4f7fd730c888402ec0948c8`; provenance in results manifest.
+- Config: `configs/fm-movielens1m-k50-100-150.json`.
+- Common 1M 70/15/15 split: 700146 train, 150002 known-ID validation; test not evaluated.
+- Fixed Adam lr=.01, batch1024, reg_bias=.01, reg_factors=.05, max200 epochs, patience20.
+- All nine checkpoints restored with identical predictions; finite histories, aligned rows and best epoch verified.
+- Results/plots/team CSV merge example: `results/fm-movielens1m-k50-100-150-20261006/README.md`.
+- Lowest mean validation RMSE at k=50: 0.913085 +/- 0.002013 sample SD.
+- No comparison with old datasets or test-based tuning. Weights and per-row predictions local under data/.
