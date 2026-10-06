@@ -70,4 +70,3 @@
   regularization; proposed grid still requires team confirmation and peer review.
 - Next: combine with colleagues' comparable tables, review protocol/settings,
   tune regularization within an agreed budget, then freeze choices for test.
-
