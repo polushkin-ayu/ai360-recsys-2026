@@ -250,7 +250,9 @@ def expected_runs(config):
 def pilot(config, data, histories, fingerprint):
     output = ROOT / config["output_dir"]
     checks = read_json(ROOT / "results/svdpp/checks.json")
-    if not checks["successful"] or checks["skipped"] or checks["source_sha256"] != fingerprint["source_sha256"]:
+    if (not checks["successful"] or checks.get("svdpp_skipped", checks["skipped"])
+            or checks.get("svdpp_expected_failures", 0)
+            or checks["source_sha256"] != fingerprint["source_sha256"]):
         raise ValueError("run python -m src.check_svdpp successfully on this source before pilot")
     if (output / "manifest.json").exists() and read_json(output / "manifest.json").get("test_access_started_at"):
         raise ValueError("test has already been viewed; pilot/model selection is closed")
