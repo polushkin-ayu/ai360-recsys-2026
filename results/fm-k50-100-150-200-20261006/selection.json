@@ -1,0 +1,8 @@
+{
+  "selected_k": 50,
+  "val_rmse_mean": 1.0189017440531514,
+  "val_rmse_std": 0.00043308323077488744,
+  "test_evaluated": false,
+  "criterion": "lowest mean validation RMSE across three seeds; tie broken by smaller k",
+  "limitations": "Selection only within this grid at fixed regularization; subject to team review"
+}

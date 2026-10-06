@@ -70,3 +70,18 @@
   regularization; proposed grid still requires team confirmation and peer review.
 - Next: combine with colleagues' comparable tables, review protocol/settings,
   tune regularization within an agreed budget, then freeze choices for test.
+
+## fm-k50-100-150-200-20261006 — requested FM grid, 6 October 2026
+
+- Author: uliana roshchina; k=50/100/150/200, seeds=42/43/44, 12 runs.
+- Executable commit: `4ee07212010fe77c4fd6903338667743e50c9fa1`; clean working tree before training.
+- Config: `configs/fm-k50-100-150-200.json`.
+- Command: `python -m src.run_fm_sweep --config configs/fm-k50-100-150-200.json`.
+- Shared Team 1 MovieLens data/split and same hyperparameters as the first sweep.
+- Test not evaluated; no bias comparison performed.
+- Results and observation details: `results/fm-k50-100-150-200-20261006/README.md`.
+- Exact environment, provenance, split/row hashes: manifest.json in that folder.
+- All checkpoint reloads matched predictions; histories finite and rows aligned.
+- Observation: k50 has the lowest mean within this grid; larger k does not
+  consistently improve validation. Three seeds at fixed regularization.
+- Next: team review, combine comparable model tables and freeze settings before test.
