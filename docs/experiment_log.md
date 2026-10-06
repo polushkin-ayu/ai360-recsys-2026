@@ -100,3 +100,18 @@
 - Окружение: Python 3.12.14, torch 2.14.1+cpu, NumPy 2.3.5, pandas 2.2.3, CPU/float32/один поток/deterministic. Сумма fit основных запусков 13.5593 с, включая epoch evaluation/early stopping/best restore, без I/O.
 - Файлы: `results/svdpp/`, `docs/svdpp_report.md`; команды — в отчёте. Ограничения: малый срез, один split, известные ID, разброс только по инициализации.
 - Удалённый push не выполнен; подготовлены отдельная ветка, patch, архив и bundle.
+
+## movielens1m-shared-split-20261006 — common 1M preparation
+
+- Author: uliana roshchina; requested shared MovieLens 1M for all models.
+- Code commit: `adf5fdab0c5dfcf9ba48af954ce2514b4f6c97d8`; config `configs/movielens1m-data.json`.
+- Command: `python -m src.prepare_movielens1m`.
+- Source: user-specified Kaggle archive; ratings.dat matches official GroupLens.
+- 1,000,209 ratings, 6040 users, 3706 rated items. All source rows retained.
+- PCG64 seed42 split70/15/15: train700146/validation150031/test150032.
+- Known-ID evaluation: validation150002/test149990, unknown items29/42; no unknown users.
+- K5/K6 passed; no overlapping rows/pairs, train-only mappings, row lineage and checksums verified.
+- Independent official ZIP reproduction matched all 11 prepared artifact hashes and split ID.
+- Checks and exact environment: `results/movielens1m-data/`.
+- Models not trained, test scores not computed. Raw/processed data ignored by Git.
+- Next: all model authors use this common data_dir and verify the split ID before training.

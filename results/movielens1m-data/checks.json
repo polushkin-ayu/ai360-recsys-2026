@@ -1,0 +1,190 @@
+{
+  "run_id": "movielens1m-shared-split-20261006",
+  "dataset": "MovieLens 1M",
+  "config": {
+    "dataset": "MovieLens 1M",
+    "source": {
+      "url": "https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset",
+      "official_page": "https://grouplens.org/datasets/movielens/1m/",
+      "ratings_sha256": "506d64ca44484487c11dc2d9a28de5c54948213e6b96285e298afe28d6ea4e0f",
+      "archives": [
+        {
+          "url": "https://www.kaggle.com/api/v1/datasets/download/odedgolden/movielens-1m-dataset",
+          "bytes": 6111600,
+          "sha256": "395e13ac878c54d2e99ad493369600c042113ed36d0a76c5731f715e53de7451",
+          "prefix": ""
+        },
+        {
+          "url": "https://files.grouplens.org/datasets/movielens/ml-1m.zip",
+          "bytes": 5917549,
+          "sha256": "a6898adb50b9ca05aa231689da44c217cb524e7ebd39d264c56e2832f2c54e20",
+          "prefix": "ml-1m/"
+        }
+      ]
+    },
+    "expected": {
+      "ratings": 1000209,
+      "users": 6040,
+      "items": 3706
+    },
+    "subset": {
+      "rule": "all_ratings",
+      "seed": 42,
+      "target_ratings": 1000209
+    },
+    "split": {
+      "seed": 42,
+      "fractions": [
+        0.7,
+        0.15,
+        0.15
+      ]
+    },
+    "raw_dir": "data/raw/movielens1m",
+    "output_dir": "data/processed/movielens1m"
+  },
+  "config_sha256": "ce06681cca97a03e1772d71f39344d4abafe9f80397a15f789cb7dc57b357fea",
+  "downloaded_archive": {
+    "url": "https://www.kaggle.com/api/v1/datasets/download/odedgolden/movielens-1m-dataset",
+    "bytes": 6111600,
+    "sha256": "395e13ac878c54d2e99ad493369600c042113ed36d0a76c5731f715e53de7451",
+    "prefix": ""
+  },
+  "kaggle_and_official_ratings_byte_identical": true,
+  "source_summary": {
+    "ratings": 1000209,
+    "users": 6040,
+    "items": 3706,
+    "missing_values": {
+      "row_id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 1,
+    "rating_max": 5,
+    "duplicate_pair_rows": 0,
+    "duplicate_pair_excess": 0,
+    "rating_distribution": {
+      "1": 56174,
+      "2": 107557,
+      "3": 261197,
+      "4": 348971,
+      "5": 226310
+    },
+    "ratings_per_user": {
+      "count": 6040.0,
+      "mean": 165.5975165562914,
+      "std": 192.74702906977777,
+      "min": 20.0,
+      "25%": 44.0,
+      "50%": 96.0,
+      "75%": 208.0,
+      "max": 2314.0
+    },
+    "ratings_per_item": {
+      "count": 3706.0,
+      "mean": 269.88909875876953,
+      "std": 384.0478375720256,
+      "min": 1.0,
+      "25%": 33.0,
+      "50%": 123.5,
+      "75%": 350.0,
+      "max": 3428.0
+    }
+  },
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.3.5",
+    "pandas": "3.0.6",
+    "os": "Windows-11-10.0.26200-SP0",
+    "device": "CPU"
+  },
+  "K5": {
+    "status": "passed",
+    "source_lineage_verified": true,
+    "seeded_membership_verified": true,
+    "train_only_mappings_verified": true,
+    "all_source_rows_retained": true,
+    "row_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "pair_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "sizes_before_filter": {
+      "train": 700146,
+      "validation": 150031,
+      "test": 150032
+    },
+    "evaluation": {
+      "validation": {
+        "before": 150031,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 29,
+        "unknown_users": 0,
+        "unknown_items": 25,
+        "unknown_both_rows": 0,
+        "excluded_rows": 29,
+        "after": 150002,
+        "coverage": 0.9998067066139664,
+        "canonical_row_ids_sha256": "21c29da556328c953b76824b5f8493116fe8b359ac3240add2221193cd0993dd"
+      },
+      "test": {
+        "before": 150032,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 42,
+        "unknown_users": 0,
+        "unknown_items": 36,
+        "unknown_both_rows": 0,
+        "excluded_rows": 42,
+        "after": 149990,
+        "coverage": 0.999720059720593,
+        "canonical_row_ids_sha256": "14200ea13d3a70c3d29fdf105e9ece86d7f905adec7a6026ac46937b4c065cc2"
+      }
+    },
+    "split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+    "train_canonical_row_ids_sha256": "87546f525fe29570b7f47577a2d1346484f47d52433c13d229f11ad13e50449b"
+  },
+  "K6": {
+    "status": "passed",
+    "manual_rmse": 1.5811388300841898,
+    "expected": 1.5811388300841898,
+    "aligned_rmse": 1.5811388300841898,
+    "invalid_inputs_rejected": [
+      "different_lengths",
+      "broadcast_column",
+      "broadcast_row",
+      "both_2d",
+      "scalar",
+      "empty",
+      "nan_truth",
+      "nan_prediction",
+      "inf_truth",
+      "inf_prediction",
+      "complex",
+      "nonnumeric",
+      "reordered_row_ids",
+      "different_row_ids",
+      "duplicate_row_ids",
+      "missing_row_ids",
+      "noninteger_row_ids",
+      "row_ids_length_mismatch"
+    ],
+    "finite_large_values_checked": true,
+    "zero_error_checked": true
+  },
+  "test_scores_computed": false,
+  "code_commit": "adf5fdab0c5dfcf9ba48af954ce2514b4f6c97d8",
+  "command": "python -m src.prepare_movielens1m --config configs/movielens1m-data.json",
+  "limitations": [
+    "Windows CPU execution; other participants should run the shared command and verify split ID.",
+    "No model trained and no test scores computed.",
+    "Archive checksums were measured from downloaded bytes; they are not publisher signatures."
+  ]
+}

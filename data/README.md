@@ -1,5 +1,8 @@
 # MovieLens 100K — общий интерфейс Team 1
 
+**Для новых запусков используем MovieLens 1M:** [единая инструкция](../docs/movielens1m-data.md), `python -m src.prepare_movielens1m`. Описание MovieLens 100K ниже сохранено для исторических экспериментов.
+
+
 Предсказываем рейтинг 1–5 по user/item ID. Протокол: [research_plan.md](../docs/research_plan.md),
 ТЗ: [team1-data.md](../docs/teams/team1-data.md). Жанры и обучение моделей не входят в подготовку.
 
