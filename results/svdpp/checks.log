@@ -1,0 +1,49 @@
+test_autograd_matches_finite_difference_with_regularization (test_models.ModelTests.test_autograd_matches_finite_difference_with_regularization) ... ok
+test_bias_forward (test_models.ModelTests.test_bias_forward) ... ok
+test_fast_and_direct_fm_are_equal (test_models.ModelTests.test_fast_and_direct_fm_are_equal) ... ok
+test_fit_and_standard_checkpoint (test_models.ModelTests.test_fit_and_standard_checkpoint) ... ok
+test_fm_is_matrix_factorization_with_bias (test_models.ModelTests.test_fm_is_matrix_factorization_with_bias) ... ok
+test_one_standard_sgd_step (test_models.ModelTests.test_one_standard_sgd_step) ... ok
+test_predict_frame_preserves_team1_row_order (test_models.ModelTests.test_predict_frame_preserves_team1_row_order) ... ok
+test_predict_frame_rejects_unknown_ids (test_models.ModelTests.test_predict_frame_rejects_unknown_ids) ... ok
+test_training_seed_is_reproducible (test_models.ModelTests.test_training_seed_is_reproducible) ... ok
+test_zero_factors_reduce_fm_to_bias (test_models.ModelTests.test_zero_factors_reduce_fm_to_bias) ... ok
+test_bad_indices_histories_and_inputs (test_svdpp.SVDPlusPlusTests.test_bad_indices_histories_and_inputs) ... ok
+test_best_validation_restore_and_metrics (test_svdpp.SVDPlusPlusTests.test_best_validation_restore_and_metrics) ... ok
+test_buffers_follow_device_and_dtype (test_svdpp.SVDPlusPlusTests.test_buffers_follow_device_and_dtype) ... ok
+test_finite_differences_full_regularization (test_svdpp.SVDPlusPlusTests.test_finite_differences_full_regularization) ... ok
+test_independent_forward (test_svdpp.SVDPlusPlusTests.test_independent_forward) ... ok
+test_one_sgd_step_and_no_stale_cache (test_svdpp.SVDPlusPlusTests.test_one_sgd_step_and_no_stale_cache) ... ok
+test_prediction_order_checkpoint_identity_and_shapes (test_svdpp.SVDPlusPlusTests.test_prediction_order_checkpoint_identity_and_shapes) ... ok
+test_repeated_user_gradient_accumulates (test_svdpp.SVDPlusPlusTests.test_repeated_user_gradient_accumulates) ... ok
+test_representable_toy_learning (test_svdpp.SVDPlusPlusTests.test_representable_toy_learning) ... ok
+test_seed_reset_parameter_count_and_fixed_mean (test_svdpp.SVDPlusPlusTests.test_seed_reset_parameter_count_and_fixed_mean) ... ok
+test_sqrt_lengths_zero_item_and_empty_bags (test_svdpp.SVDPlusPlusTests.test_sqrt_lengths_zero_item_and_empty_bags) ... ok
+test_train_histories_membership_and_deduplication (test_svdpp.SVDPlusPlusTests.test_train_histories_membership_and_deduplication) ... ok
+test_zero_factors_direct_linear_terms (test_svdpp.SVDPlusPlusTests.test_zero_factors_direct_linear_terms) ... ok
+test_zero_implicit_factors_direct_formula (test_svdpp.SVDPlusPlusTests.test_zero_implicit_factors_direct_formula) ... ok
+test_all_k6_checks (test_team1.MetricsTests.test_all_k6_checks) ... ok
+test_finite_subtraction_overflow_detected (test_team1.MetricsTests.test_finite_subtraction_overflow_detected) ... ok
+test_ids_not_silently_reordered (test_team1.MetricsTests.test_ids_not_silently_reordered) ... ok
+test_large_integer_input_avoids_integer_square_overflow (test_team1.MetricsTests.test_large_integer_input_avoids_integer_square_overflow) ... ok
+test_same_model_ids (test_team1.MetricsTests.test_same_model_ids) ... ok
+test_archive_size_and_checksum_rejected (test_team1.PreparationTests.test_archive_size_and_checksum_rejected) ... ok
+test_duplicate_pairs_split_as_whole_groups_no_rows_removed (test_team1.PreparationTests.test_duplicate_pairs_split_as_whole_groups_no_rows_removed) ... ok
+test_invalid_config_rejected (test_team1.PreparationTests.test_invalid_config_rejected) ... ok
+test_invalid_split_fractions (test_team1.PreparationTests.test_invalid_split_fractions) ... ok
+test_invalid_subset_sizes (test_team1.PreparationTests.test_invalid_subset_sizes) ... ok
+test_row_split_complete_disjoint_and_repeatable (test_team1.PreparationTests.test_row_split_complete_disjoint_and_repeatable) ... ok
+test_seeded_subset_is_repeatable (test_team1.PreparationTests.test_seeded_subset_is_repeatable) ... ok
+test_subset_keeps_all_user_ratings_and_ignores_target (test_team1.PreparationTests.test_subset_keeps_all_user_ratings_and_ignores_target) ... ok
+test_too_small_split_is_rejected (test_team1.PreparationTests.test_too_small_split_is_rejected) ... ok
+test_train_only_mappings_and_all_unknown_cases (test_team1.PreparationTests.test_train_only_mappings_and_all_unknown_cases) ... ok
+test_modified_table_rejected_by_loader (test_team1.SavedArtifactTests.test_modified_table_rejected_by_loader) ... ok
+test_real_saved_pipeline_k5 (test_team1.SavedArtifactTests.test_real_saved_pipeline_k5) ... ok
+test_reordered_evaluation_ids_rejected_even_with_valid_checksums (test_team1.SavedArtifactTests.test_reordered_evaluation_ids_rejected_even_with_valid_checksums) ... ok
+test_train_mapping_leak_rejected_even_with_valid_checksums (test_team1.SavedArtifactTests.test_train_mapping_leak_rejected_even_with_valid_checksums) ... ok
+test_wrong_coverage_rejected (test_team1.SavedArtifactTests.test_wrong_coverage_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 2.760s
+
+OK

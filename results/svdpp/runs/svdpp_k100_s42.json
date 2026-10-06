@@ -1,0 +1,52 @@
+{
+  "signature": "be2e48ca818d234e89b775e742040aa1960c45b3dd98cdfd2f3038c93291c923",
+  "metrics": {
+    "run_id": "svdpp_k100_s42",
+    "model": "svdpp",
+    "k": 100,
+    "initialization_seed": 42,
+    "subset_seed": 42,
+    "split_seed": 42,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "history_normalization": "sqrt",
+    "fixed_global_mean": 3.502837657928467,
+    "config_hash": "d943856a4226b521314b107a3ab896ed251917f7a84f4f1c35771340c917221d",
+    "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7",
+    "dirty_worktree": true,
+    "best_epoch": 2,
+    "epochs_run": 22,
+    "train_mse": 0.5387245084262607,
+    "train_loss_with_regularization": 0.5431046724811234,
+    "train_rmse": 0.7339785476608024,
+    "validation_rmse": 1.0335859597068557,
+    "test_rmse": 1.0559359971386726,
+    "parameter_count": 281269,
+    "fit_seconds": 0.9454652040003566,
+    "device": "cpu",
+    "history_checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507"
+  },
+  "training_config": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "optimizer": "adam",
+    "learning_rate": 0.01,
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0,
+    "seed": 42
+  },
+  "checkpoint": "artifacts/svdpp/main/svdpp_k100_s42.pt",
+  "history_csv": "results/svdpp/histories/svdpp_k100_s42.csv",
+  "validation_predictions": "results/svdpp/predictions/svdpp_k100_s42_validation.csv",
+  "y_gradient_norm": 57.845420837402344,
+  "reload_max_error": 0.0,
+  "files": {
+    "artifacts/svdpp/main/svdpp_k100_s42.pt": "38fa09d28dfeeea5e5a32fca04b839f94583a1f74ea9f5641b50a66ab872ad82",
+    "results/svdpp/histories/svdpp_k100_s42.csv": "f2cfa8a703f45f432a3bc1ce72ac580b7855a3eefa77a5bd1ba8eb78778169de",
+    "results/svdpp/predictions/svdpp_k100_s42_validation.csv": "3594d71f91d936732f818de07ef074a554f6c0a2ab700a5fe6e81f49ae64faa7"
+  },
+  "test_files": {
+    "results/svdpp/predictions/svdpp_k100_s42_test.csv": "1edb1bd0b1a3caf11ea904c49af2dbdc53eb59f569f6467a38a92621609117ee"
+  }
+}

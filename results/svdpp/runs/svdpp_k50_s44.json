@@ -1,0 +1,52 @@
+{
+  "signature": "13f8abeaf41db1bbb0bde32db7974d1aae8bff4400c1a3aca42a9a36b4905b44",
+  "metrics": {
+    "run_id": "svdpp_k50_s44",
+    "model": "svdpp",
+    "k": 50,
+    "initialization_seed": 44,
+    "subset_seed": 42,
+    "split_seed": 42,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "history_normalization": "sqrt",
+    "fixed_global_mean": 3.502837657928467,
+    "config_hash": "d943856a4226b521314b107a3ab896ed251917f7a84f4f1c35771340c917221d",
+    "code_commit": "2f880f746f514f33ddcdbeb91064c5c24af736b7",
+    "dirty_worktree": true,
+    "best_epoch": 2,
+    "epochs_run": 22,
+    "train_mse": 0.6776999398542513,
+    "train_loss_with_regularization": 0.6802441408781195,
+    "train_rmse": 0.823225327510185,
+    "validation_rmse": 1.034245724504668,
+    "test_rmse": 1.052059265958613,
+    "parameter_count": 141369,
+    "fit_seconds": 0.7073748619995968,
+    "device": "cpu",
+    "history_checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507"
+  },
+  "training_config": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "optimizer": "adam",
+    "learning_rate": 0.01,
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0,
+    "seed": 44
+  },
+  "checkpoint": "artifacts/svdpp/main/svdpp_k50_s44.pt",
+  "history_csv": "results/svdpp/histories/svdpp_k50_s44.csv",
+  "validation_predictions": "results/svdpp/predictions/svdpp_k50_s44_validation.csv",
+  "y_gradient_norm": 40.81012725830078,
+  "reload_max_error": 0.0,
+  "files": {
+    "artifacts/svdpp/main/svdpp_k50_s44.pt": "481b943e5eb47b278ce6fdf94efbc86b024a63ff9d04543f4719de383be73f3e",
+    "results/svdpp/histories/svdpp_k50_s44.csv": "4c73c9a632469df58b45505695d7f8cbb2445e56062689c5392f52e2735eea14",
+    "results/svdpp/predictions/svdpp_k50_s44_validation.csv": "bde0e0984c338f89dd9105e8e10b64d6c457c93872e43316249a16be990c365f"
+  },
+  "test_files": {
+    "results/svdpp/predictions/svdpp_k50_s44_test.csv": "98583e35fa3270411cc7b9445609ef75c59ddb39046de5ab88b3d2bdf668c795"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "rule": "sorted unique train item indices, including train targets, never held-out events",
+  "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+  "checksum": "765ca64d3b18193506b6be61c9c4e3fc968c94aa839783f8d416368815a76507",
+  "count": 140,
+  "total_unique_memberships": 10572,
+  "min": 10,
+  "median": 43.5,
+  "mean": 75.51428571428572,
+  "max": 350,
+  "empty": 0
+}

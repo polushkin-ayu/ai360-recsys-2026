@@ -1,0 +1,42 @@
+{
+  "main_commit": "28ed5b5407f634ba9225b6d194a4c2a8cc94e052",
+  "svdpp_parent": "935ae36643e2245054b8009a5d68b31ef1913555",
+  "conflicts_resolved": [
+    "README.md",
+    "docs/experiment_log.md",
+    "src/models.py"
+  ],
+  "tests_run": 65,
+  "failures": 0,
+  "errors": 0,
+  "intentional_skips_in_existing_fm_audit": 1,
+  "expected_failures_in_existing_fm_audit": 2,
+  "svdpp_skips": 0,
+  "svdpp_expected_failures": 0,
+  "svdpp_validation_predictions_unchanged_for_runs": 15,
+  "sparse_fm_checkpoint_predictions_exact": true,
+  "published_svdpp_artifacts_byte_unchanged": true,
+  "other_participants_nonconflicting_files_byte_unchanged": true,
+  "source_sha256": {
+    "src/__init__.py": "94556718ef07ab44f3f5f6a2b5b4e5891ad68ca5059e20cd1216e42ce7d35c2e",
+    "src/check_data.py": "9d2bc67ee554b35dbf4932dd1c5b7a6c93e8176031b697a50a7b94c7a2f7c70e",
+    "src/check_svdpp.py": "5d8dbfab058fa015307644bd72715bd6f005528c220dc5e2ba8579916de44405",
+    "src/data.py": "83f72d1c68cbb5e58bcd3d16d52ca1ab42197f9581e0cecfefa42191fc345332",
+    "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+    "src/models.py": "07c42d35e75913769aea098bf63a0c8651a6db7bbe39a25f6f3bd7ae11eea6bc",
+    "src/plot_fm_sweep.py": "3be9953435ee87d78ba0e69fc4c51c6db62181957c23cd626848b1aeb8d84354",
+    "src/plot_svdpp.py": "e2802ee1b613696bda59787cd65a15195524ef9b6fa1400a026e9650cff373aa",
+    "src/polynomial.py": "103d38bf57d30c8c37ae59f27e48116825fd1aebcfcfb043c01853d1b1c41e22",
+    "src/prepare_data.py": "d98ad0cc0772136406d20904f4470e8d600f82b0e6917f45ecb2066aa7a7b911",
+    "src/run_fm_sweep.py": "6f80bfd5eef0db9a7bf7b953acbbb6d5b29a90f69b90d88cb8945ee4326db079",
+    "src/run_svdpp.py": "078dc15fdf8ca1b2d068a223c4aec3148ca91604eafb33f4097efd101fe711e2",
+    "src/svdpp.py": "07470d8372e19b6f98fdbb31ab5a9fea975d7c7d3df6bada99ebba76fb07016e",
+    "tests/test_fm_audit.py": "7aa577bae594597da7d5816207a8e23bc1dcef46daefd9d6a11f698bbb9537a4",
+    "tests/test_models.py": "a0a0eae77efede6b5dcca879010dd50ba429d9c5daaf9e04f01231798f8775de",
+    "tests/test_polynomial.py": "2bd4abb836cd44bc44c929aad3efa8fd3be06ce7ce0a1c221ee60e3f13e3cfe2",
+    "tests/test_svdpp.py": "41cd1e1eb16da9edc56479bf8eb606cc705ea01e78bc8386f05b792cd698c9e4",
+    "tests/test_team1.py": "80f9b7ba2905fe516a39892c5b531ae8074a22d5c837078b77529ade2c9131e9",
+    "configs/team1-data.json": "87929a5d923624c42ceb74c9f84da39942062853bbfee29b1fcfcc55792f9b01",
+    "requirements-svdpp.txt": "d395d81a38879c9d92363fe10051641b200caf045175a8b905b9228052aff955"
+  }
+}

@@ -81,6 +81,14 @@ python -m src.prepare_data \
 python -m unittest discover -s tests -v
 ```
 
+## Отдельный эксперимент SVD++
+
+Самостоятельная PyTorch-реализация канонической SVD++ находится в `src/svdpp.py`. Истории строятся только по train, нормировка sqrt, среднее train фиксировано. Выполнены 3 pilot-попытки и 15 основных запусков; лучший k по validation — 10.
+
+CLI `python -m src.run_svdpp` выполняет этапы pilot/sweep/final-evaluate только для SVD++; `python -m src.plot_svdpp` строит её графики из сохранённых CSV. Комплексное сравнение моделей проводится отдельно участниками проекта.
+
+Конфигурация: `configs/svdpp-study.json`; окружение CPU: `requirements-svdpp.txt`; проверки: `python -m src.check_svdpp`; результаты и ограничения: [docs/svdpp_report.md](docs/svdpp_report.md).
+
 ## API подготовленных данных
 
 ```python

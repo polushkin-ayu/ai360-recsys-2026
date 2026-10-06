@@ -1,6 +1,6 @@
 # Журнал экспериментов
 
-Проведённых экспериментов пока нет. Не заполняйте метрики ожидаемыми значениями.
+Ниже записаны подготовка данных и отдельные эксперименты участников проекта. Не заполняйте метрики ожидаемыми значениями.
 
 Для каждого запуска скопируйте блок:
 
@@ -85,3 +85,18 @@
 - Observation: k50 has the lowest mean within this grid; larger k does not
   consistently improve validation. Three seeds at fixed regularization.
 - Next: team review, combine comparable model tables and freeze settings before test.
+
+## svdpp-only-2026-10-06 — отдельный эксперимент SVD++
+
+- Ветка: `feat/svdpp-only-study`; исходный commit `37a9e2aa1d9f8792da3f3654275deae3ccc7de91`; commit измеряемого кода `2f880f746f514f33ddcdbeb91064c5c24af736b7`.
+- Объём: только canonical SVD++, sqrt normalization, fixed train mean; комплексное сравнение моделей проводится отдельно участниками проекта.
+- Данные: существующий MovieLens pipeline, 140 users, 1 329 train items; train/validation/test известных ID 10 572/2 209/2 220.
+- Pilot: k=20, seed=0, три попытки; выбран Adam lr=0.01, lambda_f=0.05 при lambda_b=0.01 по validation.
+- Sweep: 15 запусков SVD++, k=[10,20,50,100,200], seeds=[42,43,44], batch=1024, максимум 200 эпох, patience=20, min_delta=0, init_std=0.01, clipping=False.
+- Лучший k по среднему validation RMSE: 10; validation 1.031823 ± 0.006952, test 1.051429 ± 0.009956 (sample std по трём seed).
+- Test оценён отдельной командой после frozen manifest. Test уже был просмотрен в предыдущем запуске SVD++; повтор выполнен без изменения численного протокола и нового подбора. Все метрики SVD++ совпали точно.
+- Проверки: 44 теста, 0 failures/errors/skipped; finite differences max error 1.5711e-10; независимый forward max error 0; К5–К6 прошли; CSV восстанавливают RMSE точно в float32.
+- Источники, конфигурация, checkpoint и CSV защищены SHA-256; до/после test protocol/checkpoint/validation hashes неизменны. Повтор plot из CSV даёт идентичные PNG.
+- Окружение: Python 3.12.14, torch 2.14.1+cpu, NumPy 2.3.5, pandas 2.2.3, CPU/float32/один поток/deterministic. Сумма fit основных запусков 13.5593 с, включая epoch evaluation/early stopping/best restore, без I/O.
+- Файлы: `results/svdpp/`, `docs/svdpp_report.md`; команды — в отчёте. Ограничения: малый срез, один split, известные ID, разброс только по инициализации.
+- Удалённый push не выполнен; подготовлены отдельная ветка, patch, архив и bundle.
