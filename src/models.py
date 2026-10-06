@@ -407,8 +407,8 @@ def regularized_mse_loss(
     mse = nn.functional.mse_loss(prediction, target)
     return (
         mse
-        + reg_bias / n_train * model.bias_l2()
-        + reg_factors / n_train * model.factor_l2()
+        + reg_bias * model.bias_l2()
+        + reg_factors * model.factor_l2()
     )
 
 
