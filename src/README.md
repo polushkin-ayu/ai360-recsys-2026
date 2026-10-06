@@ -1,11 +1,13 @@
 # Модели
 
 В `models.py` находятся две PyTorch-модели для уже подготовленных целочисленных
-`user_idx` и `item_idx`:
+`user_idx` и `item_idx`, а также общая FM:
 
 - `BiasModel`: `mu + b_user + b_item`;
 - `FactorizationMachine`: та же линейная часть плюс
   `dot(user_factors, item_factors)` — FM второго порядка для двух one-hot полей.
+- `SparseFactorizationMachine`: FM второго порядка для произвольного dense-вектора
+  `[batch, n_features]` или разреженного CSR batch через `forward_sparse`.
 
 Подготовка данных, словари категорий, split и обработка неизвестных ID намеренно
 не входят в модуль моделей.
@@ -53,3 +55,6 @@ validation RMSE по эпохам. Для checkpoint используются `s
 ```bash
 python -m unittest discover -s tests -v
 ```
+
+Полное описание данных, обучения, результатов, общей sparse FM и контракта для
+добавления моделей находится в корневом [`README.md`](../README.md).
