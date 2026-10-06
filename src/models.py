@@ -287,6 +287,8 @@ def fit_model(
     best_val_rmse = float("inf")
     best_state: Optional[dict[str, Tensor]] = None
     epochs_without_improvement = 0
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
     start = time.perf_counter()
 
     for epoch in range(1, config.epochs + 1):
@@ -307,6 +309,8 @@ def fit_model(
                 reg_bias=config.reg_bias,
                 reg_factors=config.reg_factors,
             )
+            if not torch.isfinite(loss):
+                raise ValueError("nonfinite training loss")
             loss.backward()
             optimizer.step()
 
@@ -325,6 +329,7 @@ def fit_model(
                 reg_factors=config.reg_factors,
             ).item()
             train_rmse = _rmse(train_prediction, train_ratings_device)
+            train_mse = nn.functional.mse_loss(train_prediction, train_ratings_device).item()
             validation_rmse: Optional[float] = None
             if has_validation:
                 assert val_user_idx is not None and val_item_idx is not None
@@ -336,11 +341,15 @@ def fit_model(
                     validation_prediction,
                     val_rating.to(device=device, dtype=dtype),
                 )
+            if not np.isfinite(train_loss) or (validation_rmse is not None and not np.isfinite(validation_rmse)):
+                raise ValueError("nonfinite evaluation metrics")
 
         history.append(
             {
                 "epoch": float(epoch),
                 "train_loss": train_loss,
+                "train_mse": train_mse,
+                "train_loss_with_regularization": train_loss,
                 "train_rmse": train_rmse,
                 "val_rmse": validation_rmse,
             }
@@ -365,6 +374,8 @@ def fit_model(
     elif not has_validation:
         best_epoch = len(history)
     model.eval()
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
     return TrainingResult(
         history=history,
         best_epoch=best_epoch,
@@ -446,7 +457,10 @@ def predict_frame(
                 )
     finally:
         model.train(was_training)
-    return torch.cat(predictions).numpy(), row_ids.copy()
+    prediction = torch.cat(predictions).numpy()
+    if prediction.shape != row_ids.shape or not np.isfinite(prediction).all():
+        raise ValueError("predictions must be finite and match the input row count")
+    return prediction, row_ids.copy()
 
 
 def save_checkpoint(
@@ -474,9 +488,12 @@ def load_checkpoint(
 ) -> tuple[BiasModel, Optional[TrainingResult]]:
     """Load a checkpoint created by :func:`save_checkpoint`."""
     payload = torch.load(Path(path), map_location=map_location, weights_only=True)
+    from src.svdpp import SVDPlusPlus
+
     model_classes = {
         "BiasModel": BiasModel,
         "FactorizationMachine": FactorizationMachine,
+        "SVDPlusPlus": SVDPlusPlus,
     }
     try:
         model_class = model_classes[payload["model_class"]]
@@ -484,6 +501,7 @@ def load_checkpoint(
         raise ValueError("checkpoint contains an unknown model class") from error
     model = model_class(**payload["model_config"])
     model.load_state_dict(payload["model_state_dict"])
+    model.to(map_location)
     model.eval()
     result_data = payload.get("training_result")
     result = TrainingResult(**result_data) if result_data is not None else None

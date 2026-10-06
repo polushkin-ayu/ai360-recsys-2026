@@ -21,3 +21,6 @@ venv/
 checkpoints/
 runs/
 wandb/
+/artifacts/svdpp/
+!/results/svdpp/runs/
+!/results/svdpp/runs/*.json
