@@ -1,0 +1,28 @@
+{
+  "experiment_id": "fm-full100k-k50-100-150-20261006",
+  "data_dir": "data/processed/movielens100k-full",
+  "output_dir": "results/fm-full100k-k50-100-150-20261006",
+  "local_dir": "data/fm-full100k-k50-100-150-20261006",
+  "k_values": [
+    50,
+    100,
+    150
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "init_std": 0.01,
+  "threads": 1,
+  "training": {
+    "epochs": 200,
+    "batch_size": 1024,
+    "learning_rate": 0.01,
+    "optimizer": "adam",
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 20,
+    "min_delta": 0.0
+  }
+}
