@@ -1,0 +1,243 @@
+{
+  "run_id": "team1-data-2026-10-04",
+  "command": "python -m src.prepare_data --config configs/full100k-data.json --report data/full100k-checks.json",
+  "config_sha256": "265b5a98f17690d6bacde619459a8a1984bb6d129666e4e10cc45bbc4849e46d",
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.3.5",
+    "pandas": "3.0.6",
+    "os": "Windows-11-10.0.26200-SP0",
+    "device": "CPU"
+  },
+  "provenance": {
+    "base_commit": "16595d729e5797803cc0bf0ec45f11e5393e7c65",
+    "uncommitted_changes": false,
+    "source_sha256": {
+      "src\\__init__.py": "2e967f53c5448c6f532d982f2b3a1d476d0c6d7235f6fdad13b912a1d9084ea0",
+      "src\\check_data.py": "7b975243eeb21db20d04371cc2abd563ae98bb4fc5ad927e07b8a17ed5f028b0",
+      "src\\check_svdpp.py": "45e8d2ba40e4442e3cbb1d30b3543f49de30fee9228e5195e1c6d8d539f94fac",
+      "src\\data.py": "726f34d7d8ea0de25000ac65136aec6d645d1f42a527be518051f17f605b0826",
+      "src\\metrics.py": "393191cf2899df0adf23e3350180d5b4c4b2af5bc35c5aa059c185a9de44e7d9",
+      "src\\models.py": "725b74865f08c32c4076d4ada5070a71a8252ed1fefdab20c80db92c267a88e4",
+      "src\\plot_fm_sweep.py": "c9427531a34e7eacd7182f72e7213dd3cc53fddd0adafffa785bffe95452fe22",
+      "src\\plot_svdpp.py": "45a02e8de9ab0ba8d8f9e1188a62e626fafd1d4e6b06f24bc56f1894c115ac0f",
+      "src\\polynomial.py": "1c6461881d397b366e5506c584f319fac65c67d03e6ee56fe564c6a440c5bfca",
+      "src\\prepare_data.py": "4e75714df3ad61d1b19cb63c061b714a2cccbe1d59ed094883cf7f9db4398cf7",
+      "src\\run_fm_sweep.py": "530a5a2099f26daa6d19bef12730a7532867ddae1ba357717747c634ab9fa173",
+      "src\\run_svdpp.py": "dfba16db6341d704cf61eff9bfb644f297659275f531228070fefb2a915780a2",
+      "src\\svdpp.py": "05593eeec7ed6be31f1e5b01e1bef2e1e0cc4989365a6c94a89c915bbc800b5e",
+      "tests\\test_fm_audit.py": "d48a569a59cc42c8daaa21b68678b8079431e4cfcdba635e637d7becc2b20fbf",
+      "tests\\test_models.py": "f40821bea7040de9f17d836983139b404f01fbdecb3febb401bd10b3ce865ce9",
+      "tests\\test_polynomial.py": "dba194a0f2dc83fa8f787b2086f6da57e82896a1828540bdb01c200f84187ceb",
+      "tests\\test_svdpp.py": "a85fb88c9412527d962a22be5da56d6319efe7fe878fb5e4563ade0d88f0dcdd",
+      "tests\\test_team1.py": "769af4c373982ece034404d718c088e6b90fadeca6c49cc6c67644c874953bcb",
+      "configs\\team1-data.json": "31d24555ef42ecfd5d25a924b5736754e2cb6f5ba522aed4500572a94224c47e",
+      "requirements-data.txt": "0e4e49b3abfe08aade0888121cd24da1a51c7666644fe03e234951a6eafeb833"
+    },
+    "note": "No commit/push performed. Reproduce with the supplied patch, not the base commit alone."
+  },
+  "source": {
+    "url": "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+    "archive_sha256": "50d2a982c66986937beb9ffb3aa76efe955bf3d5c6b761f4e3a7cd717c6a3229",
+    "ratings_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490"
+  },
+  "full_data": {
+    "ratings": 100000,
+    "users": 943,
+    "items": 1682,
+    "missing_values": {
+      "row_id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 1,
+    "rating_max": 5,
+    "duplicate_pair_rows": 0,
+    "duplicate_pair_excess": 0,
+    "rating_distribution": {
+      "1": 6110,
+      "2": 11370,
+      "3": 27145,
+      "4": 34174,
+      "5": 21201
+    },
+    "ratings_per_user": {
+      "count": 943.0,
+      "mean": 106.04453870625663,
+      "std": 100.93174276633498,
+      "min": 20.0,
+      "25%": 33.0,
+      "50%": 65.0,
+      "75%": 148.0,
+      "max": 737.0
+    },
+    "ratings_per_item": {
+      "count": 1682.0,
+      "mean": 59.45303210463734,
+      "std": 80.3838456100493,
+      "min": 1.0,
+      "25%": 6.0,
+      "50%": 27.0,
+      "75%": 80.0,
+      "max": 583.0
+    }
+  },
+  "subset": {
+    "ratings": 100000,
+    "users": 943,
+    "items": 1682,
+    "missing_values": {
+      "row_id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 1,
+    "rating_max": 5,
+    "duplicate_pair_rows": 0,
+    "duplicate_pair_excess": 0,
+    "rating_distribution": {
+      "1": 6110,
+      "2": 11370,
+      "3": 27145,
+      "4": 34174,
+      "5": 21201
+    },
+    "ratings_per_user": {
+      "count": 943.0,
+      "mean": 106.04453870625663,
+      "std": 100.93174276633498,
+      "min": 20.0,
+      "25%": 33.0,
+      "50%": 65.0,
+      "75%": 148.0,
+      "max": 737.0
+    },
+    "ratings_per_item": {
+      "count": 1682.0,
+      "mean": 59.45303210463734,
+      "std": 80.3838456100493,
+      "min": 1.0,
+      "25%": 6.0,
+      "50%": 27.0,
+      "75%": 80.0,
+      "max": 583.0
+    }
+  },
+  "selected_users": 943,
+  "n_users": 943,
+  "n_items": 1634,
+  "config": {
+    "source": {
+      "url": "https://files.grouplens.org/datasets/movielens/ml-100k.zip",
+      "archive_bytes": 4924029,
+      "archive_sha256": "50d2a982c66986937beb9ffb3aa76efe955bf3d5c6b761f4e3a7cd717c6a3229",
+      "ratings_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490"
+    },
+    "expected": {
+      "ratings": 100000,
+      "users": 943,
+      "items": 1682
+    },
+    "subset": {
+      "seed": 42,
+      "target_ratings": 100000
+    },
+    "split": {
+      "seed": 42,
+      "fractions": [
+        0.7,
+        0.15,
+        0.15
+      ]
+    },
+    "raw_dir": "data/raw",
+    "output_dir": "data/processed/movielens100k-full"
+  },
+  "K5": {
+    "status": "passed",
+    "row_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "pair_intersections": {
+      "train/validation": 0,
+      "train/test": 0,
+      "validation/test": 0
+    },
+    "union_equals_subset": true,
+    "raw_row_lineage_verified": true,
+    "all_ratings_of_selected_users": true,
+    "seeded_subset_verified": true,
+    "mappings_exactly_train_only": true,
+    "known_flags_and_indices_verified": true,
+    "artifact_checksums_verified": true,
+    "split_id": "8bb80a3e2006533605b17b006800aff3d998847690ba8c3b8779624e42313582",
+    "sizes_before_filter": {
+      "train": 70000,
+      "validation": 15000,
+      "test": 15000
+    },
+    "evaluation": {
+      "validation": {
+        "before": 15000,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 29,
+        "unknown_users": 0,
+        "unknown_items": 28,
+        "unknown_both_rows": 0,
+        "excluded_rows": 29,
+        "after": 14971,
+        "coverage": 0.9980666666666667,
+        "row_ids_file": "validation_row_ids.csv",
+        "row_ids_sha256": "bed8e46719e255a6d5f95390331009d8eabb8e73c4c36f7c9f69280512581013"
+      },
+      "test": {
+        "before": 15000,
+        "unknown_user_rows": 0,
+        "unknown_item_rows": 23,
+        "unknown_users": 0,
+        "unknown_items": 22,
+        "unknown_both_rows": 0,
+        "excluded_rows": 23,
+        "after": 14977,
+        "coverage": 0.9984666666666666,
+        "row_ids_file": "test_row_ids.csv",
+        "row_ids_sha256": "3e7d81c4b35bc4df6632432e982023f995e9058e3af08fef8aea5f8305ff111f"
+      }
+    },
+    "model_id_comparison": "pending model implementations; require_same_row_ids is provided"
+  },
+  "K6": {
+    "status": "passed",
+    "manual_rmse": 1.5811388300841898,
+    "expected": 1.5811388300841898,
+    "aligned_rmse": 1.5811388300841898,
+    "invalid_inputs_rejected": [
+      "different_lengths",
+      "broadcast_column",
+      "broadcast_row",
+      "both_2d",
+      "scalar",
+      "empty",
+      "nan_truth",
+      "nan_prediction",
+      "inf_truth",
+      "inf_prediction",
+      "complex",
+      "nonnumeric",
+      "reordered_row_ids",
+      "different_row_ids",
+      "duplicate_row_ids",
+      "missing_row_ids",
+      "noninteger_row_ids",
+      "row_ids_length_mismatch"
+    ],
+    "finite_large_values_checked": true,
+    "zero_error_checked": true
+  }
+}

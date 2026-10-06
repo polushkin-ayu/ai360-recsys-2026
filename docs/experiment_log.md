@@ -100,3 +100,21 @@
 - Окружение: Python 3.12.14, torch 2.14.1+cpu, NumPy 2.3.5, pandas 2.2.3, CPU/float32/один поток/deterministic. Сумма fit основных запусков 13.5593 с, включая epoch evaluation/early stopping/best restore, без I/O.
 - Файлы: `results/svdpp/`, `docs/svdpp_report.md`; команды — в отчёте. Ограничения: малый срез, один split, известные ID, разброс только по инициализации.
 - Удалённый push не выполнен; подготовлены отдельная ветка, patch, архив и bundle.
+
+## fm-full100k-k50-100-150-20261006 — full source retraining
+
+- Author: uliana roshchina; requested full MovieLens 100K, k=50/100/150, seeds=42/43/44.
+- Executable config/code commit: `16595d729e5797803cc0bf0ec45f11e5393e7c65`; clean tree at launch.
+- Data: all 100,000 source ratings before split; 70,000 train, 14971
+  known-ID validation and 14977 known-ID test after filtering; split seed 42.
+- Configs: `configs/full100k-data.json`, `configs/fm-full100k-k50-100-150.json`.
+- Command: `python -m src.run_fm_sweep --config configs/fm-full100k-k50-100-150.json`.
+- 9 measured runs; test not evaluated. Fixed original FM training settings.
+- Results: `results/fm-full100k-k50-100-150-20261006/` (summary, aggregate,
+  histories, plots, manifest, data checks, selection and README).
+- Data K5/K6 passed; checkpoint reloads, row alignment, finite histories and
+  best-validation restoration checked in all runs.
+- Lowest mean validation score in this grid at k=50; no final test or bias claim.
+- Previous subset series unchanged. Full100k results require matching full-data
+  runs from other models; do not directly combine with their 15k-subset scores.
+- Next: team review, comparable baseline runs, frozen settings, final test.
