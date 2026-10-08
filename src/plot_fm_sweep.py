@@ -10,13 +10,14 @@ import pandas as pd
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results", default="results/fm-k-sweep-20261006")
+    parser.add_argument("--title", default="MovieLens subset: FM at fixed regularization")
     args = parser.parse_args()
     root = Path(args.results)
     aggregate = pd.read_csv(root / "aggregate.csv").sort_values("k")
     fig, ax = plt.subplots(figsize=(7, 4.5))
     ax.errorbar(aggregate.k, aggregate.val_rmse_mean, yerr=aggregate.val_rmse_std,
                 marker="o", capsize=4, label="FM(user,item): mean +/- sample SD, 3 seeds")
-    ax.set(xlabel="k (latent dimensions)", ylabel="Validation RMSE", title="MovieLens subset: FM at fixed regularization")
+    ax.set(xlabel="k (latent dimensions)", ylabel="Validation RMSE", title=args.title)
     ax.set_xticks(aggregate.k)
     ax.grid(alpha=.25)
     ax.legend(fontsize=8)
