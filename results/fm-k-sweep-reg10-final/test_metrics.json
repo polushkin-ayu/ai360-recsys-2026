@@ -1,0 +1,12 @@
+{
+  "selected_k": 100,
+  "test_rmse_by_seed": {
+    "42": 0.847368,
+    "43": 0.847401,
+    "44": 0.847409
+  },
+  "test_rmse_mean": 0.847392,
+  "test_rmse_std": 0.000022,
+  "selection_was_done_on_validation_only": true,
+  "test_used_for_hyperparameter_selection": false
+}
