@@ -1,6 +1,10 @@
 import torch
 from torch import Tensor, nn
 
+from src.models import (
+    BiasModel,
+    FactorizationMachine,
+)
 
 def _prepare_input(
     x: Tensor,
@@ -481,99 +485,24 @@ class FactorizedPolynomialRegression(nn.Module):
             * self.n_factors
         )
 
-
-def _validate_user_item_input(
-    user_idx: Tensor,
-    item_idx: Tensor,
-    n_users: int,
-    n_items: int,
-) -> None:
+class UserItemPolynomialRegression2(BiasModel):
     """
-    Validate user/item index tensors used by the
-    project's standard training API.
-    """
+    Second-order polynomial regression for one-hot user/item data.
 
-    if user_idx.ndim != 1 or item_idx.ndim != 1:
-        raise ValueError(
-            "user_idx and item_idx must be one-dimensional"
-        )
+    For one active user feature and one active item feature,
+    the general second-order polynomial
 
-    if user_idx.shape != item_idx.shape:
-        raise ValueError(
-            "user_idx and item_idx must have the same shape"
-        )
+        w0 + sum_i w_i x_i + sum_{i<j} w_ij x_i x_j
 
-    if user_idx.dtype != torch.long or item_idx.dtype != torch.long:
-        raise TypeError(
-            "user_idx and item_idx must have dtype torch.long"
-        )
+    reduces to
 
-    if user_idx.numel() == 0:
-        return
+        global_bias
+        + user_bias[user]
+        + item_bias[item]
+        + interaction_weight[user, item].
 
-    if (
-        (user_idx < 0).any()
-        or (user_idx >= n_users).any()
-    ):
-        raise ValueError(
-            "unknown or out-of-range user index"
-        )
-
-    if (
-        (item_idx < 0).any()
-        or (item_idx >= n_items).any()
-    ):
-        raise ValueError(
-            "unknown or out-of-range item index"
-        )
-
-
-def _upper_triangle_pair_index(
-    i: Tensor,
-    j: Tensor,
-    n_features: int,
-) -> Tensor:
-    """
-    Return the flattened position of pair (i, j)
-    in torch.triu_indices(n_features, n_features, offset=1).
-
-    The function assumes i < j.
-    """
-
-    return (
-        i
-        * (
-            2 * n_features
-            - i
-            - 1
-        )
-        // 2
-        + (
-            j
-            - i
-            - 1
-        )
-    )
-
-
-class UserItemPolynomialRegression2(
-    PolynomialRegression2
-):
-    """
-    User-item adapter for second-order polynomial regression.
-
-    The generic polynomial model expects a complete feature
-    vector x. The project training pipeline instead supplies:
-
-        user_idx, item_idx
-
-    For one-hot user/item data exactly two features are active,
-    so only one second-order interaction survives:
-
-        w_user,item
-
-    This adapter preserves the polynomial parameterization
-    while exposing the API expected by src.models.fit_model().
+    Unlike FactorizationMachine, every user-item interaction
+    has its own independent parameter.
     """
 
     def __init__(
@@ -583,267 +512,82 @@ class UserItemPolynomialRegression2(
         *,
         global_mean: float = 0.0,
     ) -> None:
-        if not isinstance(n_users, int) or n_users <= 0:
-            raise ValueError(
-                "n_users must be a positive integer"
-            )
-
-        if not isinstance(n_items, int) or n_items <= 0:
-            raise ValueError(
-                "n_items must be a positive integer"
-            )
-
         super().__init__(
-            n_features=n_users + n_items
+            n_users=n_users,
+            n_items=n_items,
+            global_mean=global_mean,
         )
 
-        self.n_users = n_users
-        self.n_items = n_items
-
-        self.reset_parameters(
-            global_mean=global_mean
+        self.pair_weights = nn.Embedding(
+            n_users * n_items,
+            1,
         )
+
+        self._reset_pair_parameters()
+
+    def _reset_pair_parameters(self) -> None:
+        with torch.no_grad():
+            self.pair_weights.weight.zero_()
 
     def reset_parameters(
         self,
         global_mean: float = 0.0,
     ) -> None:
-        """
-        Reset parameters using the same API as the
-        project's standard models.
-        """
+        self._reset_bias_parameters(
+            global_mean
+        )
 
-        with torch.no_grad():
-            self.bias.fill_(
-                float(global_mean)
-            )
-
-            self.linear_weights.zero_()
-            self.pair_weights.zero_()
+        self._reset_pair_parameters()
 
     def forward(
         self,
         user_idx: Tensor,
         item_idx: Tensor,
     ) -> Tensor:
-        """
-        Predict ratings from user and item indices.
-        """
-
-        _validate_user_item_input(
+        bias_prediction = super().forward(
             user_idx,
             item_idx,
-            self.n_users,
-            self.n_items,
         )
 
-        item_feature_idx = (
-            self.n_users
-            + item_idx
-        )
-
-        pair_idx = _upper_triangle_pair_index(
-            user_idx,
-            item_feature_idx,
-            self.n_features,
-        )
-
-        return (
-            self.bias
-            + self.linear_weights[
-                user_idx
-            ]
-            + self.linear_weights[
-                item_feature_idx
-            ]
-            + self.pair_weights[
-                pair_idx
-            ]
-        )
-
-    def bias_l2(
-        self,
-    ) -> Tensor:
-        """
-        L2 penalty for non-global linear coefficients.
-        """
-
-        return (
-            self.linear_weights
-            .square()
-            .sum()
-        )
-
-    def factor_l2(
-        self,
-    ) -> Tensor:
-        """
-        L2 penalty for independent interaction coefficients.
-
-        The common project training API names this parameter
-        group factor_l2 even though this model is not factorized.
-        """
-
-        return (
-            self.pair_weights
-            .square()
-            .sum()
-        )
-
-    def get_config(
-        self,
-    ) -> dict:
-        return {
-            "n_users": self.n_users,
-            "n_items": self.n_items,
-        }
-
-
-class UserItemFactorizedPolynomialRegression(
-    FactorizedPolynomialRegression
-):
-    """
-    User-item adapter for factorized polynomial regression.
-
-    For MovieLens-style one-hot user/item input there are
-    exactly two active features.
-
-    Therefore:
-
-        sum_{i < j} <v_i, v_j> x_i x_j
-
-    reduces to:
-
-        <v_user, v_item>
-
-    The adapter exposes the same training API expected by
-    src.models.fit_model().
-    """
-
-    def __init__(
-        self,
-        n_users: int,
-        n_items: int,
-        *,
-        n_factors: int = 16,
-        global_mean: float = 0.0,
-        init_std: float = 0.01,
-    ) -> None:
-        if not isinstance(n_users, int) or n_users <= 0:
-            raise ValueError(
-                "n_users must be a positive integer"
-            )
-
-        if not isinstance(n_items, int) or n_items <= 0:
-            raise ValueError(
-                "n_items must be a positive integer"
-            )
-
-        super().__init__(
-            n_features=n_users + n_items,
-            n_factors=n_factors,
-            init_std=init_std,
-            fast_interaction=True,
-        )
-
-        self.n_users = n_users
-        self.n_items = n_items
-
-        self.reset_parameters(
-            global_mean=global_mean
-        )
-
-    def reset_parameters(
-        self,
-        global_mean: float = 0.0,
-    ) -> None:
-        """
-        Reset parameters using the same API as the
-        project's standard models.
-        """
-
-        with torch.no_grad():
-            self.bias.fill_(
-                float(global_mean)
-            )
-
-            self.linear_weights.zero_()
-
-        self._reset_factor_parameters()
-
-    def forward(
-        self,
-        user_idx: Tensor,
-        item_idx: Tensor,
-    ) -> Tensor:
-        """
-        Predict ratings from user and item indices.
-        """
-
-        _validate_user_item_input(
-            user_idx,
-            item_idx,
-            self.n_users,
-            self.n_items,
-        )
-
-        item_feature_idx = (
-            self.n_users
+        pair_idx = (
+            user_idx * self.n_items
             + item_idx
         )
 
         interaction = (
-            self.factors[
-                user_idx
-            ]
-            * self.factors[
-                item_feature_idx
-            ]
-        ).sum(dim=1)
+            self.pair_weights(pair_idx)
+            .squeeze(-1)
+        )
 
         return (
-            self.bias
-            + self.linear_weights[
-                user_idx
-            ]
-            + self.linear_weights[
-                item_feature_idx
-            ]
+            bias_prediction
             + interaction
         )
 
-    def bias_l2(
-        self,
-    ) -> Tensor:
-        """
-        L2 penalty for non-global linear coefficients.
-        """
-
+    def factor_l2(self) -> Tensor:
         return (
-            self.linear_weights
+            self.pair_weights
+            .weight
             .square()
             .sum()
         )
 
-    def factor_l2(
-        self,
-    ) -> Tensor:
-        """
-        L2 penalty for latent interaction factors.
-        """
 
-        return (
-            self.factors
-            .square()
-            .sum()
-        )
+class UserItemFactorizedPolynomialRegression(
+    FactorizationMachine
+):
+    """
+    Factorized second-order polynomial regression
+    for one-hot user/item data.
 
-    def get_config(
-        self,
-    ) -> dict:
-        return {
-            "n_users": self.n_users,
-            "n_items": self.n_items,
-            "n_factors": self.n_factors,
-            "init_std": self.init_std,
-        }
+    For exactly one active user and one active item,
+    the factorized polynomial interaction is
+
+        <v_user, v_item>,
+
+    which is exactly the project's canonical
+    user/item FactorizationMachine.
+    """
+
+    pass
+

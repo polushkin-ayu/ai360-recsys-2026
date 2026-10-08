@@ -677,10 +677,18 @@ def load_checkpoint(
     """Load a checkpoint created by :func:`save_checkpoint`."""
     payload = torch.load(Path(path), map_location=map_location, weights_only=True)
     from src.svdpp import SVDPlusPlus
+    from src.polynomial import (
+        UserItemPolynomialRegression2,
+        UserItemFactorizedPolynomialRegression,
+    )
 
     model_classes = {
         "BiasModel": BiasModel,
         "FactorizationMachine": FactorizationMachine,
+        "UserItemPolynomialRegression2": UserItemPolynomialRegression2,
+        "UserItemFactorizedPolynomialRegression": (
+            UserItemFactorizedPolynomialRegression
+        ),
         "SVDPlusPlus": SVDPlusPlus,
         "SparseFactorizationMachine": SparseFactorizationMachine,
     }

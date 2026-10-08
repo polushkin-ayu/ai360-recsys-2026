@@ -147,11 +147,22 @@ def main():
         train_rmse_mean=("train_rmse", "mean"), fit_seconds_mean=("fit_seconds", "mean"),
         n_seeds=("seed", "count"), n_parameters=("n_parameters", "first"))
     aggregate.to_csv(output / "aggregate.csv", index=False)
-    selected = aggregate.sort_values(["val_rmse_mean", "k"]).iloc[0]
+    selected = aggregate.sort_values(
+        ["val_rmse_mean", "k"]
+    ).iloc[0]
+
     write_json(output / "selection.json", {
-        "selected_k": int(selected.k), "val_rmse_mean": float(selected.val_rmse_mean),
-        "val_rmse_std": float(selected.val_rmse_std), "test_evaluated": False,
-        "criterion": "lowest mean validation RMSE across three seeds; tie broken by smaller k",
+        "selected_k": int(selected.k),
+        "val_rmse_mean": float(selected.val_rmse_mean),
+
+        "val_rmse_std": (
+            None
+            if pd.isna(selected.val_rmse_std)
+            else float(selected.val_rmse_std)
+        ),
+
+        "test_evaluated": False,
+        "criterion": "lowest mean validation RMSE across available seeds; tie broken by smaller k",
         "limitations": "Selection only within this grid at fixed regularization; subject to team review",
     })
     print(aggregate.to_string(index=False), flush=True)
