@@ -1,0 +1,29 @@
+{
+  "models": ["svdpp"],
+  "scope_revision": "SVD++ only; numerical settings unchanged. Test was already viewed in the earlier run; this revision adds no tuning.",
+  "data_dir": "data/processed/team1",
+  "output_dir": "results/svdpp",
+  "checkpoint_dir": "artifacts/svdpp",
+  "k_grid": [10, 20, 50, 100, 200],
+  "initialization_seeds": [42, 43, 44],
+  "pilot_seed": 0,
+  "pilot_k": 20,
+  "pilot_candidates": [
+    {"learning_rate": 0.003, "reg_factors": 0.05},
+    {"learning_rate": 0.01, "reg_factors": 0.05},
+    {"learning_rate": 0.003, "reg_factors": 0.5}
+  ],
+  "training": {
+    "epochs": 200, "batch_size": 1024, "optimizer": "adam",
+    "learning_rate": 0.01, "reg_bias": 0.01, "reg_factors": 0.05,
+    "patience": 20, "min_delta": 0
+  },
+  "init_std": 0.01,
+  "clipping": false,
+  "mu": "fixed_train_mean",
+  "history_normalization": "sqrt",
+  "device": "cpu",
+  "dtype": "float32",
+  "threads": 1,
+  "deterministic_algorithms": true
+}

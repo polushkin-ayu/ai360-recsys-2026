@@ -1,0 +1,30 @@
+{
+  "experiment_id": "fm-k-sweep-1m-20261008",
+  "data_dir": "data/processed/movielens1m",
+  "output_dir": "results/fm-k-sweep-1m-20261008",
+  "local_dir": "data/fm-k-sweep-1m-20261008",
+  "k_values": [
+    8,
+    16,
+    32,
+    50,
+    100
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "init_std": 0.01,
+  "threads": 1,
+  "training": {
+    "epochs": 100,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "reg_bias": 0.01,
+    "reg_factors": 0.05,
+    "patience": 5,
+    "min_delta": 0.0
+  }
+}

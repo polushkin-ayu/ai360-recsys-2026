@@ -187,6 +187,50 @@ class ModelTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown"):
             predict_frame(model, frame)
 
+    def test_regularization_is_normalized_by_train_size(self) -> None:
+        model = FactorizationMachine(
+            3,
+            3,
+            n_factors=2,
+        ).double()
+
+        users = self.users
+        items = self.items
+        target = self.ratings.double()
+
+        prediction = model(
+            users,
+            items,
+        )
+
+        n_train = len(target)
+        reg_bias = 0.07
+        reg_factors = 0.11
+
+        actual = regularized_mse_loss(
+            model,
+            prediction,
+            target,
+            n_train=n_train,
+            reg_bias=reg_bias,
+            reg_factors=reg_factors,
+            normalize_regularization=True,
+        )
+
+        expected = (
+            torch.nn.functional.mse_loss(
+                prediction,
+                target,
+            )
+            + reg_bias / n_train * model.bias_l2()
+            + reg_factors / n_train * model.factor_l2()
+        )
+
+        torch.testing.assert_close(
+            actual,
+            expected,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,7 @@ def main():
     fig, ax = plt.subplots(figsize=(7, 4.5))
     ax.errorbar(aggregate.k, aggregate.val_rmse_mean, yerr=aggregate.val_rmse_std,
                 marker="o", capsize=4, label="FM(user,item): mean +/- sample SD, 3 seeds")
-    ax.set(xlabel="k (latent dimensions)", ylabel="Validation RMSE", title="MovieLens subset: FM at fixed regularization")
+    ax.set(xlabel="k (latent dimensions)", ylabel="Validation RMSE", title="MovieLens 1M: FM at fixed regularization")
     ax.set_xticks(aggregate.k)
     ax.grid(alpha=.25)
     ax.legend(fontsize=8)

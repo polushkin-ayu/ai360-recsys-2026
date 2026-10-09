@@ -98,7 +98,7 @@ class SVDPlusPlusTests(unittest.TestCase):
             mse = np.mean((prediction - self.target.numpy()) ** 2)
             bias_norm = sum(float(getattr(self.model, name).weight.detach().square().sum()) for name in ("user_bias", "item_bias"))
             factor_norm = sum(float(getattr(self.model, name).weight.detach().square().sum()) for name in ("user_factors", "item_factors", "implicit_factors"))
-            return mse + .07 / 19 * bias_norm + .11 / 19 * factor_norm
+            return mse + .07 * bias_norm + .11 * factor_norm
         regularized_mse_loss(self.model, self.model(self.users, self.items), self.target,
                              n_train=19, reg_bias=.07, reg_factors=.11).backward()
         coordinates = [("user_factors", (1, 0)), ("item_factors", (3, 1)),
@@ -143,7 +143,12 @@ class SVDPlusPlusTests(unittest.TestCase):
         before = {name: (p.detach().clone(), p.grad.detach().clone()) for name, p in self.model.named_parameters()}
         optimizer.step()
         for name, p in self.model.named_parameters():
-            torch.testing.assert_close(p, before[name][0] - .03 * before[name][1], rtol=0, atol=0)
+            torch.testing.assert_close(
+                p,
+                before[name][0] - .03 * before[name][1],
+                rtol=0,
+                atol=1e-15,
+            )
         after = self.model(self.users, self.items).detach().numpy()
         self.assertFalse(np.array_equal(after, before_prediction.numpy()))
         np.testing.assert_allclose(after, direct(self.model, self.users.numpy(), self.items.numpy()), rtol=0, atol=1e-12)

@@ -1,8 +1,15 @@
 import torch
 from torch import Tensor, nn
 
+from src.models import (
+    BiasModel,
+    FactorizationMachine,
+)
 
-def _prepare_input(x: Tensor, n_features: int) -> Tensor:
+def _prepare_input(
+    x: Tensor,
+    n_features: int,
+) -> Tensor:
     """
     Validate the input tensor and convert a single sample
     of shape [n_features] into a batch of shape [1, n_features].
@@ -313,42 +320,24 @@ class FactorizedPolynomialRegression(nn.Module):
             self.n_features,
         )
 
-        # Get latent vectors v_i for the left side
-        # of every feature pair.
         left_factors = self.factors[
             self.pair_i
         ]
 
-        # Get latent vectors v_j for the right side
-        # of every feature pair.
         right_factors = self.factors[
             self.pair_j
         ]
 
-        # Compute the dot product:
-        #
-        # <v_i, v_j>
-        #
-        # for every feature pair.
         pair_coefficients = (
             left_factors
             * right_factors
         ).sum(dim=1)
 
-        # Compute:
-        #
-        # x_i * x_j
-        #
-        # for every sample and every feature pair.
         pair_products = (
             x[:, self.pair_i]
             * x[:, self.pair_j]
         )
 
-        # Compute:
-        #
-        # sum_{i < j}
-        # <v_i, v_j> * x_i * x_j
         return (
             pair_products
             * pair_coefficients
@@ -382,9 +371,6 @@ class FactorizedPolynomialRegression(nn.Module):
         instead of:
 
             O(k * n^2)
-
-        This is the computational trick that makes
-        Factorization Machines efficient.
         """
 
         x = _prepare_input(
@@ -392,34 +378,19 @@ class FactorizedPolynomialRegression(nn.Module):
             self.n_features,
         )
 
-        # Compute for every latent factor f:
-        #
-        # sum_i v_if * x_i
-        #
-        # Result shape:
-        # [batch_size, n_factors]
         factor_sums = (
             x @ self.factors
         )
 
-        # Compute:
-        #
-        # (sum_i v_if * x_i)^2
         squared_factor_sums = (
             factor_sums.square()
         )
 
-        # Compute:
-        #
-        # sum_i v_if^2 * x_i^2
-        #
-        # for every latent factor.
         factor_square_sums = (
             x.square()
             @ self.factors.square()
         )
 
-        # Apply the FM sum-of-squares identity.
         return 0.5 * (
             squared_factor_sums
             - factor_square_sums
@@ -513,3 +484,110 @@ class FactorizedPolynomialRegression(nn.Module):
             self.n_features
             * self.n_factors
         )
+
+class UserItemPolynomialRegression2(BiasModel):
+    """
+    Second-order polynomial regression for one-hot user/item data.
+
+    For one active user feature and one active item feature,
+    the general second-order polynomial
+
+        w0 + sum_i w_i x_i + sum_{i<j} w_ij x_i x_j
+
+    reduces to
+
+        global_bias
+        + user_bias[user]
+        + item_bias[item]
+        + interaction_weight[user, item].
+
+    Unlike FactorizationMachine, every user-item interaction
+    has its own independent parameter.
+    """
+
+    def __init__(
+        self,
+        n_users: int,
+        n_items: int,
+        *,
+        global_mean: float = 0.0,
+    ) -> None:
+        super().__init__(
+            n_users=n_users,
+            n_items=n_items,
+            global_mean=global_mean,
+        )
+
+        self.pair_weights = nn.Embedding(
+            n_users * n_items,
+            1,
+        )
+
+        self._reset_pair_parameters()
+
+    def _reset_pair_parameters(self) -> None:
+        with torch.no_grad():
+            self.pair_weights.weight.zero_()
+
+    def reset_parameters(
+        self,
+        global_mean: float = 0.0,
+    ) -> None:
+        self._reset_bias_parameters(
+            global_mean
+        )
+
+        self._reset_pair_parameters()
+
+    def forward(
+        self,
+        user_idx: Tensor,
+        item_idx: Tensor,
+    ) -> Tensor:
+        bias_prediction = super().forward(
+            user_idx,
+            item_idx,
+        )
+
+        pair_idx = (
+            user_idx * self.n_items
+            + item_idx
+        )
+
+        interaction = (
+            self.pair_weights(pair_idx)
+            .squeeze(-1)
+        )
+
+        return (
+            bias_prediction
+            + interaction
+        )
+
+    def factor_l2(self) -> Tensor:
+        return (
+            self.pair_weights
+            .weight
+            .square()
+            .sum()
+        )
+
+
+class UserItemFactorizedPolynomialRegression(
+    FactorizationMachine
+):
+    """
+    Factorized second-order polynomial regression
+    for one-hot user/item data.
+
+    For exactly one active user and one active item,
+    the factorized polynomial interaction is
+
+        <v_user, v_item>,
+
+    which is exactly the project's canonical
+    user/item FactorizationMachine.
+    """
+
+    pass
+

@@ -14,7 +14,7 @@
     "optimizer": "adam",
     "reg_bias": 0.01,
     "reg_factors": 0.05,
-    "patience": 20,
+    "patience": 5,
     "min_delta": 0.0
   }
 }

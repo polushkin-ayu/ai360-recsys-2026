@@ -431,6 +431,7 @@ class TrainingConfig:
     optimizer: str = "adam"
     reg_bias: float = 0.01
     reg_factors: float = 0.05
+    normalize_regularization: bool = False
     patience: Optional[int] = 20
     min_delta: float = 0.0
     seed: int = 42
@@ -465,19 +466,23 @@ def regularized_mse_loss(
     n_train: int,
     reg_bias: float,
     reg_factors: float,
+    normalize_regularization: bool = False,
 ) -> Tensor:
     """MSE plus explicit L2 penalties; the global intercept is not penalized."""
     if prediction.shape != target.shape or prediction.ndim != 1:
         raise ValueError("prediction and target must have the same 1-D shape")
     if n_train <= 0:
         raise ValueError("n_train must be positive")
+
     mse = nn.functional.mse_loss(prediction, target)
+
+    scale = n_train if normalize_regularization else 1
+
     return (
         mse
-        + reg_bias * model.bias_l2()
-        + reg_factors * model.factor_l2()
+        + reg_bias / scale * model.bias_l2()
+        + reg_factors / scale * model.factor_l2()
     )
-
 
 def _validate_training_tensors(
     user_idx: Tensor, item_idx: Tensor, rating: Tensor, name: str
@@ -563,6 +568,7 @@ def fit_model(
                 n_train=n_train,
                 reg_bias=config.reg_bias,
                 reg_factors=config.reg_factors,
+                normalize_regularization=config.normalize_regularization,
             )
             if not torch.isfinite(loss):
                 raise ValueError("nonfinite training loss")
@@ -582,6 +588,7 @@ def fit_model(
                 n_train=n_train,
                 reg_bias=config.reg_bias,
                 reg_factors=config.reg_factors,
+                normalize_regularization=config.normalize_regularization,
             ).item()
             train_rmse = _rmse(train_prediction, train_ratings_device)
             train_mse = nn.functional.mse_loss(train_prediction, train_ratings_device).item()
@@ -744,10 +751,18 @@ def load_checkpoint(
     """Load a checkpoint created by :func:`save_checkpoint`."""
     payload = torch.load(Path(path), map_location=map_location, weights_only=True)
     from src.svdpp import SVDPlusPlus
+    from src.polynomial import (
+        UserItemPolynomialRegression2,
+        UserItemFactorizedPolynomialRegression,
+    )
 
     model_classes = {
         "BiasModel": BiasModel,
         "FactorizationMachine": FactorizationMachine,
+        "UserItemPolynomialRegression2": UserItemPolynomialRegression2,
+        "UserItemFactorizedPolynomialRegression": (
+            UserItemFactorizedPolynomialRegression
+        ),
         "SVDPlusPlus": SVDPlusPlus,
         "SparseFactorizationMachine": SparseFactorizationMachine,
         "PureMatrixFactorization" : PureMatrixFactorization,
