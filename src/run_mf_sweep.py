@@ -57,7 +57,7 @@ def main() -> None:
     val_rating = torch.as_tensor(val["rating"].to_numpy().copy(), dtype=torch.float32, device=device)
 
     # 3. Настройка сетки гиперпараметров для k-sweep (от 1 до 100 включительно)
-    k_grid = list(range(50, 201, 5))
+    k_grid = [8, 16, 32, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
 
     base_config = TrainingConfig(
         epochs=100,  # Можно уменьшить, patience сделает остальное
@@ -65,7 +65,7 @@ def main() -> None:
         learning_rate=0.001,  # Снизили в 10 раз (было 0.01)
         optimizer="adam",
         reg_bias=0.0,
-        reg_factors=0.0,
+        reg_factors=0.00001,
         patience=15,  # Ранняя остановка
         seed=42,
     )

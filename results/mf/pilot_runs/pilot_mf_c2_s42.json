@@ -1,0 +1,42 @@
+{
+  "signature": "6b67fe9ee5e7765179fdb6576dfb567da5515252c5e753b329af66007f151ad8",
+  "metrics": {
+    "run_id": "pilot_mf_c2_s42",
+    "model": "mf",
+    "k": 20,
+    "initialization_seed": 42,
+    "split_id": "e5aa6fab5d93666dba4df22d71e9371c8ba5c0a06df1b6e0721c1f57bc838ce4",
+    "fixed_global_mean": 3.502837657928467,
+    "config_hash": "1fc6e3d98dd6de8ad005b6e1e6e328ccbc21f5e218408d7300c85b02a4a8344d",
+    "code_commit": "df1993e49f981735098b560548bf905b23879a60",
+    "dirty_worktree": true,
+    "best_epoch": 1,
+    "epochs_run": 11,
+    "train_mse": 1.3606577713354893,
+    "train_loss_with_regularization": 1.3606604192253202,
+    "train_rmse": 1.1664723620109863,
+    "validation_rmse": 1.1598360631830242,
+    "test_rmse": null,
+    "parameter_count": 29380,
+    "fit_seconds": 0.026748124975711107,
+    "device": "cpu"
+  },
+  "training_config": {
+    "epochs": 100,
+    "batch_size": 2048,
+    "patience": 10,
+    "learning_rate": 0.01,
+    "reg_bias": 0.0,
+    "reg_factors": 0.05,
+    "seed": 42
+  },
+  "checkpoint": "checkpoints/mf/pilot/pilot_mf_c2_s42.pt",
+  "history_csv": "results/mf/histories/pilot_mf_c2_s42.csv",
+  "validation_predictions": "results/mf/predictions/pilot_mf_c2_s42_validation.csv",
+  "reload_max_error": 0.0,
+  "files": {
+    "checkpoints/mf/pilot/pilot_mf_c2_s42.pt": "583868c7852d9e4a588b6c5a2c6ae5c92198013bc8199d580739b77821ccdfca",
+    "results/mf/histories/pilot_mf_c2_s42.csv": "45da5c5c071ae16bd58b61879ad74e7be81082339bd868e939a22dd2e5770a5b",
+    "results/mf/predictions/pilot_mf_c2_s42_validation.csv": "e629532a2d5d041905fbe6b333a3173bc0d4fa8ac5ed7326c6ccafcd4c4838ad"
+  }
+}
