@@ -144,7 +144,7 @@ class FactorizationMachine(BiasModel):
             - item_factors.square()
         ).sum(dim=1)
 
-    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:    
+    def forward(self, user_idx: Tensor, item_idx: Tensor) -> Tensor:
         return super().forward(user_idx, item_idx) + self.interaction_direct(
             user_idx, item_idx
         )
@@ -352,7 +352,74 @@ class SparseFactorizationMachine(nn.Module):
             "n_factors": self.n_factors,
             "init_std": self.init_std,
         }
+class PureMatrixFactorization(nn.Module):
+    """
+    Матричная факторизация без линейных сдвигов
+    """
 
+    def __init__(
+            self,
+            n_users: int,
+            n_items: int,
+            n_factors: int,
+            global_mean: float = 0.0,
+            init_std: float = 0.01,
+            data_identity: dict | None = None,
+    ) -> None:
+        super().__init__()
+        _validate_model_sizes(n_users, n_items)
+        self.n_users = n_users
+        self.n_items = n_items
+        self.n_factors = n_factors
+        self.init_std = float(init_std)
+        self.data_identity = data_identity or {}
+
+        # Глобальное среднее регистрируется как буфер без градиентов
+        self.register_buffer("global_bias", torch.tensor(float(global_mean), dtype=torch.float32))
+
+        self.user_factors = nn.Embedding(n_users, n_factors)
+        self.item_factors = nn.Embedding(n_items, n_factors)
+
+        self.reset_parameters()
+
+    def reset_parameters(self, global_mean: float | None = None) -> None:
+        if global_mean is not None:
+            self.global_bias.fill_(float(global_mean))
+
+        nn.init.normal_(self.user_factors.weight, mean=0.0, std=self.init_std)
+        nn.init.normal_(self.item_factors.weight, mean=0.0, std=self.init_std)
+
+    def forward(self, users: torch.Tensor, items: torch.Tensor) -> torch.Tensor:
+        _validate_inputs(users, items)
+        p_u = self.user_factors(users)
+        q_i = self.item_factors(items)
+        return self.global_bias + (p_u * q_i).sum(dim=1)
+
+    def bias_l2(self) -> torch.Tensor:
+        """Обучаемых смещений нет — возвращаем точный скалярный ноль."""
+        return self.global_bias.new_zeros(())
+
+    def factor_l2(self) -> torch.Tensor:
+        """L2 норма факторных матриц."""
+        return (
+                self.user_factors.weight.square().sum()
+                + self.item_factors.weight.square().sum()
+        )
+
+    def get_config(self) -> dict[str, Any]:
+        return {
+            "n_users": self.n_users,
+            "n_items": self.n_items,
+            "n_factors": self.n_factors,
+            "init_std": self.init_std,
+            "data_identity": self.data_identity,
+        }
+
+    def verify_data_identity(self, identity: dict) -> None:
+        if self.data_identity != identity:
+            raise ValueError(
+                f"Data identity mismatch: expected {self.data_identity}, got {identity}"
+            )
 
 @dataclass(frozen=True)
 class TrainingConfig:
@@ -416,7 +483,6 @@ def regularized_mse_loss(
         + reg_bias / scale * model.bias_l2()
         + reg_factors / scale * model.factor_l2()
     )
-
 
 def _validate_training_tensors(
     user_idx: Tensor, item_idx: Tensor, rating: Tensor, name: str
@@ -699,6 +765,7 @@ def load_checkpoint(
         ),
         "SVDPlusPlus": SVDPlusPlus,
         "SparseFactorizationMachine": SparseFactorizationMachine,
+        "PureMatrixFactorization" : PureMatrixFactorization,
     }
     try:
         model_class = model_classes[payload["model_class"]]

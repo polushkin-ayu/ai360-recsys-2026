@@ -1,0 +1,31 @@
+{
+  "models": ["mf"],
+  "data_dir": "data/processed/team1",
+  "output_dir": "results/mf",
+  "checkpoint_dir": "checkpoints/mf",
+  "device": "cpu",
+  "dtype": "float32",
+  "threads": 4,
+  "deterministic_algorithms": true,
+  "clipping": false,
+  "mu": "fixed_train_mean",
+
+  "init_std": 0.01,
+
+  "pilot_k": 20,
+  "pilot_seed": 42,
+  "pilot_candidates": [
+    {"learning_rate": 0.001, "reg_bias": 0.0, "reg_factors": 0.001},
+    {"learning_rate": 0.005, "reg_bias": 0.0, "reg_factors": 0.01},
+    {"learning_rate": 0.01,  "reg_bias": 0.0, "reg_factors": 0.05}
+  ],
+
+  "k_grid": [10, 20, 50, 100, 150, 200, 250, 300],
+  "initialization_seeds": [11, 22, 33],
+
+  "training": {
+    "epochs": 100,
+    "batch_size": 2048,
+    "patience": 10
+  }
+}
