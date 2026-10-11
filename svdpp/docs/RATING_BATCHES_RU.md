@@ -43,3 +43,23 @@ test-кривая добавляется на итоговый график. Н�
 
 Время не ограничено. Early stopping и лимит 25 эпох сохраняются;
 достижение лимита отдельно отмечается в метриках.
+
+## Текущий запуск: 13 k, пять отложены
+
+По просьбе пользователя k=6,7,8,9,15 отложены. Команда активной серии:
+
+```powershell
+python -u train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu
+```
+
+Численные настройки не меняются. Готовые модели k=1,2,3 и checkpoint
+k=4 после 18-й эпохи перенесены без изменения весов, Adam и генератора
+перестановок; меняется только идентификатор списка кандидатов.
+Переход записан в continuation_provenance.json. Test до перехода не оценивался.
+Для оставленных 13 k test будет рассчитан после фиксации всех 13 моделей.
+
+Отдельная команда на потом (сейчас не запускается):
+
+```powershell
+python -u train_ratings.py --config configs/svdpp-ml1m-ratings-deferred.json --output results/svdpp-ml1m-ratings-deferred/seed11 --seed 11 --device cpu
+```

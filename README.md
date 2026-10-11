@@ -95,7 +95,7 @@ MovieLens 1M с общими CSV split; реализация и обучение
 python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -r requirements-svdpp.txt
 python svdpp/prepare_data.py
-python svdpp/train_ratings.py --seed 11 --device cpu
+python svdpp/train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu
 ```
 
 Опубликованы результаты одного seed по всем 18 значениям k: [метрики](svdpp/results/published/seed11/metrics_summary.csv),

@@ -19,3 +19,7 @@ results/svdpp-ml1m-fast-completed/
 results/complete-fast-*.log
 
 results/rating-training-*.log
+
+results/svdpp-ml1m-ratings-active/
+
+results/svdpp-ml1m-ratings-deferred/

@@ -276,3 +276,8 @@ python prepare_data.py --check-only
 вся сетка k, один seed, максимум 25 эпох и patience=10, без лимита времени.
 Протокол и продолжение: [docs/RATING_BATCHES_RU.md](docs/RATING_BATCHES_RU.md).
 Результаты: `results/svdpp-ml1m-ratings/seed11/`.
+
+Текущая серия исключает отложенные k=6,7,8,9,15:
+`python -u train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu`.
+Для отложенных k создана `configs/svdpp-ml1m-ratings-deferred.json`;
+она сейчас не запускается.
