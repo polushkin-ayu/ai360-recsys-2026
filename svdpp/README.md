@@ -27,7 +27,8 @@
 Запускайте команды ниже из этой папки. Датасеты и веса в Git не включены:
 перед первым обучением выполните `python prepare_data.py`. Если данные уже
 подготовлены, `python prepare_data.py --check-only` проверит их без обучения.
-Опубликованные метрики и графики находятся в `results/published/seed11/`;
+Новая серия с 684 обновлениями за эпоху находится в `results/published-ratings/seed11/`.
+Предыдущий быстрый протокол сохранён в `results/published/seed11/`;
 это отдельный каталог, поэтому новый запуск не пытается продолжить их без весов.
 
 ## Данные
@@ -271,13 +272,20 @@ python prepare_data.py --check-only
 
 ## Обучение с 684 обновлениями за эпоху
 
-Для сравнения с FM при фиксированных настройках выполните
-`python -u train_ratings.py --seed 11 --device cpu`. Батчи по 1024 оценки,
-вся сетка k, один seed, максимум 25 эпох и patience=10, без лимита времени.
-Протокол и продолжение: [docs/RATING_BATCHES_RU.md](docs/RATING_BATCHES_RU.md).
-Результаты: `results/svdpp-ml1m-ratings/seed11/`.
+Текущая серия для сравнения с FM: k=1,2,3,4,5,10,20,30,40,50,100,150,200,
+seed 11, максимум 25 эпох, patience=10, без лимита времени.
+Батчи по 1024 оценки дают 684 отдельных обновления Adam за эпоху.
 
-Текущая серия исключает отложенные k=6,7,8,9,15:
-`python -u train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu`.
-Для отложенных k создана `configs/svdpp-ml1m-ratings-deferred.json`;
-она сейчас не запускается.
+```powershell
+python -u train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu
+```
+
+Протокол и продолжение: [docs/RATING_BATCHES_RU.md](docs/RATING_BATCHES_RU.md).
+Результаты: `results/svdpp-ml1m-ratings-active/seed11/`.
+k=6,7,8,9,15 отложены; для них создана
+`configs/svdpp-ml1m-ratings-deferred.json`, которая сейчас не запускается.
+Исходная полная сетка сохранена в `configs/svdpp-ml1m-ratings.json`.
+
+Завершённая текущая серия: [отчёт](results/published-ratings/seed11/REPORT_RU.md),
+[validation/test RMSE](results/published-ratings/seed11/rmse_vs_k_log.png),
+[сравнение с FM](results/published-ratings/seed11/validation_comparison.png).

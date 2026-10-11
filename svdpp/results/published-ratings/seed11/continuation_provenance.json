@@ -1,0 +1,91 @@
+{
+  "reason": "User deferred k=6,7,8,9,15 before any test evaluation",
+  "previous_protocol_fingerprint": "2f416d99ca1c2d58649d31edd3e66a68a21d43b54c77a0a564ace3eac307a3bc",
+  "current_protocol_fingerprint": "bc124f2747755b70a10bda519a2d71b82d217bbbb6358c3579a7442e8a55fe73",
+  "previous_directory": "C:\\Users\\user\\Downloads\\SVDpp_MovieLens1M_Colab\\svdpp-movielens1m\\results\\svdpp-ml1m-ratings\\seed11",
+  "deferred_k": [
+    6,
+    7,
+    8,
+    9,
+    15
+  ],
+  "active_k": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    10,
+    20,
+    30,
+    40,
+    50,
+    100,
+    150,
+    200
+  ],
+  "changed_fields": [
+    "settings.k_grid",
+    "settings.output_dir"
+  ],
+  "numerical_settings_and_source_unchanged": true,
+  "checkpoints": [
+    {
+      "k": 1,
+      "file": "last.pt",
+      "source_sha256": "f235d440aceef4d66a29aef83cc08dfe5ca9137ccfe8137bfb18758669a36107",
+      "target_sha256": "443fbc9a79e6dd5814c8ef8c4af8a002a2471ebdd4ddb41602b8c73b5b10dce9",
+      "epoch": 25,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 1,
+      "file": "model.pt",
+      "source_sha256": "3bcda50f772b79769af720bd17f86738a76e4a7d092330b73a30320ace027912",
+      "target_sha256": "9298bbb36a0f727054051cb79164d434f983e68d59a1724017b673b5aea5f8e0",
+      "epoch": null,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 2,
+      "file": "last.pt",
+      "source_sha256": "7c4d50279a03fd8da96f63520476b01f8edf3ddd9541e8c157572daff1aa8dfa",
+      "target_sha256": "845758b28c2d8e9c8ca1998806febc5aa2188aff07cda6b22eccbc81ac694e6d",
+      "epoch": 25,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 2,
+      "file": "model.pt",
+      "source_sha256": "e3c88d86f5fd31ff91c474c59eec3e8dd247689f527a80f120117e8b7c61d07b",
+      "target_sha256": "83ee968c9459eec50b419aba67081bef1b79f30b3675e25b140dacc331236814",
+      "epoch": null,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 3,
+      "file": "last.pt",
+      "source_sha256": "bae18e17b6c894fc1463e7844cbc3c5c90939d98014458af8dc69f4effcd5606",
+      "target_sha256": "ca3c43a7d69fdba2f81f5cfbe97beebe39d8590381cc08f6c98489c068ae827e",
+      "epoch": 25,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 3,
+      "file": "model.pt",
+      "source_sha256": "e18c71cfbb98a04388bbc92663b91bd01cbe5046aa9e1f1ceaed8ff637ebee3f",
+      "target_sha256": "f420882322134ab4f1c497befe9de71736fb89041afbadf7ec9eaa2047ffd8d4",
+      "epoch": null,
+      "weights_and_optimizer_unchanged": true
+    },
+    {
+      "k": 4,
+      "file": "last.pt",
+      "source_sha256": "fb4337ba4954329d4e7dd74db5dfa58f494df041d9a2b969d4b63edca9009de8",
+      "target_sha256": "374ac35a0845731bdce96d25ea4082814fb50cdf1fe5ea497a4f0f4b60917011",
+      "epoch": 18,
+      "weights_and_optimizer_unchanged": true
+    }
+  ]
+}

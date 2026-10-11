@@ -22,13 +22,17 @@ def main():
     stored=json.loads((out/'protocol.json').read_text(encoding='utf-8'));protocol=stored['protocol'];cfg=protocol['settings']
     require(digest(protocol)==stored['fingerprint'],'Protocol fingerprint mismatch')
     with zipfile.ZipFile(out/'source_snapshot.zip') as archive:
+        require(json.loads(archive.read('experiment_config.json'))==cfg,'Snapshot settings mismatch')
         for name,expected in protocol['source_sha256'].items():
             require(sha256(ROOT/name)==expected,f'Current source differs: {name}')
             require(hashlib.sha256(archive.read(name)).hexdigest()==expected,f'Source snapshot differs: {name}')
     frozen=json.loads((out/'frozen.json').read_text(encoding='utf-8'))
     require(frozen['fingerprint']==stored['fingerprint'],'Freeze fingerprint mismatch')
+    require(frozen['test_used_for_selection'] is False,'Test used for selection')
     ctx=context('configs/svdpp-ml1m.json','cpu');torch.set_num_threads(cfg['threads'])
     require(ctx['meta']['split']['id']==protocol['split_id'],'Split mismatch')
+    require(ctx['meta']['artifact_sha256']==protocol['data_sha256'],'Data hash mismatch')
+    require(not(set(ctx['train'].row_id)&set(ctx['validation'].row_id)),'Train/validation overlap')
     require(ctx['histories'].checksum==protocol['histories_checksum'],'Histories mismatch')
     test=pd.read_csv(ctx['directory']/'test.csv');test_t=tensors(test,torch.device('cpu'));val_t=tensors(ctx['validation'],torch.device('cpu'))
     test_score,val_score=FixedOrderScorer(test),FixedOrderScorer(ctx['validation'])
@@ -36,7 +40,7 @@ def main():
     require(not(set(test.row_id)&set(ctx['validation'].row_id)),'Validation/test overlap')
     table=pd.read_csv(out/'metrics_by_run.csv')
     require(set(table.k)==set(cfg['k_grid']) and len(table)==len(cfg['k_grid']),'Incomplete grid')
-    operator=HistoryOperator(ctx['histories'],ctx['meta']['n_items']);maximum_error=0.;checked=0
+    operator=HistoryOperator(ctx['histories'],ctx['meta']['n_items']);maximum_error=0.;checked=0;parameter_counts={}
     for row in table.to_dict('records'):
         k=int(row['k']);run=out/'runs'/f'k{k}';history=pd.read_csv(run/'history.csv')
         saved=torch.load(run/'last.pt',map_location='cpu',weights_only=False)
@@ -58,6 +62,8 @@ def main():
             torch.testing.assert_close(weight,best['state'][name],rtol=0,atol=0)
         require(sha256(run/'model.pt')==frozen['models_sha256'][str(k)],f'Frozen weight hash k={k}')
         model=RatingSVDPlusPlus(ctx['meta']['n_users'],ctx['meta']['n_items'],k,float(ctx['train'].rating.mean()),ctx['histories'],cfg['init_std'],operator)
+        require(len(saved['optimizer']['state'])==len(list(model.parameters())),f'Missing Adam states k={k}')
+        parameter_counts[str(k)]=sum(p.numel() for p in model.parameters() if p.requires_grad)
         model.load_state_dict(best['state'])
         val=val_score(predict(model,val_t,cfg['eval_batch_size']));score=test_score(predict(model,test_t,cfg['eval_batch_size']))
         error=max(abs(val-row['validation_rmse']),abs(score-row['test_rmse']));maximum_error=max(maximum_error,error)
@@ -72,7 +78,9 @@ def main():
     result=dict(passed=True,models_checked=checked,updates_per_epoch=684,max_epochs=25,
                 total_optimizer_updates=int(table.optimizer_updates.sum()),maximum_recomputed_metric_difference=maximum_error,
                 selected_k_by_validation=int(best.k),source_snapshot_checked=True,frozen_weights_checked=True,
-                histories_and_adam_steps_checked=True,artifact_sha256=hashes)
+                histories_and_adam_steps_checked=True,trainable_parameter_counts=parameter_counts,
+                data_counts=dict(train=len(ctx['train']),validation=len(ctx['validation']),test=len(test),n_users=ctx['meta']['n_users'],n_items=ctx['meta']['n_items']),
+                artifact_sha256=hashes)
     write_json(out/'verification.json',result)
     print(json.dumps({k:v for k,v in result.items() if k!='artifact_sha256'},indent=2))
 

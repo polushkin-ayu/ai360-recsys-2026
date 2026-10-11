@@ -1,0 +1,11 @@
+{
+  "k": [
+    6,
+    7,
+    8,
+    9,
+    15
+  ],
+  "config": "configs/svdpp-ml1m-ratings-deferred.json",
+  "not_trained_in_active_study": true
+}

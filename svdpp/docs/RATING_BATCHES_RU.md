@@ -1,9 +1,10 @@
 # SVD++ с батчами по оценкам для сравнения с FM
 
+Текущая серия: 13 значений k, seed 11, не более 25 эпох.
 Команда из папки проекта:
 
 ```powershell
-.\.venv\Scripts\python.exe -u train_ratings.py --seed 11 --device cpu
+.\.venv\Scripts\python.exe -u train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu
 ```
 
 Полный train MovieLens 1M: 700146 оценок. Перед каждой эпохой заново
@@ -11,7 +12,9 @@
 за эпоху выполняется 684 отдельных обновления Adam, как у FM.
 Накопление градиентов и объединение обновлений не используются.
 
-Вся сетка k: 1,2,3,4,5,6,7,8,9,10,15,20,30,40,50,100,150,200.
+Активная сетка k: 1,2,3,4,5,10,20,30,40,50,100,150,200.
+Отложены k=6,7,8,9,15. Исходная полная сетка из 18 значений
+остаётся в configs/svdpp-ml1m-ratings.json для отдельного будущего запуска.
 Настройки фиксированы: learning_rate=0.001, reg_bias=0.01,
 reg_factors=10, init_std=0.01, максимум 25 эпох, patience=10.
 Регуляризация делится на число оценок train. Проверка validation
@@ -26,7 +29,7 @@ reg_factors=10, init_std=0.01, максимум 25 эпох, patience=10.
 Средняя оценка mu остаётся фиксированной средней train.
 
 Результаты находятся отдельно от быстрых опытов:
-results/svdpp-ml1m-ratings/seed11/.
+results/svdpp-ml1m-ratings-active/seed11/.
 В runs/k<K>/ находятся history.csv, progress.json, last.pt, model.pt,
 metrics.json и learning_and_loss.png. В history.csv записано число
 обновлений за эпоху и накопленное число шагов Adam. last.pt сохраняется

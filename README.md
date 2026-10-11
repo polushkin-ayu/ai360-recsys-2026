@@ -88,7 +88,7 @@ python -m unittest discover -s tests -v
 
 Актуальная реализация и процесс обучения находятся в [`svdpp/`](svdpp/README.md).
 Модель: [`svdpp/src/model.py`](svdpp/src/model.py); цикл обучения:
-[`svdpp/src/training.py`](svdpp/src/training.py). Это отдельный проект на полном
+[`svdpp/src/rating_training.py`](svdpp/src/rating_training.py). Это отдельный проект на полном
 MovieLens 1M с общими CSV split; реализация и обучение FM сохранены.
 
 ```bash
@@ -98,13 +98,18 @@ python svdpp/prepare_data.py
 python svdpp/train_ratings.py --config configs/svdpp-ml1m-ratings-active.json --output results/svdpp-ml1m-ratings-active/seed11 --seed 11 --device cpu
 ```
 
-Опубликованы результаты одного seed по всем 18 значениям k: [метрики](svdpp/results/published/seed11/metrics_summary.csv),
-[RMSE на validation/test от k](svdpp/results/published/seed11/rmse_vs_k_log.png),
-[train loss по эпохам](svdpp/results/published/seed11/final_loss_curves.png).
-Все 97 случаев остановки по времени продолжены без временного лимита; лучшая
-модель по validation: k=6, lr=0.03, lambda=10, validation RMSE=0.856640,
-test RMSE=0.854807. Суммарное время двух запусков — 44.5 минуты на Celeron N5095.
-Сохранены короткие бюджеты 8/30 эпох и один seed; сходимость не установлена.
+Завершена серия с 684 обновлениями Adam за эпоху: 13 значений k, seed 11,
+максимум 25 эпох. k=6,7,8,9,15 отложены. Лучший по validation — k=40,
+validation RMSE=0.848575, test RMSE=0.847055;
+восстановлены веса 12-й эпохи из 22 выполненных.
+Сумма времени завершённых эпох — 98.64 минуты на Celeron N5095.
+
+[Метрики](svdpp/results/published-ratings/seed11/metrics_by_run.csv),
+[validation/test RMSE от k](svdpp/results/published-ratings/seed11/rmse_vs_k_log.png),
+[train loss по эпохам](svdpp/results/published-ratings/seed11/final_loss_curves.png),
+[сравнение с FM](svdpp/results/published-ratings/seed11/validation_comparison.png).
+Ранее завершённый быстрый протокол с подбором lr/lambda сохранён отдельно:
+[архивный отчёт](docs/archive/svdpp_fast_report_2026-10-11.md).
 
 Полный отчёт: [docs/svdpp_report.md](docs/svdpp_report.md). Старые результаты
 `results/svdpp/` и [отчёт от 6 октября](docs/archive/svdpp_report_2026-10-06.md)

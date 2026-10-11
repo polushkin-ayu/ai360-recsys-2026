@@ -1,0 +1,18 @@
+{
+  "k": 4,
+  "seed": 11,
+  "train_rmse": 0.8296123981486884,
+  "validation_rmse": 0.863060056477899,
+  "best_epoch": 25,
+  "epochs_run": 25,
+  "updates_per_epoch": 684,
+  "optimizer_updates": 17100,
+  "fit_seconds": 205.3194943999988,
+  "hit_epoch_cap": true,
+  "time_limited": false,
+  "learning_rate": 0.001,
+  "reg_bias": 0.01,
+  "reg_factors": 10.0,
+  "batch_size": 1024,
+  "init_std": 0.01
+}
