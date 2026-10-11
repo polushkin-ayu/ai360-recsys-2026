@@ -10,8 +10,12 @@ results/single/
 results/svdpp-ml1m/
 results/colab-study/
 configs/colab-study.json
+results/svdpp-ml1m-ratings/
 
-# New runs stay local; published metrics/figures live under results/published.
 results/svdpp-ml1m-fast/
+
 results/svdpp-ml1m-fast-completed/
+
 results/complete-fast-*.log
+
+results/rating-training-*.log

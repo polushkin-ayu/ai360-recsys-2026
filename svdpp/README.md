@@ -268,3 +268,11 @@ python prepare_data.py --check-only
 `python -m unittest tests.test_plotting -v`.
 Полный набор тестов выше включает короткое обучение на искусственном примере.
 Архивные сведения о первоначальных проверках — `docs/VERIFICATION.json`.
+
+## Обучение с 684 обновлениями за эпоху
+
+Для сравнения с FM при фиксированных настройках выполните
+`python -u train_ratings.py --seed 11 --device cpu`. Батчи по 1024 оценки,
+вся сетка k, один seed, максимум 25 эпох и patience=10, без лимита времени.
+Протокол и продолжение: [docs/RATING_BATCHES_RU.md](docs/RATING_BATCHES_RU.md).
+Результаты: `results/svdpp-ml1m-ratings/seed11/`.
