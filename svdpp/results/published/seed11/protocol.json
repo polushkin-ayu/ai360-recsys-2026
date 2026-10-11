@@ -1,0 +1,136 @@
+{
+  "fingerprint": "cd6c6fc54b5e36fcc04cf20f2cadf9377f42137bcc8a980ef09e59cfcce59fba",
+  "protocol": {
+    "config": {
+      "data_dir": "data/processed/movielens1m",
+      "output_dir": "results\\svdpp-ml1m-fast-completed\\seed11",
+      "checkpoint_dir": "artifacts\\svdpp-ml1m-fast-completed\\seed11",
+      "expected_split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+      "expected_sizes": {
+        "train": 700146,
+        "validation": 150002,
+        "test": 149990
+      },
+      "k_grid": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        15,
+        20,
+        30,
+        40,
+        50,
+        100,
+        150,
+        200
+      ],
+      "learning_rates": [
+        0.003,
+        0.03
+      ],
+      "regularizations": [
+        0.0,
+        0.1,
+        1.0,
+        10.0
+      ],
+      "tuning_seeds": [
+        11,
+        22,
+        33
+      ],
+      "final_seeds": [
+        101,
+        102,
+        103,
+        104,
+        105
+      ],
+      "tuning_strategy": {
+        "mode": "two_stage",
+        "screening_epochs": 8,
+        "candidates_per_learning_rate": 1
+      },
+      "max_epochs": 30,
+      "patience": 10,
+      "batch_users": 512,
+      "eval_batch_size": 16384,
+      "init_base_std": 0.1,
+      "checkpoint_every": 10,
+      "log_every": 10,
+      "threads": 4,
+      "device": "cpu",
+      "eval_every": 5,
+      "fixed_user_batches": true
+    },
+    "data_sha256": {
+      "subset.csv": "6d3056e38ac489f1f22c1e6502d6e5ce6e42447d162df8eb111eb1fecba49623",
+      "selected_users.json": "a2e3f271e5a58b5eacb1497d926d03a84dd5ea5f876d9f0e2e273ef41f0a56e1",
+      "user_mapping.csv": "d8a3d28dfcb7355f92dd076cc09868d2d5393047248f3182db94139ff2d36751",
+      "item_mapping.csv": "a81e6318d18fb7a77aeec7fd08883de56bbf649d30df758bc0550982d4f8a24c",
+      "train.csv": "488fae0e135dd129ccf4cee0e3718b09b39376826bb98af98c316080ea1ec76d",
+      "validation.csv": "81d20dbeaa989894ae0b85bad3c48154fb3396c2abbe2919bdc83856b6835715",
+      "validation_all.csv": "f629176ff436693806e6b67e55e58e855206b2b2215c957ee87f2610c6b8a54f",
+      "validation_row_ids.csv": "617ac27482bf208e83e27f99f7f5d743d3f0fe0fad5d1d6bde4e692f81f16e5c",
+      "test.csv": "25718681ef7ecf9dd7aeefaa3124f654d518ca9ac14e3dd63d164ffdf5256e4f",
+      "test_all.csv": "c7ce6bac1e5f9e6a19ccb2f58fa185f07fc63ca61dc7e80d063a8d61fb59ace7",
+      "test_row_ids.csv": "e2d35ec4b4e1ab005e765ee46959e5284cf862609d0c2d22fbcec0d7dcaf0944"
+    },
+    "split_id": "f8f6f4178788e3c718735b2e7f23e1918f8801df2a8778cceb8227bf5b031b62",
+    "histories_checksum": "5a44570ccaa047ec5a29a194e68b11e5947c8d7ab04554aa5b51ccfb9c345b06",
+    "reference_split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+    "all_shared_csvs_byte_identical": true,
+    "source_sha256": {
+      "src/experiment.py": "479494efaafd50780fb3fa45cd85db72b12be27a799bcc679ff96ed706cf82af",
+      "src/model.py": "db469e4aa585d8ae3acc6f44f67a7aeddcf14edd24d578f34b75b8847dd2bfa8",
+      "src/training.py": "08624f02480037cdcb4ef78d7b52ce31e2b0f5aa8374f056e7197520406e7fa7",
+      "src/data.py": "5046e0067af3254eb65f5d4496fbe959b33337301f91dc9fc25d5db8b3d4ff2c",
+      "src/check_data.py": "ee66ecd99da26825fe02fa66fac149d3eff5659da789d402106a1801c7c57a99",
+      "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+      "src/prepare_movielens1m.py": "51faf1e4d5d048e475dc61d644ebecc40ad9c408b1eda4efff3ab078a82aa8fa",
+      "src/plotting.py": "c9f60be712f0643473ac3c883efc126c90e5c30f5411be366c44119b2323905e",
+      "results/movielens1m-data/reproducibility.json": "3f792d50c332319c62c590bf647654e06a9f90c2da1b8f98426762881da282a5",
+      "fast.py": "0cba603d343cfc9d8bdac4c71e20ca9004c026e3ec0e7645f33de4154d9ce4b3",
+      "src/fast_experiment.py": "002dab6f73d40c65ca57fd4a6ebb0bf6fc8b052ab043f949bac8082d25d7369b",
+      "complete_fast.py": "293c06247bae5ce6655b1f9f3ed6aa96417448510e7a3ec03e35fc70f6bc6895"
+    },
+    "environment": {
+      "python": "3.13.5",
+      "os": "Windows-10-10.0.19045-SP0",
+      "torch": "2.14.1+cpu",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "device": "cpu",
+      "gpu": null,
+      "threads": 4,
+      "deterministic_algorithms": true,
+      "cuda_version": null
+    },
+    "mean": 3.582288551245026,
+    "objective": "MSE + lambda/N * (||bu||^2+||bi||^2+||P||^2+||Q||^2+||Y||^2)",
+    "optimizer": "Adam, weight_decay=0, no learning-rate scheduler, float32, unclipped predictions",
+    "selection": "Original candidates fixed; complete time-limited trials; validation-only selection",
+    "tuning_strategy": {
+      "mode": "two_stage",
+      "screening_epochs": 8,
+      "candidates_per_learning_rate": 1
+    },
+    "source_fingerprint": "a2169eb2522c46d0d2b6cec2ae149783e8462af3dbc2ca1d998b687f058bbf84",
+    "source_protocol_sha256": "a1ad036602c44add673908de4a0eb9c8336551e13afcf28930870d8e6ac4150f",
+    "source_record_manifest": "20ad9d0f6a4936de367259346e504013f7a86cb5c35903a2b1f7ff868546277d",
+    "fast_seed": 11,
+    "wall_budget_seconds": null,
+    "independent_final_repeats": false
+  },
+  "git": {
+    "commit": "bdf104aa6d771cff35c65eb31b59bb0d4575f1d4",
+    "dirty": true
+  }
+}

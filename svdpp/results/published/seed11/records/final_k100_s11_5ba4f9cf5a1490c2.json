@@ -1,0 +1,25 @@
+{
+  "id": "final_k100_s11_5ba4f9cf5a1490c2",
+  "stage": "final",
+  "signature": "f3862e81495168ead1dc1a594ec7d6d6ce1c4a3d6a9037c9fc14a08d5872a883",
+  "metrics": {
+    "k": 100,
+    "learning_rate": 0.003,
+    "regularization": 0.1,
+    "seed": 11,
+    "train_rmse": 0.7149647367760351,
+    "validation_rmse": 0.8647435606854181,
+    "best_epoch": 15,
+    "epochs_run": 25,
+    "hit_epoch_cap": false,
+    "time_limited": false,
+    "fit_seconds": 38.79835529999582,
+    "n_parameters": 1344092,
+    "init_std": 0.03162277660168379
+  },
+  "checkpoint": "artifacts\\svdpp-ml1m-fast-completed\\seed11\\final\\final_k100_s11_5ba4f9cf5a1490c2.pt",
+  "files": {
+    "artifacts\\svdpp-ml1m-fast-completed\\seed11\\final\\final_k100_s11_5ba4f9cf5a1490c2.pt": "5092dbde3f7b192a1aeabbf79b41513fb5eaed22e04f2e988a60fed7b7499a9e",
+    "results\\svdpp-ml1m-fast-completed\\seed11\\histories\\final_k100_s11_5ba4f9cf5a1490c2.csv": "578de86a9f5413b24e88b97d2e81741a3d4d59b7ebe1e634b402f9f0804634be"
+  }
+}

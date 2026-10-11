@@ -1,0 +1,33 @@
+{
+  "id": "screen_k20_s11_496cdef937e1b935",
+  "stage": "screen",
+  "signature": "df376fdd009cc04cb13376c4d8fbeb6e86b301adcad5c8ba692ab4ed25964b36",
+  "metrics": {
+    "k": 20,
+    "learning_rate": 0.03,
+    "regularization": 10.0,
+    "seed": 11,
+    "train_rmse": 0.7788445461732866,
+    "validation_rmse": 0.8682875487306745,
+    "best_epoch": 8,
+    "epochs_run": 8,
+    "hit_epoch_cap": true,
+    "time_limited": false,
+    "fit_seconds": 6.000975900001322,
+    "n_parameters": 276572,
+    "init_std": 0.047287080450158794
+  },
+  "checkpoint": "artifacts\\svdpp-ml1m-fast\\seed11\\best\\screen_k20_s11_496cdef937e1b935.pt",
+  "last_checkpoint": "artifacts\\svdpp-ml1m-fast\\seed11\\active\\screen_k20_s11_496cdef937e1b935.pt",
+  "checkpoint_signature": "2b0906bf11bab31f82ea33c7b7c5b13fb46560410d7c12f2743be973f6fcb40a",
+  "checkpoint_fingerprint": "a2169eb2522c46d0d2b6cec2ae149783e8462af3dbc2ca1d998b687f058bbf84",
+  "files": {
+    "artifacts\\svdpp-ml1m-fast\\seed11\\active\\screen_k20_s11_496cdef937e1b935.pt": "dab66672c605a7309bafe7f9786b5d60ad3d11d2cfe02b83aef141a000d6cf31",
+    "artifacts\\svdpp-ml1m-fast\\seed11\\best\\screen_k20_s11_496cdef937e1b935.pt": "68b352ff322f5a86ee9a936e9e0205a15d717bf0504279ab84d8acac63d895c7",
+    "results\\svdpp-ml1m-fast-completed\\seed11\\histories\\screen_k20_s11_496cdef937e1b935.csv": "4c5f07ed53edd85e9bd3f8d0517555102234e0c7ab99ec382dc57f91af6b94bf"
+  },
+  "source_signature": "2b0906bf11bab31f82ea33c7b7c5b13fb46560410d7c12f2743be973f6fcb40a",
+  "source_time_limited": false,
+  "source_epochs": 8,
+  "additional_epochs": 0
+}

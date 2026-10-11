@@ -1,0 +1,25 @@
+{
+  "id": "final_k6_s11_496cdef937e1b935",
+  "stage": "final",
+  "signature": "bd58b1ea0f9a994c1b9c07fa1ebfe7caa5cc915d3120b38849d32edcdd2e2db5",
+  "metrics": {
+    "k": 6,
+    "learning_rate": 0.03,
+    "regularization": 10.0,
+    "seed": 11,
+    "train_rmse": 0.8054096275667816,
+    "validation_rmse": 0.8566402859236522,
+    "best_epoch": 25,
+    "epochs_run": 30,
+    "hit_epoch_cap": true,
+    "time_limited": false,
+    "fit_seconds": 18.246453600005225,
+    "n_parameters": 89756,
+    "init_std": 0.06389431042462725
+  },
+  "checkpoint": "artifacts\\svdpp-ml1m-fast-completed\\seed11\\final\\final_k6_s11_496cdef937e1b935.pt",
+  "files": {
+    "artifacts\\svdpp-ml1m-fast-completed\\seed11\\final\\final_k6_s11_496cdef937e1b935.pt": "f92d89b2a746c5c54844cdb35f26645ca11121a072efb917b6886149c17296f7",
+    "results\\svdpp-ml1m-fast-completed\\seed11\\histories\\final_k6_s11_496cdef937e1b935.csv": "0860560215277e1a26a8b03cc76ab73ff34c7ca2f3321fe9036c9e3ecf40669a"
+  }
+}

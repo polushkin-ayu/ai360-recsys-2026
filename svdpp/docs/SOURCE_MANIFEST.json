@@ -1,0 +1,19 @@
+{
+  "retrieved_package": "SVDpp_ML1M_Package.zip",
+  "retrieved_package_date": "2026-10-06",
+  "retrieved_package_sha256": "77b832afeb8c728038f79401afd460552774eff83a07c9260bbc43940dd8c698",
+  "original_model_and_training_sha256": "bcfb21a84fc46596623aecfd6b0dd75b8a2827e20593e71326091073be30a15b",
+  "data_source_repository": "https://github.com/polushkin-ayu/ai360-recsys-2026",
+  "data_source_commit": "5f5e3a4cf86d5736bd9770c56cb654efe6708065",
+  "changes": [
+    "Extracted original classes into src/model.py",
+    "Extracted original fit_one into src/training.py",
+    "Added a single-model command and Colab notebook",
+    "Retained the original full-study protocol and validation-only tuning",
+    "Removed unrelated 100K preparation helpers"
+  ],
+  "full_hyperparameter_search_completed": false,
+  "shared_reference_split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+  "prepared_split_id": "f8f6f4178788e3c718735b2e7f23e1918f8801df2a8778cceb8227bf5b031b62",
+  "csv_hashes_match_shared_reference": true
+}

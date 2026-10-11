@@ -86,11 +86,31 @@ python -m unittest discover -s tests -v
 
 ## Отдельный эксперимент SVD++
 
-Самостоятельная PyTorch-реализация канонической SVD++ находится в `src/svdpp.py`. Истории строятся только по train, нормировка sqrt, среднее train фиксировано. Выполнены 3 pilot-попытки и 15 основных запусков; лучший k по validation — 10.
+Актуальная реализация и процесс обучения находятся в [`svdpp/`](svdpp/README.md).
+Модель: [`svdpp/src/model.py`](svdpp/src/model.py); цикл обучения:
+[`svdpp/src/training.py`](svdpp/src/training.py). Это отдельный проект на полном
+MovieLens 1M с общими CSV split; реализация и обучение FM сохранены.
 
-CLI `python -m src.run_svdpp` выполняет этапы pilot/sweep/final-evaluate только для SVD++; `python -m src.plot_svdpp` строит её графики из сохранённых CSV. Комплексное сравнение моделей проводится отдельно участниками проекта.
+```bash
+python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements-svdpp.txt
+python svdpp/prepare_data.py
+python svdpp/fast.py --seed 11 --minutes 55 --device cpu
+```
 
-Конфигурация: `configs/svdpp-study.json`; окружение CPU: `requirements-svdpp.txt`; проверки: `python -m src.check_svdpp`; результаты и ограничения: [docs/svdpp_report.md](docs/svdpp_report.md).
+Опубликованы результаты одного seed по всем 18 значениям k: [метрики](svdpp/results/published/seed11/metrics_summary.csv),
+[RMSE на validation/test от k](svdpp/results/published/seed11/rmse_vs_k_log.png),
+[train loss по эпохам](svdpp/results/published/seed11/final_loss_curves.png).
+Все 97 случаев остановки по времени продолжены без временного лимита; лучшая
+модель по validation: k=6, lr=0.03, lambda=10, validation RMSE=0.856640,
+test RMSE=0.854807. Суммарное время двух запусков — 44.5 минуты на Celeron N5095.
+Сохранены короткие бюджеты 8/30 эпох и один seed; сходимость не установлена.
+
+Полный отчёт: [docs/svdpp_report.md](docs/svdpp_report.md). Старые результаты
+`results/svdpp/` и [отчёт от 6 октября](docs/archive/svdpp_report_2026-10-06.md)
+оставлены как архив. Старые CLI заменены командами из новой инструкции;
+`src/svdpp.py` экспортирует актуальную модель, а `src/svdpp_legacy.py` нужен
+только для загрузки прежних checkpoint через общий API.
 
 ## API подготовленных данных
 

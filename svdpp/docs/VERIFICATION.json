@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-10",
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.14.1+cpu",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "device": "cpu"
+  },
+  "unit_and_synthetic_pipeline_tests": {
+    "count": 12,
+    "passed": true
+  },
+  "model_and_training_AST_identical_to_retrieved_source": true,
+  "full_ml1m_csv_hashes_match_shared_reference": true,
+  "all_source_ratings": 1000209,
+  "split_evaluation_sizes": {
+    "train": 700146,
+    "validation": 150002,
+    "test": 149990
+  },
+  "prepared_split_id": "f8f6f4178788e3c718735b2e7f23e1918f8801df2a8778cceb8227bf5b031b62",
+  "shared_reference_split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+  "auxiliary_json_difference": "selected_users.json uses LF; reference Windows file uses CRLF; all CSVs are byte-identical",
+  "full_ml1m_cli_smoke": {
+    "k": 2,
+    "lr": 0.001,
+    "lambda": 0.01,
+    "seed": 11,
+    "epochs": 5,
+    "validation_rmse": 0.9802474495796606,
+    "purpose": "technical verification, not tuned quality"
+  },
+  "first_epoch_matches_previous_user_log": {
+    "train": 1.095014,
+    "validation": 1.096083
+  },
+  "full_ml1m_resume_3_then_5_epochs_matches_uninterrupted_5_epochs_bit_exact_on_cpu": true,
+  "notebook_schema_and_python_syntax_valid": true,
+  "gpu_run_performed": false,
+  "full_hyperparameter_search_completed": false,
+  "test_rmse_computed_on_ml1m": false,
+  "source_sha256": {
+    "experiment.py": "0d403d6c501a7b6073bb24a4f2147cb50925c21d4ca5ade8a2a77e49ddba31f3",
+    "plot.py": "694a41e2c33a679af2e8cb623b5eb41c61d7565efa572f41d262a721081b8aa1",
+    "prepare_data.py": "8dc3ed5fdfaf8f3eea05a2a4c58c24ad679ec91e060a42040ebcde624647be2c",
+    "train.py": "e0443b923a028c64ba369c9faf503a365d7a54e9ff7ede275514864585734d16",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/check_data.py": "ee66ecd99da26825fe02fa66fac149d3eff5659da789d402106a1801c7c57a99",
+    "src/data.py": "5046e0067af3254eb65f5d4496fbe959b33337301f91dc9fc25d5db8b3d4ff2c",
+    "src/experiment.py": "b9699d63a54cbecb0ed54e65c06a58f4e72f310e4231c5b667006649ee65f60f",
+    "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+    "src/model.py": "1c503d746145896cc15592499b706b6b58f3239f6c85a6fb67ae6b9256aa0d1e",
+    "src/plotting.py": "44b399313fe7ecaec8b14a8e3aa0e6e688495ccf5a5d3fabe39f7dc05419e4d1",
+    "src/prepare_movielens1m.py": "51faf1e4d5d048e475dc61d644ebecc40ad9c408b1eda4efff3ab078a82aa8fa",
+    "src/svdpp_ml1m.py": "98e89783c43ee5027b7d7d1185ecf72a334d58958a22ab1ae53589059c35f78a",
+    "src/training.py": "d7cc980264cbbbf12569c39973815e555d921d32915d3a94b1ccfdb31fce037f",
+    "configs/movielens1m-data.json": "ce06681cca97a03e1772d71f39344d4abafe9f80397a15f789cb7dc57b357fea",
+    "configs/svdpp-ml1m.json": "b59dbc3fcb135e421a208f94e50c8a974705f77e57fd0f2ecd7429a5d3bda285"
+  }
+}

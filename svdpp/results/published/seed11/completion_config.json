@@ -1,0 +1,69 @@
+{
+  "data_dir": "data/processed/movielens1m",
+  "output_dir": "results\\svdpp-ml1m-fast-completed\\seed11",
+  "checkpoint_dir": "artifacts\\svdpp-ml1m-fast-completed\\seed11",
+  "expected_split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+  "expected_sizes": {
+    "train": 700146,
+    "validation": 150002,
+    "test": 149990
+  },
+  "k_grid": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    15,
+    20,
+    30,
+    40,
+    50,
+    100,
+    150,
+    200
+  ],
+  "learning_rates": [
+    0.003,
+    0.03
+  ],
+  "regularizations": [
+    0.0,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "tuning_seeds": [
+    11,
+    22,
+    33
+  ],
+  "final_seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "tuning_strategy": {
+    "mode": "two_stage",
+    "screening_epochs": 8,
+    "candidates_per_learning_rate": 1
+  },
+  "max_epochs": 30,
+  "patience": 10,
+  "batch_users": 512,
+  "eval_batch_size": 16384,
+  "init_base_std": 0.1,
+  "checkpoint_every": 10,
+  "log_every": 10,
+  "threads": 4,
+  "device": "cpu",
+  "eval_every": 5,
+  "fixed_user_batches": true
+}

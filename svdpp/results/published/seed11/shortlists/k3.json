@@ -1,0 +1,36 @@
+{
+  "candidates": [
+    {
+      "k": 3,
+      "learning_rate": 0.003,
+      "regularization": 0.1,
+      "seed": 11,
+      "train_rmse": 0.9534335939704816,
+      "validation_rmse": 0.9588154172298085,
+      "best_epoch": 8,
+      "epochs_run": 8,
+      "hit_epoch_cap": true,
+      "time_limited": false,
+      "fit_seconds": 4.1073740000001635,
+      "n_parameters": 49724,
+      "init_std": 0.07598356856515927
+    },
+    {
+      "k": 3,
+      "learning_rate": 0.03,
+      "regularization": 10.0,
+      "seed": 11,
+      "train_rmse": 0.8532802758533818,
+      "validation_rmse": 0.8787984789711591,
+      "best_epoch": 8,
+      "epochs_run": 8,
+      "hit_epoch_cap": true,
+      "time_limited": false,
+      "fit_seconds": 3.978894400000172,
+      "n_parameters": 49724,
+      "init_std": 0.07598356856515927
+    }
+  ],
+  "policy": "Candidates fixed in source study",
+  "test_used": false
+}

@@ -1,0 +1,26 @@
+{
+  "method": "Inference-only on random weights; no backward, optimizer, training or test targets",
+  "cpu": "Intel Celeron N5095",
+  "threads": 4,
+  "batch_users": 512,
+  "batches_per_epoch": 12,
+  "samples": [
+    {
+      "k": 2,
+      "forward_only_seconds": 0.0420919,
+      "train_validation_forward_seconds": 0.0766301
+    },
+    {
+      "k": 50,
+      "forward_only_seconds": 0.2602617,
+      "train_validation_forward_seconds": 0.31785245
+    },
+    {
+      "k": 200,
+      "forward_only_seconds": 0.9035281,
+      "train_validation_forward_seconds": 1.10869145
+    }
+  ],
+  "measured_part_for_full_fast_study_minutes": 8.94191551,
+  "full_training_duration_verified": false
+}

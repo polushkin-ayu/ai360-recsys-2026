@@ -1,8 +1,9 @@
 # Модели
 
-Каноническая SVD++ добавлена в `svdpp.py`: `SVDPlusPlus` и `build_train_histories(train, n_users, n_items)`. Истории — unique train items, нормировка sqrt; mu фиксировано, P/Q/Y независимы.
-
-`run_svdpp.py` выполняет только SVD++: 3 pilot attempts и 15 основных запусков. `plot_svdpp.py` строит её графики из CSV. Содержательные проверки модели — `tests/test_svdpp.py`; полная инструкция — [отчёт](../docs/svdpp_report.md).
+Актуальная SVD++ и отдельный цикл обучения находятся в [svdpp/](../svdpp/README.md).
+`src/svdpp.py` экспортирует новую модель. `src/svdpp_legacy.py` используется
+общим загрузчиком только для прежнего формата checkpoint. Запускать новый
+эксперимент следует через `python svdpp/fast.py` из корня репозитория.
 
 В `models.py` находятся две PyTorch-модели для уже подготовленных целочисленных
 `user_idx` и `item_idx`, а также общая FM:
