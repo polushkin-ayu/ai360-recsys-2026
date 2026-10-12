@@ -1,0 +1,7 @@
+model,budget,actual_params,k,learning_rate,seed,validation_rmse,best_epoch,fit_seconds,checkpoint,test_rmse,status,error
+"FM(u,i)",100000,96921,9,0.0001,42,0.875636315207584,100,51.49132770900178,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget100000_lr0p0001_seed42.pt,,ok,
+"FM(u,i)",100000,96921,9,0.0003,42,0.858463227447479,100,49.51381954099634,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget100000_lr0p0003_seed42.pt,,ok,
+"FM(u,i)",100000,96921,9,0.001,42,0.8554313909446575,100,51.43917004099785,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget100000_lr0p001_seed42.pt,,ok,
+"FM(u,i)",100000,96921,9,0.003,42,0.8552683384197228,35,22.51811454199924,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget100000_lr0p003_seed42.pt,,ok,
+"FM(u,i)",100000,96921,9,0.01,42,0.8635141999547951,14,12.428153333996306,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget100000_lr0p01_seed42.pt,,ok,
+"FM(u,i)",200000,203533,20,0.0001,42,0.8658069755170923,100,54.858826957999554,results/fm-parameter-lr-sweep/checkpoints/fm_ui_budget200000_lr0p0001_seed42.pt,,ok,

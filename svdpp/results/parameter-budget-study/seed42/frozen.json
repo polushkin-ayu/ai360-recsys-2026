@@ -1,0 +1,12 @@
+{
+  "fingerprint": "493b26a8af7fae38a093db3f8fdbecc4e225865089b610d420fadaa22b6e3bd0",
+  "selected_k_by_validation": 74,
+  "models_sha256": {
+    "7": "042c4b771c91a60200130fda5766c4d4d3763337b542419710a398281c68fdc8",
+    "14": "a5974c00a8460fef985288b9f161c69ae9e0523282b4575d3b8575e8c483126f",
+    "37": "1c8f834cb76685afd9eb63e40aae6863bb52917b9f11983dd1e3ec641aa473ac",
+    "74": "01e2fbca17b2cbb88394cbec43963331e9bc2d5340b5e3a1caef1f0b6e4693c1"
+  },
+  "epoch_cap_k": [],
+  "test_used_for_selection": false
+}

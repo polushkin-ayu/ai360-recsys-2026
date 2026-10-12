@@ -1,14 +1,15 @@
 {
+  "completed": true,
   "completed_k": [
-    7
-  ],
-  "pending_k": [
+    7,
     14,
     37,
     74
   ],
-  "completed": false,
+  "pending_k": [],
   "seed": 42,
+  "selected_k_by_validation": 74,
   "updates_per_epoch": 684,
-  "test_evaluated": false
+  "total_fit_seconds": 1265.4889155039855,
+  "test_evaluated": true
 }

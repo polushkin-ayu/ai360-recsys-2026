@@ -9,6 +9,8 @@ from src.data import load_prepared
 BUDGETS = [
     100_000,
     200_000,
+    300_000,
+    400_000,
     500_000,
     1_000_000,
 ]
