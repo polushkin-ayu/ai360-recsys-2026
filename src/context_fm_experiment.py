@@ -35,19 +35,29 @@ class ContextFM(nn.Module):
         self.use_frequency = use_frequency
         self.init_std = init_std
 
-        # Sparse embeddings = намного легче обучение на MovieLens 1M.
-        self.user_bias = nn.Embedding(n_users, 1, sparse=True)
-        self.item_bias = nn.Embedding(n_items, 1, sparse=True)
-        self.day_bias = nn.Embedding(n_days, 1, sparse=True)
+        # Dense embeddings:
+        # все параметры обучаются одним обычным Adam.
+        self.user_bias = nn.Embedding(
+            n_users, 1
+        )
+        self.item_bias = nn.Embedding(
+            n_items, 1
+        )
+        self.day_bias = nn.Embedding(
+            n_days, 1
+        )
 
         self.user_factors = nn.Embedding(
-            n_users, n_factors, sparse=True
+            n_users,
+            n_factors,
         )
         self.item_factors = nn.Embedding(
-            n_items, n_factors, sparse=True
+            n_items,
+            n_factors,
         )
         self.day_factors = nn.Embedding(
-            n_days, n_factors, sparse=True
+            n_days,
+            n_factors,
         )
 
         self.global_bias = nn.Parameter(
@@ -58,13 +68,17 @@ class ContextFM(nn.Module):
             self.frequency_weight = nn.Parameter(
                 torch.tensor(0.0)
             )
+
             self.frequency_factor = nn.Parameter(
                 torch.empty(n_factors)
             )
 
         self.reset_parameters(0.0)
 
-    def reset_parameters(self, global_mean):
+    def reset_parameters(
+        self,
+        global_mean,
+    ):
         with torch.no_grad():
             self.global_bias.fill_(
                 float(global_mean)
@@ -102,6 +116,65 @@ class ContextFM(nn.Module):
                 std=self.init_std,
             )
 
+    def bias_l2(self):
+        """
+        Полный L2 по ВСЕМ линейным/bias параметрам.
+
+        global_bias не регуляризуем,
+        как и в FM(u,i).
+        """
+
+        value = (
+            self.user_bias.weight
+            .square()
+            .sum()
+            +
+            self.item_bias.weight
+            .square()
+            .sum()
+            +
+            self.day_bias.weight
+            .square()
+            .sum()
+        )
+
+        if self.use_frequency:
+            value = (
+                value
+                + self.frequency_weight.square()
+            )
+
+        return value
+
+    def factor_l2(self):
+        """
+        Полный L2 по ВСЕМ latent factors.
+        """
+
+        value = (
+            self.user_factors.weight
+            .square()
+            .sum()
+            +
+            self.item_factors.weight
+            .square()
+            .sum()
+            +
+            self.day_factors.weight
+            .square()
+            .sum()
+        )
+
+        if self.use_frequency:
+            value = (
+                value
+                + self.frequency_factor
+                .square()
+                .sum()
+            )
+
+        return value
+
     def forward_with_regularization(
         self,
         user_idx,
@@ -109,10 +182,17 @@ class ContextFM(nn.Module):
         day_idx,
         frequency,
     ):
-        # day_idx = -1 означает день,
-        # которого вообще не было в train.
+        # -1 = день, которого
+        # не было в train.
         safe_day = day_idx.clamp_min(0)
-        day_mask = (day_idx >= 0).float()
+
+        day_mask = (
+            day_idx >= 0
+        ).float()
+
+        # -----------------------
+        # Linear terms
+        # -----------------------
 
         ub = self.user_bias(
             user_idx
@@ -128,6 +208,10 @@ class ContextFM(nn.Module):
             ).squeeze(-1)
             * day_mask
         )
+
+        # -----------------------
+        # Latent factors
+        # -----------------------
 
         uf = self.user_factors(
             user_idx
@@ -157,18 +241,9 @@ class ContextFM(nn.Module):
             df,
         ]
 
-        # Регуляризуем только активные sparse-параметры.
-        bias_reg = (
-            ub.square().sum()
-            + ib.square().sum()
-            + db.square().sum()
-        )
-
-        factor_reg = (
-            uf.square().sum()
-            + itf.square().sum()
-            + df.square().sum()
-        )
+        # -----------------------
+        # Frequency feature
+        # -----------------------
 
         if self.use_frequency:
             frequency = frequency.to(
@@ -182,7 +257,9 @@ class ContextFM(nn.Module):
             )
 
             frequency_vector = (
-                self.frequency_factor[None, :]
+                self.frequency_factor[
+                    None, :
+                ]
                 * frequency[:, None]
             )
 
@@ -190,24 +267,17 @@ class ContextFM(nn.Module):
                 frequency_vector
             )
 
-            bias_reg = (
-                bias_reg
-                + self.frequency_weight.square()
-            )
-
-            factor_reg = (
-                factor_reg
-                + self.frequency_factor
-                .square()
-                .sum()
-            )
+        # -----------------------
+        # FM pairwise interactions
+        # -----------------------
 
         interaction = torch.zeros_like(
             prediction
         )
 
-        # Все pairwise interactions FM.
-        for left in range(len(vectors)):
+        for left in range(
+            len(vectors)
+        ):
             for right in range(
                 left + 1,
                 len(vectors),
@@ -219,6 +289,12 @@ class ContextFM(nn.Module):
                         * vectors[right]
                     ).sum(dim=1)
                 )
+
+        # ВАЖНО:
+        # regularization теперь FULL,
+        # а не только active embeddings.
+        bias_reg = self.bias_l2()
+        factor_reg = self.factor_l2()
 
         return (
             prediction + interaction,
@@ -243,29 +319,6 @@ class ContextFM(nn.Module):
         )
 
         return prediction
-
-    def sparse_parameters(self):
-        return [
-            self.user_bias.weight,
-            self.item_bias.weight,
-            self.day_bias.weight,
-            self.user_factors.weight,
-            self.item_factors.weight,
-            self.day_factors.weight,
-        ]
-
-    def dense_parameters(self):
-        params = [
-            self.global_bias,
-        ]
-
-        if self.use_frequency:
-            params += [
-                self.frequency_weight,
-                self.frequency_factor,
-            ]
-
-        return params
 
 
 def prepare_context_frames(data):
@@ -464,23 +517,14 @@ def fit_one(
 
     model.reset_parameters(
         float(
-            train[
-                "rating"
-            ].mean()
+            train["rating"].mean()
         )
     )
 
-    # SparseAdam обновляет только реально
-    # использованные embeddings.
-    sparse_optimizer = (
-        torch.optim.SparseAdam(
-            model.sparse_parameters(),
-            lr=learning_rate,
-        )
-    )
-
-    dense_optimizer = torch.optim.Adam(
-        model.dense_parameters(),
+    # Один обычный Adam
+    # по ВСЕМ параметрам модели.
+    optimizer = torch.optim.Adam(
+        model.parameters(),
         lr=learning_rate,
     )
 
@@ -526,17 +570,27 @@ def fit_one(
                 start + batch_size
             ]
 
-            users = train_values[0][batch]
-            items = train_values[1][batch]
-            days = train_values[2][batch]
-            frequency = train_values[3][batch]
-            ratings = train_values[4][batch]
-
-            sparse_optimizer.zero_grad(
-                set_to_none=True
+            users = (
+                train_values[0][batch]
             )
 
-            dense_optimizer.zero_grad(
+            items = (
+                train_values[1][batch]
+            )
+
+            days = (
+                train_values[2][batch]
+            )
+
+            frequency = (
+                train_values[3][batch]
+            )
+
+            ratings = (
+                train_values[4][batch]
+            )
+
+            optimizer.zero_grad(
                 set_to_none=True
             )
 
@@ -553,17 +607,22 @@ def fit_one(
                 )
             )
 
+            # То же определение
+            # normalized full L2,
+            # что и для FM(u,i).
             loss = (
                 F.mse_loss(
                     prediction,
                     ratings,
                 )
-                + (
+                +
+                (
                     reg_bias
                     / n_train
                 )
                 * bias_reg
-                + (
+                +
+                (
                     reg_factors
                     / n_train
                 )
@@ -579,8 +638,7 @@ def fit_one(
 
             loss.backward()
 
-            sparse_optimizer.step()
-            dense_optimizer.step()
+            optimizer.step()
 
         val_pred, val_ids = predict(
             model,
@@ -598,10 +656,12 @@ def fit_one(
             val_ids,
         )
 
-        history.append({
-            "epoch": epoch,
-            "val_rmse": val_rmse,
-        })
+        history.append(
+            {
+                "epoch": epoch,
+                "val_rmse": val_rmse,
+            }
+        )
 
         print(
             f"epoch={epoch:03d} "
@@ -609,12 +669,20 @@ def fit_one(
             flush=True,
         )
 
-        if val_rmse < best_val_rmse:
-            best_val_rmse = val_rmse
+        if (
+            val_rmse
+            < best_val_rmse
+        ):
+            best_val_rmse = (
+                val_rmse
+            )
+
             best_epoch = epoch
 
-            best_state = copy.deepcopy(
-                model.state_dict()
+            best_state = (
+                copy.deepcopy(
+                    model.state_dict()
+                )
             )
 
             epochs_without_improvement = 0
@@ -640,15 +708,22 @@ def fit_one(
     model.eval()
 
     return {
-        "best_epoch": best_epoch,
-        "validation_rmse": best_val_rmse,
-        "fit_seconds": (
-            time.perf_counter()
-            - started
-        ),
-        "history": pd.DataFrame(
-            history
-        ),
+        "best_epoch":
+            best_epoch,
+
+        "validation_rmse":
+            best_val_rmse,
+
+        "fit_seconds":
+            (
+                time.perf_counter()
+                - started
+            ),
+
+        "history":
+            pd.DataFrame(
+                history
+            ),
     }
 
 
