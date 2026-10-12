@@ -1,0 +1,218 @@
+{
+  "1": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "2": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "3": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "4": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "5": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "6": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "7": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "8": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "9": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "10": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "15": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "20": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "30": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "40": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "50": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "100": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "150": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "200": {
+    "learning_rates": [
+      0.003,
+      0.03
+    ],
+    "regularizations": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  }
+}

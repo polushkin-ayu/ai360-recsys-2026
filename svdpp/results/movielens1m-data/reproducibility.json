@@ -1,0 +1,35 @@
+{
+  "code_commit": "adf5fdab0c5dfcf9ba48af954ce2514b4f6c97d8",
+  "kaggle_ratings_sha256": "506d64ca44484487c11dc2d9a28de5c54948213e6b96285e298afe28d6ea4e0f",
+  "official_ratings_sha256": "506d64ca44484487c11dc2d9a28de5c54948213e6b96285e298afe28d6ea4e0f",
+  "prepared_artifact_count": 11,
+  "all_prepared_artifacts_byte_identical": true,
+  "split_ids_identical": true,
+  "split_id": "44980861026c554d3b7d26ebd5bbf763ff0104d5629f40cc200ba2db38887663",
+  "artifact_sha256": {
+    "subset.csv": "6d3056e38ac489f1f22c1e6502d6e5ce6e42447d162df8eb111eb1fecba49623",
+    "selected_users.json": "a1ed25a1aa8bb56df31cae4780a274afb58256caa434a98a36823058c7e20bc4",
+    "user_mapping.csv": "d8a3d28dfcb7355f92dd076cc09868d2d5393047248f3182db94139ff2d36751",
+    "item_mapping.csv": "a81e6318d18fb7a77aeec7fd08883de56bbf649d30df758bc0550982d4f8a24c",
+    "train.csv": "488fae0e135dd129ccf4cee0e3718b09b39376826bb98af98c316080ea1ec76d",
+    "validation.csv": "81d20dbeaa989894ae0b85bad3c48154fb3396c2abbe2919bdc83856b6835715",
+    "validation_all.csv": "f629176ff436693806e6b67e55e58e855206b2b2215c957ee87f2610c6b8a54f",
+    "validation_row_ids.csv": "617ac27482bf208e83e27f99f7f5d743d3f0fe0fad5d1d6bde4e692f81f16e5c",
+    "test.csv": "25718681ef7ecf9dd7aeefaa3124f654d518ca9ac14e3dd63d164ffdf5256e4f",
+    "test_all.csv": "c7ce6bac1e5f9e6a19ccb2f58fa185f07fc63ca61dc7e80d063a8d61fb59ace7",
+    "test_row_ids.csv": "e2d35ec4b4e1ab005e765ee46959e5284cf862609d0c2d22fbcec0d7dcaf0944"
+  },
+  "primary_config": "configs/movielens1m-data.json",
+  "reproduction": "Same config with only raw_dir and output_dir changed; official ZIP rather than Kaggle ZIP.",
+  "tests": {
+    "new_1m_tests": 4,
+    "legacy_team1_tests": 20
+  },
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.3.5",
+    "pandas": "3.0.6",
+    "os": "Windows-11-10.0.26200-SP0",
+    "device": "CPU"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "base_main_commit": "da15862860d623f5dafdb92fa6ee28f447bae6bf",
+  "checks": {
+    "unit_and_pipeline_tests": 8,
+    "tests_passed": true,
+    "canonical_forward": true,
+    "finite_difference_implicit_gradient": true,
+    "grouped_batch_full_objective_gradient": true,
+    "resume_matches_uninterrupted_cpu_training": true,
+    "checkpoint_reload": true,
+    "test_lock_and_resume": true,
+    "full_ml1m_preparation_and_check_only": true,
+    "all_shared_csvs_byte_identical": true
+  },
+  "benchmark": {
+    "device": {
+      "python": "3.12.14",
+      "os": "Linux-6.18.44-x86_64-with-glibc2.39",
+      "torch": "2.14.1+cpu",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "device": "cpu",
+      "gpu": null,
+      "threads": 4,
+      "deterministic_algorithms": true,
+      "cuda_version": null
+    },
+    "runs": [
+      {
+        "k": 2,
+        "measured_seconds": 1.6369336359994122,
+        "epoch_seconds": [
+          0.5837537110000994,
+          0.48686722299953544,
+          0.5663127019997773
+        ],
+        "validation_rmse": 0.9652653257623022,
+        "quality_result": false
+      },
+      {
+        "k": 200,
+        "measured_seconds": 6.299284118998912,
+        "epoch_seconds": [
+          2.056991267999365,
+          2.0212504219998664,
+          2.221042428999681
+        ],
+        "validation_rmse": 0.896049486008233,
+        "quality_result": false
+      }
+    ],
+    "test_used": false
+  },
+  "full_hyperparameter_search_completed": false,
+  "ml1m_test_rmse_computed": false,
+  "files_sha256": {
+    "src/svdpp_ml1m.py": "bcfb21a84fc46596623aecfd6b0dd75b8a2827e20593e71326091073be30a15b",
+    "configs/svdpp-ml1m.json": "b59dbc3fcb135e421a208f94e50c8a974705f77e57fd0f2ecd7429a5d3bda285",
+    "requirements-svdpp-ml1m.txt": "a898c61fcf798c20c66d1a1ce09bb726543a33ed3f1a45c3815b80097b3043b1",
+    "tests/test_svdpp_ml1m.py": "34923a7a6376e79d25beee2e02b8b3942d7d3023bd0c1c835d1c583f8e7c43ff",
+    "docs/svdpp_ml1m_run_guide.md": "f59474b605a2066e0b6e9c0a83acb03a46ae04ae16f01a66c57fc8aae4e9aee3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "k_grid": [7, 14, 37, 74],
+  "seed": 42,
+  "max_epochs": 100,
+  "patience": 10,
+  "batch_size": 1024,
+  "learning_rate": 0.001,
+  "reg_bias": 0.01,
+  "reg_factors": 10.0,
+  "init_std": 0.01,
+  "eval_batch_size": 16384,
+  "threads": 4,
+  "device": "cpu",
+  "progress_every": 200,
+  "output_dir": "results/parameter-budget-study/seed42",
+  "test_policy": "Evaluate only after all k models are frozen by validation"
+}

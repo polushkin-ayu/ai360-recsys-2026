@@ -1,0 +1,14 @@
+{
+  "completed_k": [
+    7
+  ],
+  "pending_k": [
+    14,
+    37,
+    74
+  ],
+  "completed": false,
+  "seed": 42,
+  "updates_per_epoch": 684,
+  "test_evaluated": false
+}

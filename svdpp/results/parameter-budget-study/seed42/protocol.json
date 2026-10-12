@@ -1,0 +1,72 @@
+{
+  "fingerprint": "493b26a8af7fae38a093db3f8fdbecc4e225865089b610d420fadaa22b6e3bd0",
+  "protocol": {
+    "settings": {
+      "k_grid": [
+        7,
+        14,
+        37,
+        74
+      ],
+      "seed": 42,
+      "max_epochs": 100,
+      "patience": 10,
+      "batch_size": 1024,
+      "learning_rate": 0.001,
+      "reg_bias": 0.01,
+      "reg_factors": 10.0,
+      "init_std": 0.01,
+      "eval_batch_size": 16384,
+      "threads": 4,
+      "device": "cpu",
+      "progress_every": 200,
+      "output_dir": "results/parameter-budget-study/seed42",
+      "test_policy": "Evaluate only after all k models are frozen by validation"
+    },
+    "split_id": "f8f6f4178788e3c718735b2e7f23e1918f8801df2a8778cceb8227bf5b031b62",
+    "data_sha256": {
+      "subset.csv": "6d3056e38ac489f1f22c1e6502d6e5ce6e42447d162df8eb111eb1fecba49623",
+      "selected_users.json": "a2e3f271e5a58b5eacb1497d926d03a84dd5ea5f876d9f0e2e273ef41f0a56e1",
+      "user_mapping.csv": "d8a3d28dfcb7355f92dd076cc09868d2d5393047248f3182db94139ff2d36751",
+      "item_mapping.csv": "a81e6318d18fb7a77aeec7fd08883de56bbf649d30df758bc0550982d4f8a24c",
+      "train.csv": "488fae0e135dd129ccf4cee0e3718b09b39376826bb98af98c316080ea1ec76d",
+      "validation.csv": "81d20dbeaa989894ae0b85bad3c48154fb3396c2abbe2919bdc83856b6835715",
+      "validation_all.csv": "f629176ff436693806e6b67e55e58e855206b2b2215c957ee87f2610c6b8a54f",
+      "validation_row_ids.csv": "617ac27482bf208e83e27f99f7f5d743d3f0fe0fad5d1d6bde4e692f81f16e5c",
+      "test.csv": "25718681ef7ecf9dd7aeefaa3124f654d518ca9ac14e3dd63d164ffdf5256e4f",
+      "test_all.csv": "c7ce6bac1e5f9e6a19ccb2f58fa185f07fc63ca61dc7e80d063a8d61fb59ace7",
+      "test_row_ids.csv": "e2d35ec4b4e1ab005e765ee46959e5284cf862609d0c2d22fbcec0d7dcaf0944"
+    },
+    "source_sha256": {
+      "train_ratings.py": "5d5ef5385a243d9aafe78a4f019e74b1515e84bd4cd59053eb06fcbb57fe9520",
+      "src/rating_training.py": "ebe09800c4762156e0d66d4132fed5f6b55f5096de7589ad8dfed893b363a95b",
+      "src/model.py": "db469e4aa585d8ae3acc6f44f67a7aeddcf14edd24d578f34b75b8847dd2bfa8",
+      "src/training.py": "08624f02480037cdcb4ef78d7b52ce31e2b0f5aa8374f056e7197520406e7fa7",
+      "src/data.py": "5046e0067af3254eb65f5d4496fbe959b33337301f91dc9fc25d5db8b3d4ff2c",
+      "src/metrics.py": "efbd5b4a097a3851f3e8633cbde26abf4ba4f2f5e0a5133f9993e1c53fc986da",
+      "src/experiment.py": "479494efaafd50780fb3fa45cd85db72b12be27a799bcc679ff96ed706cf82af"
+    },
+    "histories_checksum": "5a44570ccaa047ec5a29a194e68b11e5947c8d7ab04554aa5b51ccfb9c345b06",
+    "objective": "MSE + reg_bias/N * (||bu||^2+||bi||^2) + reg_factors/N * (||P||^2+||Q||^2+||Y||^2)",
+    "model": "Canonical SVD++, fixed train mean, train-only histories, unclipped predictions",
+    "selection": "Fixed hyperparameters for every k; best epoch and best k by validation only",
+    "batching": "Fresh shuffle of all train ratings per epoch; one Adam step per rating batch",
+    "history_sums": "Recomputed at every Adam update; only immutable membership matrices are cached"
+  },
+  "environment": {
+    "python": "3.13.7",
+    "os": "macOS-15.5-arm64-arm-64bit-Mach-O",
+    "torch": "2.14.1",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "device": "cpu",
+    "gpu": null,
+    "threads": 4,
+    "deterministic_algorithms": true,
+    "cuda_version": null
+  },
+  "git": {
+    "commit": "5f5e3a4cf86d5736bd9770c56cb654efe6708065",
+    "dirty": true
+  }
+}

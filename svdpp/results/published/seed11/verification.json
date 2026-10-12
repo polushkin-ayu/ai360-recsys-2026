@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "checks": {
+    "artifact_hashes": 986,
+    "histories": 198,
+    "final_models": 18,
+    "test_prediction_files": 18,
+    "search_tables": 36,
+    "png_files": 77
+  },
+  "errors": [],
+  "original_study_unchanged": true,
+  "original_seconds": 2459.4184373999988,
+  "completion_seconds": 208.71794670000054,
+  "prediction_dtype": "float32",
+  "maximum_test_rmse_difference": 0.0
+}

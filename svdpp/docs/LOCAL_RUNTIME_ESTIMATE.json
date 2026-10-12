@@ -1,0 +1,128 @@
+{
+  "method": "Inference-only timings on randomly initialized models; no backward/optimizer/test targets",
+  "training_run": false,
+  "threads": 4,
+  "cpu": "Intel Celeron N5095",
+  "samples": [
+    {
+      "k": 1,
+      "forward_only_seconds": 0.14173540000001594,
+      "evaluation_forward_seconds": 0.0976541999998517,
+      "rmse_check_seconds": 1.7494055999998182
+    },
+    {
+      "k": 2,
+      "forward_only_seconds": 0.20521289999987857,
+      "evaluation_forward_seconds": 0.10954919999994672,
+      "rmse_check_seconds": 1.5981163999999808
+    },
+    {
+      "k": 10,
+      "forward_only_seconds": 0.1847957499999211,
+      "evaluation_forward_seconds": 0.1659751499998947,
+      "rmse_check_seconds": 1.7748027499999353
+    },
+    {
+      "k": 20,
+      "forward_only_seconds": 0.22549054999990403,
+      "evaluation_forward_seconds": 0.1948458000001665,
+      "rmse_check_seconds": 1.6866103500001373
+    },
+    {
+      "k": 50,
+      "forward_only_seconds": 0.3756337499996789,
+      "evaluation_forward_seconds": 0.3631144000000859,
+      "rmse_check_seconds": 1.8211354000000028
+    },
+    {
+      "k": 100,
+      "forward_only_seconds": 0.6353761000000304,
+      "evaluation_forward_seconds": 0.7032236000002285,
+      "rmse_check_seconds": 1.6480739000000995
+    },
+    {
+      "k": 200,
+      "forward_only_seconds": 1.6585359000002882,
+      "evaluation_forward_seconds": 1.8408160500000577,
+      "rmse_check_seconds": 1.5492887999996583
+    }
+  ],
+  "k_grid": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    15,
+    20,
+    30,
+    40,
+    50,
+    100,
+    150,
+    200
+  ],
+  "interpolated_forward_and_evaluation_seconds": [
+    1.9887951999996858,
+    1.912878499999806,
+    1.9394653937497992,
+    1.9660522874997923,
+    1.9926391812497855,
+    2.0192260749997786,
+    2.0458129687497717,
+    2.072399862499765,
+    2.098986756249758,
+    2.125573649999751,
+    2.1162601749999794,
+    2.106946700000208,
+    2.257925650000061,
+    2.4089045999999144,
+    2.5598835499997676,
+    2.9866736000003584,
+    4.017657175000181,
+    5.048640750000004
+  ],
+  "models_per_k": 29,
+  "estimated_hours_excluding_backward_optimizer_io": {
+    "41": 14.421487374214673,
+    "100": 35.17435944930408,
+    "150": 52.761539173956116,
+    "500": 175.8717972465204
+  },
+  "rmse_validation_microbenchmark": {
+    "repeated_row_id_checks_and_rmse_seconds": 1.6990246999998817,
+    "rmse_only_seconds": 0.037644600000021455,
+    "note": "Potential optimization: validate fixed row IDs once, retain shape/finiteness/order guarantees. No code changed."
+  },
+  "date": "2026-10-11",
+  "memory_gib": 15.78,
+  "estimated_hours_by_stage_excluding_backward_optimizer_io": {
+    "41": {
+      "tuning": 11.935024033832834,
+      "final": 2.48646334038184,
+      "total": 14.421487374214673
+    },
+    "100": {
+      "tuning": 29.109814716665444,
+      "final": 6.064544732638634,
+      "total": 35.17435944930408
+    },
+    "150": {
+      "tuning": 43.66472207499816,
+      "final": 9.09681709895795,
+      "total": 52.761539173956116
+    },
+    "500": {
+      "tuning": 145.54907358332724,
+      "final": 30.322723663193173,
+      "total": 175.8717972465204
+    }
+  },
+  "code_state": "Before fixed-ID scoring optimization and two-stage tuning; historical timings only",
+  "applies_to_current_config": false
+}

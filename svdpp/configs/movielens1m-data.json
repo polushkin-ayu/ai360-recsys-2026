@@ -1,0 +1,27 @@
+{
+  "dataset": "MovieLens 1M",
+  "source": {
+    "url": "https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset",
+    "official_page": "https://grouplens.org/datasets/movielens/1m/",
+    "ratings_sha256": "506d64ca44484487c11dc2d9a28de5c54948213e6b96285e298afe28d6ea4e0f",
+    "archives": [
+      {
+        "url": "https://www.kaggle.com/api/v1/datasets/download/odedgolden/movielens-1m-dataset",
+        "bytes": 6111600,
+        "sha256": "395e13ac878c54d2e99ad493369600c042113ed36d0a76c5731f715e53de7451",
+        "prefix": ""
+      },
+      {
+        "url": "https://files.grouplens.org/datasets/movielens/ml-1m.zip",
+        "bytes": 5917549,
+        "sha256": "a6898adb50b9ca05aa231689da44c217cb524e7ebd39d264c56e2832f2c54e20",
+        "prefix": "ml-1m/"
+      }
+    ]
+  },
+  "expected": {"ratings": 1000209, "users": 6040, "items": 3706},
+  "subset": {"rule": "all_ratings", "seed": 42, "target_ratings": 1000209},
+  "split": {"seed": 42, "fractions": [0.7, 0.15, 0.15]},
+  "raw_dir": "data/raw/movielens1m",
+  "output_dir": "data/processed/movielens1m"
+}

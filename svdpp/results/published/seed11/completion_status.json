@@ -1,0 +1,16 @@
+{
+  "complete": true,
+  "source": "C:\\Users\\user\\Downloads\\SVDpp_MovieLens1M_Colab\\svdpp-movielens1m\\results\\svdpp-ml1m-fast\\seed11",
+  "seed": 11,
+  "wall_time_limit": null,
+  "source_time_limited_runs": 97,
+  "completed_time_limited_runs": 97,
+  "remaining_time_limited_runs": 0,
+  "additional_epochs": 192,
+  "invocation_seconds": 208.71794670000054,
+  "selected_models_time_limited": 0,
+  "selected_models_at_epoch_cap": 10,
+  "all_k_evaluated": true,
+  "converged": false,
+  "quality_note": "Original epoch caps/patience and one seed retained; no convergence claim"
+}

@@ -1,0 +1,2 @@
+k,seed,train_rmse_mean,validation_rmse_mean,best_epoch,epochs_run,updates_per_epoch,optimizer_updates,fit_seconds,hit_epoch_cap,time_limited,learning_rate,reg_bias,reg_factors,batch_size,init_std,n_seeds
+7,42,0.7910510905052645,0.852274552176069,56,66,684,45144,477.31917328797863,False,False,0.001,0.01,10.0,1024,0.01,1

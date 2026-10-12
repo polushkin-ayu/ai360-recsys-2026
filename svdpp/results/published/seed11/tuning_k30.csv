@@ -1,0 +1,3 @@
+k,learning_rate,regularization,validation_rmse_mean,validation_rmse_std,n_seeds
+30,0.003,0.1,0.867087004106393,,1
+30,0.03,10.0,0.8747700137502907,,1

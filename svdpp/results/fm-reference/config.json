@@ -1,0 +1,33 @@
+{
+  "experiment_id": "fm-k-sweep-reg10-final",
+  "data_dir": "data/processed/movielens1m",
+  "output_dir": "results/fm-k-sweep-reg10-final",
+  "local_dir": "data/fm-k-sweep-reg10-final",
+  "k_values": [
+    8,
+    16,
+    32,
+    50,
+    100,
+    150,
+    200
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "init_std": 0.01,
+  "threads": 1,
+  "training": {
+    "epochs": 100,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "reg_bias": 0.01,
+    "reg_factors": 10.0,
+    "patience": 10,
+    "min_delta": 0.0,
+    "normalize_regularization": true
+  }
+}

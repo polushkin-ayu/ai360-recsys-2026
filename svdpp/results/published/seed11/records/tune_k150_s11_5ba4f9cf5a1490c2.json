@@ -1,0 +1,33 @@
+{
+  "id": "tune_k150_s11_5ba4f9cf5a1490c2",
+  "stage": "tune",
+  "signature": "4016496575e7240ab728dab94cef73b322ed724612c7a7b012f0a267e5144ceb",
+  "metrics": {
+    "k": 150,
+    "learning_rate": 0.003,
+    "regularization": 0.1,
+    "seed": 11,
+    "train_rmse": 0.7630345265685959,
+    "validation_rmse": 0.8694094670666146,
+    "best_epoch": 10,
+    "epochs_run": 20,
+    "hit_epoch_cap": false,
+    "time_limited": false,
+    "fit_seconds": 45.54837530000441,
+    "n_parameters": 2011292,
+    "init_std": 0.028574404296987998
+  },
+  "checkpoint": "artifacts\\svdpp-ml1m-fast\\seed11\\best\\tune_k150_s11_5ba4f9cf5a1490c2.pt",
+  "last_checkpoint": "artifacts\\svdpp-ml1m-fast\\seed11\\active\\tune_k150_s11_5ba4f9cf5a1490c2.pt",
+  "checkpoint_signature": "97e9c4f3546ee9aca963cb18cea4b6175ac0ce9860b710f2245ad7a67898db3b",
+  "checkpoint_fingerprint": "a2169eb2522c46d0d2b6cec2ae149783e8462af3dbc2ca1d998b687f058bbf84",
+  "files": {
+    "artifacts\\svdpp-ml1m-fast\\seed11\\active\\tune_k150_s11_5ba4f9cf5a1490c2.pt": "057671f84dec1d6ec49f4236788e09ac19d50c2cc994a5d20cc7d2f39c6cdd5c",
+    "artifacts\\svdpp-ml1m-fast\\seed11\\best\\tune_k150_s11_5ba4f9cf5a1490c2.pt": "67e46b24575fd455e4fd4a5e06b733a3474d7311c375c2a7fade18a74987b2f5",
+    "results\\svdpp-ml1m-fast-completed\\seed11\\histories\\tune_k150_s11_5ba4f9cf5a1490c2.csv": "135b39ec919df6720765c02ad3c8b5721b84d1dcd66b2061394e07ea0cfaa233"
+  },
+  "source_signature": "97e9c4f3546ee9aca963cb18cea4b6175ac0ce9860b710f2245ad7a67898db3b",
+  "source_time_limited": false,
+  "source_epochs": 20,
+  "additional_epochs": 0
+}
